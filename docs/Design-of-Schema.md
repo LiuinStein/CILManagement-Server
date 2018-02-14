@@ -62,13 +62,41 @@ The subjects we should manager in this program includes **personnel**, **resourc
 
 **project team table (t_team):**
 
-| Name | Type | key  | Comment | Example |
-| ---- | ---- | ---- | ------- | ------- |
-|      |      |      |         |         |
-|      |      |      |         |         |
-|      |      |      |         |         |
-|      |      |      |         |         |
-|      |      |      |         |         |
-|      |      |      |         |         |
-|      |      |      |         |         |
+| Name        | Type         | key  | Comment   | Example      |
+| ----------- | ------------ | ---- | --------- | ------------ |
+| id          | INT          | PK   | team id   | 1            |
+| leader      | INT          |      | leader id | 151105       |
+| title       | VARCHAR(30)  |      | team name | C++ team     |
+| description | VARCHAR(300) |      | -         | We ...       |
+| slogan      | VARCHAR(50)  |      | -         | Attitude ... |
+
+> All of the lab persons contributes a big team called "CIL home"
+
+**team-personnel table (t_team_personnel):**
+
+| Name      | Type         | key  | Comment                                  | Example      |
+| --------- | ------------ | ---- | ---------------------------------------- | ------------ |
+| id        | INT          | PK   | independent id                           | 1            |
+| team_id   | INT          |      | team id                                  | 3            |
+| person_id | INT          |      | person id                                | 2            |
+| position  | TINYINT      |      | 0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others | 0            |
+| jobs      | VARCHAR(300) |      | work content                             | XXX features |
+
+**team-project table (t_team_project):**
+
+| Name       | Type | key  | Comment        | Example |
+| ---------- | ---- | ---- | -------------- | ------- |
+| id         | INT  | PK   | independent id | 1       |
+| team_id    | INT  |      | -              | 3       |
+| project_id | INT  |      | -              | 1       |
+
+**expenditures table (t_expenditure):**
+
+| Name       | Type    | key  | Comment                | Example |
+| ---------- | ------- | ---- | ---------------------- | ------- |
+| id         | INT     | PK   | -                      | 1       |
+| flow       | TINYINT |      | 1: income; -1: outcome | 1       |
+| amount     | BIGINT  |      | measure in cent        | 5000    |
+| balance    | BIGINT  |      | funding balance        | 50000   |
+| project_id | INT     |      | affiliated project     | 1       |
 

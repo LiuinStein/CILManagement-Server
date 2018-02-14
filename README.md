@@ -18,7 +18,7 @@ CIL Management System is an internal program for the Co-innovation Laboratory of
 
 **master:**
 
-Master branch are stored current publish version.
+Master branch stores the current published version.
 
 **dev:**
 
