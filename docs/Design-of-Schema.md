@@ -11,7 +11,7 @@ The subjects we should manager in this program includes **personnel**, **resourc
 
 
 
-### 0x01 Personnel Management
+### 0x01 Personnel management
 
 **personnel table (t_personnel):**
 
@@ -42,6 +42,8 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | ---- | ----------- | ---- | ------- | --------------------------------------- |
 | id   | INT         | PK   | -       | 58                                      |
 | name | VARCHAR(30) |      | -       | computer science and technology college |
+
+### 0x02 Project & Team management
 
 **project table (t_project):**
 
@@ -90,13 +92,51 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | team_id    | INT  |      | -              | 3       |
 | project_id | INT  |      | -              | 1       |
 
-**expenditures table (t_expenditure):**
+**funding's expenditures table (t_expenditure):**
 
-| Name       | Type    | key  | Comment                | Example |
-| ---------- | ------- | ---- | ---------------------- | ------- |
-| id         | INT     | PK   | -                      | 1       |
-| flow       | TINYINT |      | 1: income; -1: outcome | 1       |
-| amount     | BIGINT  |      | measure in cent        | 5000    |
-| balance    | BIGINT  |      | funding balance        | 50000   |
-| project_id | INT     |      | affiliated project     | 1       |
+| Name       | Type         | key  | Comment                       | Example       |
+| ---------- | ------------ | ---- | ----------------------------- | ------------- |
+| id         | INT          | PK   | -                             | 1             |
+| flow       | TINYINT      |      | 1: income; -1: outcome        | 1             |
+| amount     | BIGINT       |      | measure in cent               | 5000          |
+| balance    | BIGINT       |      | funding balance               | 50000         |
+| project_id | INT          |      | affiliated project            | 1             |
+| note       | VARCHAR(100) |      | description                   | buy something |
+| date       | DATE         |      | when did you spend this money | 2018-2-1      |
+
+### 0x03 Resource & Usage management
+
+**resources's type table (t_resource_type):**
+
+| Name        | Type         | key  | Comment       | Example          |
+| ----------- | ------------ | ---- | ------------- | ---------------- |
+| id          | INT          | PK   | -             | 1                |
+| name        | VARCHAR(100) |      | -             | Dell Laptop X123 |
+| description | VARCHAR(300) |      | detail        | i7-4710MQ, ...   |
+| disposable  | TINYINT      |      | 0: no, 1: yes | 1                |
+
+**resource table (t_resource):**
+
+| Name         | Type   | key  | Comment                | Example |
+| ------------ | ------ | ---- | ---------------------- | ------- |
+| id           | INT    | PK   | -                      | 1       |
+| type_id      | INT    |      | type                   | 2       |
+| purchaser_id | INT    |      | who bought it          | 151105  |
+| unit_price   | BIGINT |      | unit price at purchase | 50000   |
+| remaining    | INT    |      | remaining amount       | 5       |
+| quantity     | INT    |      | all quantity           | 6       |
+
+> If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity
+
+**resource usage table (t_resource_usage):**
+
+| Name         | Type         | key  | Comment                                  | Example        |
+| ------------ | ------------ | ---- | ---------------------------------------- | -------------- |
+| id           | INT          | PK   | -                                        | 1              |
+| resource_id  | INT          |      | -                                        | 2              |
+| user_id      | INT          |      | -                                        | 151105         |
+| usage_amount | INT          |      | usage amount                             | 5              |
+| start_date   | DATE         |      | when did someone use it                  | 2018-2-1       |
+| end_date     | DATE         |      | when did he return it, 1970-1-1 will be set when it still lending or it's disposable | 1970-1-1       |
+| purpose      | VARCHAR(200) |      | why did he use it                        | compose theory |
 
