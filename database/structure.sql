@@ -102,4 +102,38 @@ CREATE TABLE `cil_management`.`t_expenditure`  (
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
+-- --------------------------------- Resource & Usage management --------------------------
+-- ------------------------------- resources's type table (t_resource_type) ---------------
+DROP TABLE IF EXISTS `cil_management`.`t_resource_type`;
+CREATE TABLE `cil_management`.`t_resource_type`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT 'resource name',
+  `description` varchar(300) NOT NULL DEFAULT '' COMMENT 'resource detail and configuration',
+  `disposable` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: no, 1: yes',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+-- ------------------------------- resource table (t_resource) ----------------------------
+DROP TABLE IF EXISTS `cil_management`.`t_resource`;
+CREATE TABLE `cil_management`.`t_resource`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'resource id',
+  `type_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'type',
+  `purchaser_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who bought it',
+  `unit_price` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'unit price at purchase',
+  `remaining` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'remaining amount\n',
+  `quantity` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'all quantity, If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+-- ------------------------------- resource usage table (t_resource_usage) ----------------
+DROP TABLE IF EXISTS `cil_management`.`t_resource_usage`;
+CREATE TABLE `cil_management`.`t_resource_usage`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
+  `resource_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'resource id',
+  `user_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who use it',
+  `usage_amount` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'how many of they use',
+  `start_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he use it',
+  `end_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he return it, 1970-1-1 will be set when it still lending or it\'s disposable\n',
+  `purpose` varchar(200) NOT NULL DEFAULT '' COMMENT 'why did he use it',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
 

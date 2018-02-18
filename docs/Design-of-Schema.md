@@ -134,9 +134,9 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | ------------ | ------------ | ---- | ---------------------------------------- | -------------- |
 | id           | INT          | PK   | -                                        | 1              |
 | resource_id  | INT          |      | -                                        | 2              |
-| user_id      | INT          |      | -                                        | 151105         |
-| usage_amount | INT          |      | usage amount                             | 5              |
-| start_date   | DATE         |      | when did someone use it                  | 2018-2-1       |
-| end_date     | DATE         |      | when did he return it, 1970-1-1 will be set when it still lending or it's disposable | 1970-1-1       |
+| user_id      | INT          |      | who use it                               | 151105         |
+| usage_amount | INT          |      | how many of they use                     | 5              |
+| start_date   | DATE         |      | GMT, when did he use it                  | 2018-2-1       |
+| end_date     | DATE         |      | GMT, when did he return it, 1970-1-1 will be set when it still lending or it's disposable | 1970-1-1       |
 | purpose      | VARCHAR(200) |      | why did he use it                        | compose theory |
 
