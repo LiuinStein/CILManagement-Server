@@ -33,7 +33,7 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | Name    | Type        | key  | Comment               | Example       |
 | ------- | ----------- | ---- | --------------------- | ------------- |
 | id      | INT         | PK   | -                     | 101           |
-| name    | VARCHAR(10) |      | -                     | Software-1505 |
+| name    | VARCHAR(20) |      | -                     | Software-1505 |
 | college | INT         |      | affiliated college id | 58            |
 
 **college table (t_college):**
@@ -56,7 +56,7 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | docs_uri         | VARCHAR(400) |      | documents position, if have no documents, empty string will be set. Every URI occupies one single line. | GitHub wiki                |
 | leader           | INT          |      | leader id                                | 151105                     |
 | discipline       | INT          |      | the bottom discipline id                 | 46                         |
-| funding          | INT          |      | measured in cent                         | 5000000                    |
+| funding          | BIGINT       |      | measured in cent                         | 5000000                    |
 | affiliation      | VARCHAR(200) |      | affiliated companies or schools          | Some company, Some college |
 | application_date | DATE         |      | GMT                                      | 2018/1/1                   |
 | start_date       | DATE         |      | GMT                                      | 2018/2/14                  |
@@ -94,15 +94,15 @@ The subjects we should manager in this program includes **personnel**, **resourc
 
 **funding's expenditures table (t_expenditure):**
 
-| Name       | Type         | key  | Comment                       | Example       |
-| ---------- | ------------ | ---- | ----------------------------- | ------------- |
-| id         | INT          | PK   | -                             | 1             |
-| flow       | TINYINT      |      | 1: income; -1: outcome        | 1             |
-| amount     | BIGINT       |      | measure in cent               | 5000          |
-| balance    | BIGINT       |      | funding balance               | 50000         |
-| project_id | INT          |      | affiliated project            | 1             |
-| note       | VARCHAR(100) |      | description                   | buy something |
-| date       | DATE         |      | when did you spend this money | 2018-2-1      |
+| Name         | Type         | key  | Comment                               | Example       |
+| ------------ | ------------ | ---- | ------------------------------------- | ------------- |
+| id           | INT          | PK   | -                                     | 1             |
+| flow         | TINYINT      |      | 1: income; -1: outcome                | 1             |
+| amount       | BIGINT       |      | measure in cent                       | 5000          |
+| balance      | BIGINT       |      | funding balance                       | 50000         |
+| project_id   | INT          |      | affiliated project id                 | 1             |
+| note         | VARCHAR(100) |      | description                           | buy something |
+| revenue_date | DATE         |      | when did you spend or earn this money | 2018-2-1      |
 
 ### 0x03 Resource & Usage management
 
