@@ -16,9 +16,9 @@ CREATE DATABASE `cil_management` CHARACTER SET 'utf8mb4';
 DROP TABLE IF EXISTS `cil_management`.`t_personnel`;
 CREATE TABLE `cil_management`.`t_personnel`  (
   `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
-  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '\n\nmember\'s name\n',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT 'member\'s name',
   `gender` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is male, 1 is female',
-  `department` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '\n\nfor student that is class id, for teacher that is college id\n',
+  `department` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'for student that is class id, for teacher that is college id',
   `enroll_time` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he join the lab',
   `exit_time` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he exit the lab, 1970-1-1 will be set if he didn\'t retire',
   `birthday` date NOT NULL DEFAULT '1970-1-1' COMMENT 'when did he born',
@@ -76,9 +76,9 @@ DROP TABLE IF EXISTS `cil_management`.`t_team_personnel`;
 CREATE TABLE `cil_management`.`t_team_personnel`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
   `team_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'team id',
-  `person_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '\n\nperson id\n',
+  `person_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'person id',
   `position` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others',
-  `jobs` varchar(300) NOT NULL DEFAULT '' COMMENT '\n\nwork content\n',
+  `jobs` varchar(300) NOT NULL DEFAULT '' COMMENT 'work content',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 -- ------------------------------- team-project table (t_team_project) --------------------
@@ -95,8 +95,8 @@ CREATE TABLE `cil_management`.`t_expenditure`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
   `flow` tinyint NOT NULL DEFAULT 1 COMMENT '1: income; -1: outcome',
   `amount` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'measure in cent',
-  `balance` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'funding balance\n',
-  `project_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '\n\naffiliated project id \n',
+  `balance` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'funding balance',
+  `project_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'affiliated project id',
   `note` varchar(100) NOT NULL DEFAULT '' COMMENT 'description',
   `revenue_date` date NOT NULL COMMENT 'when did you spend or earn this money',
   PRIMARY KEY (`id`)
@@ -119,7 +119,7 @@ CREATE TABLE `cil_management`.`t_resource`  (
   `type_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'type',
   `purchaser_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who bought it',
   `unit_price` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'unit price at purchase',
-  `remaining` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'remaining amount\n',
+  `remaining` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'remaining amount',
   `quantity` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'all quantity, If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
@@ -131,7 +131,7 @@ CREATE TABLE `cil_management`.`t_resource_usage`  (
   `user_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who use it',
   `usage_amount` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'how many of they use',
   `start_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he use it',
-  `end_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he return it, 1970-1-1 will be set when it still lending or it\'s disposable\n',
+  `end_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he return it, 1970-1-1 will be set when it still lending or it\'s disposable',
   `purpose` varchar(200) NOT NULL DEFAULT '' COMMENT 'why did he use it',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
