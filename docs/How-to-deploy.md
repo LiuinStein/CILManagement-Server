@@ -38,9 +38,9 @@ Database Host URL:
 db.test.mgr.opencil.cn
 ```
 
-### 0x02 Example database environment
+### 0x02 Deploy example database environment
 
 
 
-### 0x03 Example server environment
+### 0x03 Deploy example server environment
 

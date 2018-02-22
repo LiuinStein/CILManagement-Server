@@ -101,6 +101,17 @@ CREATE TABLE `cil_management`.`t_expenditure`  (
   `revenue_date` date NOT NULL COMMENT 'when did you spend or earn this money',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
+-- ------------------------------- academic subjects' table (t_academic_subject) ----------
+DROP TABLE IF EXISTS `cil_management`.`t_academic_subject`;
+CREATE TABLE `cil_management`.`t_academic_subject`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
+  `code` varchar(15) NOT NULL DEFAULT '' COMMENT 'major code',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'major name',
+  `parent` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'parent id, if it have no parent, 0 will be set.',
+  `level` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is 学科门类, 1 is 一级学科, 2 is 二级学科  and so on',
+  PRIMARY KEY (`id`),
+  INDEX `idx_major_code`(`code`) USING BTREE
+) ENGINE = InnoDB;
 
 -- --------------------------------- Resource & Usage management --------------------------
 -- ------------------------------- resources's type table (t_resource_type) ---------------

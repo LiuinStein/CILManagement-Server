@@ -13,7 +13,7 @@ Here is the permission control list of every roles of every sub-systems.
 | delete an account           |   √   | only yourself | only yourself | only yourself |
 | modify member's info        |   √   | Only yourself | Only yourself | Only yourself |
 | query member's info         |   √   |       √       |       √       |       √       |
-| manage classes and colleges |   √   |               |               |               |
+| manage classes and colleges |   √   |       √       |               |               |
 
 ### 0x02 Project & Team Management
 

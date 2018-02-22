@@ -1,6 +1,6 @@
-### 0x00 Subjects
+### 0x00 Objects
 
-The subjects we should manager in this program includes **personnel**, **resources**, **projects**, **project-teams**, **funding and expenditure**, **disciplines**.
+The Objects we should manager in this program includes **personnel**, **resources**, **projects**, **project-teams**, **funding and expenditures**.
 
 **Terms:**
 
@@ -104,9 +104,25 @@ The subjects we should manager in this program includes **personnel**, **resourc
 | note         | VARCHAR(100) |      | description                           | buy something |
 | revenue_date | DATE         |      | when did you spend or earn this money | 2018-2-1      |
 
+**academic subjects' table (t_academic_subject):**
+
+| Name   | Type        | key  | Comment                                  | Example |
+| ------ | ----------- | ---- | ---------------------------------------- | ------- |
+| id     | INT         | PK   | -                                        | 1       |
+| code   | VARCHAR(15) |      | major code                               | 020301K |
+| name   | VARCHAR(50) |      | major name                               | 金融学     |
+| parent | INT         |      | parent id, if it have no parent, 0 will be set. | 2       |
+| level  | TINYINT     |      | 0 is *学科门类*, 1 is *一级学科*, 2 is *二级学科*  and so on | 2       |
+
+> The code column must be a string due to some disciplines' code has character 'T' (*特设专业*) or 'K' (*国家控制布点专业*).
+
+> This table comply with China's current academic system *学位授予和人才培养学科目录(教育部 学位[2009] 10号)*
+>
+> There is **no** function in this program to modify this table's content.
+
 ### 0x03 Resource & Usage management
 
-**resources's type table (t_resource_type):**
+**resources' type table (t_resource_type):**
 
 | Name        | Type         | key  | Comment       | Example          |
 | ----------- | ------------ | ---- | ------------- | ---------------- |
