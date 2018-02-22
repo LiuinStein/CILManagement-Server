@@ -17,11 +17,12 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 | Name        | Type         | key  | Comment                                  | Example              |
 | ----------- | ------------ | ---- | ---------------------------------------- | -------------------- |
-| id          | INT          | PK   | member's id                              | 151105               |
+| id          | INT          | PK   | school id                                | 151105               |
 | name        | VARCHAR(30)  |      | member's name                            | Jack Ma              |
 | password    | CAHR(40)     |      | SHA-1 password hash (Uppercase Hex string) |                      |
 | hash_salt   | CHAR(10)     |      | random string                            | sddfs54              |
 | gender      | TINYINT      |      | 0 is male, 1 is female                   | 0                    |
+| identify    | TINYINT      |      | 0 is student, 1 is teacher, 2 is administer | 0                    |
 | department  | INT          |      | for student that is class id, for teacher that is college id | 101                  |
 | enroll_time | DATE         |      | GMT, when did he join the lab            | 2017-8-15            |
 | exit_time   | DATE         |      | GMT, when did he exit the lab, 1970-1-1 will be set if he didn't retire | 2018-2-13            |
@@ -46,7 +47,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 > ```
 > For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
 
-class table (t_class):**
+**class table (t_class):**
 
 | Name    | Type        | key  | Comment               | Example       |
 | ------- | ----------- | ---- | --------------------- | ------------- |
