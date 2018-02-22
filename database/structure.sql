@@ -17,6 +17,8 @@ DROP TABLE IF EXISTS `cil_management`.`t_personnel`;
 CREATE TABLE `cil_management`.`t_personnel`  (
   `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT 'member\'s name',
+  `password` char(40) NOT NULL DEFAULT 'CD9477E503432CE42DA4D2FC0665863619F2993B' COMMENT 'SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)',
+  `hash_salt` char(10) NOT NULL DEFAULT '/HASHSALT/' COMMENT 'random string',
   `gender` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is male, 1 is female',
   `department` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'for student that is class id, for teacher that is college id',
   `enroll_time` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he join the lab',

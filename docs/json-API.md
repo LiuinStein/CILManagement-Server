@@ -16,31 +16,84 @@ Json API universal HTTP headers:
 
 ```
 Content-Type: application/json
+Cache-Control: no-cache
 ```
 
 ### 0x01 Personnel Management
 
 #### 0x00 Sign in 
 
+```http
+POST /v1/users/session/ HTTP/1.1
+```
+
+Input:
+
+```
+
+```
+
+Output:
+
+```
+
+```
 
 
-#### 0x01 Sign up 
+
+#### 0x01 Sign up
+
+```http
+POST /v1/users/session/ HTTP/1.1
+```
+
+Input:
+
+```
+
+```
+
+Output:
+
+```
+
+```
 
 
 
-#### 0x02 Delete an account 
+#### 0x01 Sign out
+
+```http
+DELETE /v1/users/session/ HTTP/1.1
+```
+
+Input:
+
+```
+
+```
+
+Output:
+
+```
+
+```
 
 
 
-#### 0x03 Modify member's info
+#### 0x03 Delete an account 
 
 
 
-#### 0x04 Query member's info 
+#### 0x04 Modify member's info
 
 
 
-#### 0x05 Manage school's classes and colleges
+#### 0x05 Query member's info 
+
+
+
+#### 0x06 Manage school's classes and colleges
 
 
 

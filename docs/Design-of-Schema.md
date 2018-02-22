@@ -19,6 +19,8 @@ The Objects we should manager in this program includes **personnel**, **resource
 | ----------- | ------------ | ---- | ---------------------------------------- | -------------------- |
 | id          | INT          | PK   | member's id                              | 151105               |
 | name        | VARCHAR(30)  |      | member's name                            | Jack Ma              |
+| password    | CAHR(40)     |      | SHA-1 password hash (Uppercase Hex string) |                      |
+| hash_salt   | CHAR(10)     |      | random string                            | sddfs54              |
 | gender      | TINYINT      |      | 0 is male, 1 is female                   | 0                    |
 | department  | INT          |      | for student that is class id, for teacher that is college id | 101                  |
 | enroll_time | DATE         |      | GMT, when did he join the lab            | 2017-8-15            |
@@ -28,7 +30,23 @@ The Objects we should manager in this program includes **personnel**, **resource
 | phone       | VARCHAR(20)  |      | phone number                             | 13512345678          |
 | achievement | VARCHAR(400) |      | -                                        | XXX contest Champion |
 
-**class table (t_class):**
+> Password hash generate algorithm (for `password` column):
+>
+> SHA1(hash_salt+clear_password+hash_salt)
+>
+> Default hash_salt is `/HASHSALT/`
+>
+> Default password is `666666` 
+>
+> So default hash value:
+>
+> ```
+> SHA1('/HASHSALT/666666/HASHSALT/') =>
+> 'CD9477E503432CE42DA4D2FC0665863619F2993B'
+> ```
+> For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
+
+class table (t_class):**
 
 | Name    | Type        | key  | Comment               | Example       |
 | ------- | ----------- | ---- | --------------------- | ------------- |
