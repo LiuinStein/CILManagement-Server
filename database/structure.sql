@@ -37,7 +37,8 @@ CREATE TABLE `cil_management`.`t_class`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'class id',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT 'class name',
   `college` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'affiliated college id',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `idx_class_name`(`name`) USING BTREE
 ) ENGINE = InnoDB;
 -- ----------------------------- college table (t_college) --------------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_college`;

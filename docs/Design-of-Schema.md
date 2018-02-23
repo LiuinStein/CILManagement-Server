@@ -49,18 +49,18 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **class table (t_class):**
 
-| Name    | Type        | key  | Comment               | Example       |
-| ------- | ----------- | ---- | --------------------- | ------------- |
-| id      | INT         | PK   | -                     | 101           |
-| name    | VARCHAR(20) |      | -                     | Software-1505 |
-| college | INT         |      | affiliated college id | 58            |
+| Name    | Type        | key  | Comment               | Example |
+| ------- | ----------- | ---- | --------------------- | ------- |
+| id      | INT         | PK   | -                     | 101     |
+| name    | VARCHAR(20) |      | -                     | 软件1505  |
+| college | INT         |      | affiliated college id | 58      |
 
 **college table (t_college):**
 
-| Name | Type        | key  | Comment | Example                                 |
-| ---- | ----------- | ---- | ------- | --------------------------------------- |
-| id   | INT         | PK   | -       | 58                                      |
-| name | VARCHAR(30) |      | -       | computer science and technology college |
+| Name | Type        | key  | Comment | Example    |
+| ---- | ----------- | ---- | ------- | ---------- |
+| id   | INT         | PK   | -       | 58         |
+| name | VARCHAR(30) |      | -       | 计算机科学与技术学院 |
 
 > There is no function in this program to manager school's classes & colleges information.
 
@@ -69,6 +69,8 @@ The Objects we should manager in this program includes **personnel**, **resource
 > The **newest** classes & colleges data please ask it form the **Network & information center** of Shandong University of Technology.
 >
 > **Make sure** do **INCREMENTAL** update, do **NOT** rewrite the existed data. Because if you rewrite the existed data, it will change the id field of the existed data which led to the relevant data in other tables **invalid or useless**. 
+>
+> The incremental update is easy to implement, because the school support the **excel** of new classes' information every semester year.
 
 ### 0x02 Project & Team management
 
