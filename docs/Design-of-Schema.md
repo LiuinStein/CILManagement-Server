@@ -62,6 +62,14 @@ The Objects we should manager in this program includes **personnel**, **resource
 | id   | INT         | PK   | -       | 58                                      |
 | name | VARCHAR(30) |      | -       | computer science and technology college |
 
+> There is no function in this program to manager school's classes & colleges information.
+
+> If you are a CIL member or want to deploy it for SDUT:
+>
+> The **newest** classes & colleges data please ask it form the **Network & information center** of Shandong University of Technology.
+>
+> **Make sure** do **INCREMENTAL** update, do **NOT** rewrite the existed data. Because if you rewrite the existed data, it will change the id field of the existed data which led to the relevant data in other tables **invalid or useless**. 
+
 ### 0x02 Project & Team management
 
 **project table (t_project):**

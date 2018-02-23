@@ -28,7 +28,8 @@ CREATE TABLE `cil_management`.`t_personnel`  (
   `email` varchar(30) NOT NULL DEFAULT '' COMMENT 'E-mail address',
   `phone` varchar(20) NOT NULL DEFAULT '' COMMENT 'phone number',
   `achievement` varchar(400) NOT NULL DEFAULT '' COMMENT 'personal achievement',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `idx_user_name`(`name`) USING BTREE
 ) ENGINE = InnoDB;
 -- ----------------------------- class table (t_class) ------------------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_class`;

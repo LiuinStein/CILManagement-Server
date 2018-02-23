@@ -46,7 +46,7 @@ Content-Length: 0
 
 ```json
 {
-    "error": "Test Error"
+  "error": "Test Error"
 }
 ```
 
@@ -162,7 +162,7 @@ Content-Length: None
 #### 0x04 Modify member's info
 
 ```http
-
+PUT /v1/user/ HTTP/1.1
 ```
 
 **Input:**
@@ -175,40 +175,159 @@ Content-Length: None
 ```http
 
 ```
-#### 0x05 Query member's info 
+#### 0x05 Modify password
 
 ```http
-
+PATCH /v1/user/ HTTP/1.1
 ```
 
 **Input:**
 
 ```json
-
+{
+  "old_password":"old_password",
+  "new_password":"new_password"
+}
 ```
+
 **Output:**
 
-```http
+Modify success:
 
+```http
+HTTP/1.1 202 Accepted
+Content-Length: None
 ```
-#### 0x06 Manage school's classes and colleges
+
+Old password error:
 
 ```http
+HTTP/1.1 403 Forbidden
+Content-Length: 0
+```
 
+Non-himself or he is trying to modify others password:
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Length: None
+```
+
+#### 0x06 Initialize password
+
+```http
+PATCH /v1/user/ HTTP/1.1
 ```
 
 **Input:**
 
 ```json
-
+{
+  "the-man-who-forgot-password":15110506001
+}
 ```
+
 **Output:**
 
-```http
+Modify success:
 
+```http
+HTTP/1.1 202 Accepted
+Content-Length: None
 ```
 
+Non-admin user submit data:
 
+```http
+HTTP/1.1 403 Forbidden
+Content-Length: 0
+```
+
+#### 0x07 Query member's info 
+
+```http
+GET /v1/user/ HTTP/1.1
+```
+
+**Input:**
+
+by user's id (only for exact query):
+
+```json
+{
+  "id":15110506001,
+  "mode":"summary"
+}
+```
+by user's name (only for exact query):
+
+```json
+{
+  "name":"Jack Ma",
+  "mode":"summary"
+}
+```
+
+by user's department:
+
+```json
+{
+  "department":101,
+  "mode":"summary"
+}
+```
+
+by user's identify:
+
+```json
+{
+  "identify":0,
+  "mode":"summary"
+}
+```
+
+> The mode field controls which data are returned.
+>
+> | When it is | Returned fields                          |
+> | ---------- | ---------------------------------------- |
+> | summary    | id, name, gender, identify, department   |
+> | all        | id, name, gender, identify, department, enroll-time, exit-time, birthday, email, phone, achievement |
+> |            |                                          |
+
+**Output:**
+
+Query success & there is return data:
+
+```http
+HTTP/1.1 200 OK
+```
+```json
+{
+  "users":[
+    {
+      "id":15110506001,
+      "name":"Jack Ma",
+      "gender":0,
+      "identify":0,
+      "department":101
+    },
+    {
+      "id":15110506002,
+      "name":"Pony Ma",
+      "gender":0,
+      "identify":0,
+      "department":201
+    }
+  ]
+}
+```
+
+Query success & no matched person:
+
+```http
+HTTP/1.1 404 NOT FOUND
+Content-Length: 0
+```
 
 
 ### 0x02 Project & Team Management

@@ -6,14 +6,15 @@ Here is the permission control list of every roles of every sub-systems.
 
 ### 0x01 Personnel Management
 
-|                             | Admin |    Teacher    |  Team leader  |    Member     |
-| --------------------------- | :---: | :-----------: | :-----------: | :-----------: |
-| Sign in                     |   √   |       √       |       √       |       √       |
-| Sign up                     |   √   | only student  |               |               |
-| delete an account           |   √   | only yourself | only yourself | only yourself |
-| modify member's info        |   √   | Only yourself | Only yourself | Only yourself |
-| query member's info         |   √   |       √       |       √       |       √       |
-| manage classes and colleges |   √   |       √       |               |               |
+|                      |     Admin     |    Teacher    |  Team leader  |    Member     |
+| -------------------- | :-----------: | :-----------: | :-----------: | :-----------: |
+| Sign in              |       √       |       √       |       √       |       √       |
+| Sign up              |       √       | only student  |               |               |
+| delete an account    |       √       | only yourself | only yourself | only yourself |
+| modify member's info |       √       | Only yourself | Only yourself | Only yourself |
+| query member's info  |       √       |       √       |       √       |       √       |
+| modify password      | only yourself | only yourself | only yourself | only yourself |
+| Initialize password  |       √       |               |               |               |
 
 ### 0x02 Project & Team Management
 
