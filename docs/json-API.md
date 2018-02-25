@@ -29,7 +29,14 @@ Cache-Control: no-cache
 HTTP/1.1 400 INVALID REQUEST
 ```
 
-**Operator have no authority to do this or need sign in:**
+**Session out of date or invalid, authorization failed, need re-login:**
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Length: None
+```
+
+**Operators has no authority to do this:**
 
 ```http
 HTTP/1.1 403 Forbidden
@@ -46,7 +53,7 @@ Content-Length: 0
 
 ```json
 {
-  "error": "Test Error"
+  "error": "Some Error messages"
 }
 ```
 
@@ -72,7 +79,7 @@ POST /v1/user/session/ HTTP/1.1
 Sign in success:
 
 ```http
-HTTP/1.1 202 Accepted
+HTTP/1.1 201 Created
 Content-Length: 0
 ```
 
@@ -132,7 +139,7 @@ POST /v1/user/ HTTP/1.1
 Sign up success:
 
 ```http
-HTTP/1.1 202 Accepted
+HTTP/1.1 201 CREATED
 Content-Length: None
 ```
 
@@ -162,23 +169,57 @@ Content-Length: None
 #### 0x04 Modify member's info
 
 ```http
-PUT /v1/user/ HTTP/1.1
+PUT /v1/user/info/ HTTP/1.1
 ```
 
 **Input:**
 
-```json
+for administers change everyone's information:
 
+```json
+{
+  "id":15110506001,
+  "name":"Jack Ma",
+  "gender":0,
+  "identify":0,
+  "department":101,
+  "enroll_time":"2017-8-15",
+  "exit_time":"1970-1-1",
+  "birthday":"1997-1-1",
+  "email":"test@test.com",
+  "phone":"13512345678",
+  "achievement":"some achievements"
+}
 ```
+for others change your own information:
+
+```json
+{
+  "name":"Jack Ma",
+  "gender":0,
+  "identify":0,
+  "department":101,
+  "birthday":"1997-1-1",
+  "email":"test@test.com",
+  "phone":"13512345678",
+  "achievement":"some achievements"
+}
+```
+
+> Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
+
 **Output:**
 
-```http
+Modify success:
 
+```http
+HTTP/1.1 201 CREATED
+Content-Length: None
 ```
 #### 0x05 Modify password
 
 ```http
-PATCH /v1/user/ HTTP/1.1
+PATCH /v1/user/password/ HTTP/1.1
 ```
 
 **Input:**
@@ -195,7 +236,7 @@ PATCH /v1/user/ HTTP/1.1
 Modify success:
 
 ```http
-HTTP/1.1 202 Accepted
+HTTP/1.1 201 CREATED
 Content-Length: None
 ```
 
@@ -216,7 +257,7 @@ Content-Length: None
 #### 0x06 Initialize password
 
 ```http
-PATCH /v1/user/ HTTP/1.1
+PATCH /v1/user/password/ HTTP/1.1
 ```
 
 **Input:**
@@ -232,7 +273,7 @@ PATCH /v1/user/ HTTP/1.1
 Modify success:
 
 ```http
-HTTP/1.1 202 Accepted
+HTTP/1.1 201 CREATED
 Content-Length: None
 ```
 
@@ -246,7 +287,7 @@ Content-Length: 0
 #### 0x07 Query member's info 
 
 ```http
-GET /v1/user/ HTTP/1.1
+GET /v1/user/info/ HTTP/1.1
 ```
 
 **Input:**
@@ -322,7 +363,7 @@ HTTP/1.1 200 OK
 }
 ```
 
-Query success & no matched person:
+Query success but no matched person:
 
 ```http
 HTTP/1.1 404 NOT FOUND

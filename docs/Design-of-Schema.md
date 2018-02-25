@@ -47,6 +47,8 @@ The Objects we should manager in this program includes **personnel**, **resource
 > ```
 > For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
 
+> Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
+
 **class table (t_class):**
 
 | Name    | Type        | key  | Comment               | Example |
@@ -66,7 +68,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 > If you are a CIL member or want to deploy it for SDUT:
 >
-> The **newest** classes & colleges data please ask it form the **Network & information center** of Shandong University of Technology.
+> Please ask the **newest** classes & colleges data form the **Network & information center** of Shandong University of Technology.
 >
 > **Make sure** do **INCREMENTAL** update, do **NOT** rewrite the existed data. Because if you rewrite the existed data, it will change the id field of the existed data which led to the relevant data in other tables **invalid or useless**. 
 >
