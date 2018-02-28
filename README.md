@@ -4,13 +4,59 @@ This is the server-side program of CIL Management System.
 
 CIL Management System is an internal program for the Co-innovation Laboratory of Shandong University of Technology Computer Science and Technology college.
 
-## 0x00 Related Technologies
+Related technologies:
 
+* SpringMVC for web
+* MyBatis+DBCP+MySQL for database persistence
+* Activiti for workflow
+* POI for import or export to Excel
+* Spring Security for access control
+* JUnit for test
+* Maven for package management
+* Git for versioning
+* Tomcat as a web container
 
+> You are a Chinese person, why did you write these documents in English instead of your mother tongue Chinese?
+>
+> This is the most frequent questions asked by my classmates, my teachers and someone else.
+>
+> There is only ONE reason for it:
+>
+> I want to find a job in an international giant company such as Alibaba, Tencent (in China) and even Microsoft or Google (in the USA).
+>
+> Maybe there is one day, I hand in my resume to HR of a company in Silicon Valley and then ... ...
 
+## 0x00 Documents
 
+You can find all of the document in the `docs` directory.
 
+Design-of-Schema.md
 
+> This document provides the design of database structure & the data dictionaries.
+
+How-to-deploy.md
+
+> The purpose of this file is pretty self-evident in its name. The method of deployment of the server-side program
+
+json-API.md
+
+> The Restful Json API document includes how to invoke it & the example input and output data.
+
+Role-permission-list.md
+
+> A series of table indicates the relationship between every-role and every-privilege in every sub-system.
+
+System-Structure.md
+
+> The server-side program system structure includes 3 sub-systems and a lot of functions in it.
+
+Usage-of-Session-and-Cookie.md
+
+> The usage of sessions and cookies. Convenient to follow up development.
+
+Workflow.md
+
+> How every function works. This file includes the workflow image of Activiti framework.
 
 ## 0x01 Version Control
 
