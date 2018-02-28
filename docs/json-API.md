@@ -208,6 +208,8 @@ for others change your own information:
 
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
 
+> The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
+
 **Output:**
 
 Modify success:
@@ -287,44 +289,32 @@ Content-Length: 0
 #### 0x07 Query member's info 
 
 ```http
-GET /v1/user/info/ HTTP/1.1
+GET /v1/user/info?mode={m}&condition={c}&value={v} HTTP/1.1
 ```
 
 **Input:**
 
 by user's id (only for exact query):
 
-```json
-{
-  "id":15110506001,
-  "mode":"summary"
-}
+```http
+GET /v1/user/info?mode=summary&condition=id&value=15110506001  HTTP/1.1
 ```
 by user's name (only for exact query):
 
-```json
-{
-  "name":"Jack Ma",
-  "mode":"summary"
-}
+```http
+GET /v1/user/info?mode=all&condition=name&value=Jack%20Ma  HTTP/1.1
 ```
 
 by user's department:
 
-```json
-{
-  "department":101,
-  "mode":"summary"
-}
+```http
+GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 ```
 
 by user's identify:
 
-```json
-{
-  "identify":0,
-  "mode":"summary"
-}
+```http
+GET /v1/user/info?mode=summary&condition=identify&value=0  HTTP/1.1
 ```
 
 > The mode field controls which data are returned.
