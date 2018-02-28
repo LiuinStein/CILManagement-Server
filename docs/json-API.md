@@ -4,6 +4,22 @@ Here is the client request and the server response agreements and examples of Js
 
 The design of Json API comply with **Restful API standard**. 
 
+I just consult the tutorial of Restful API, in some case, **I didn't strictly abide by this standard**, for example, I didn't add the user-id or username to the URI, I don't like this design, truly, I think the user-id or username should be a part of input data and I do in my code. The tutorial tells me to consider OAuth, I'm not, I use the session, about the usage of session and cookie, I wrote an article and listed a table in the file `Usage-of-Session-and-Cookie.md`
+
+> Reference:
+>
+> Rest HTTP Methods:
+>
+> https://restfulapi.net/http-methods/
+>
+> Rest HTTP Status Codes: 
+>
+> https://restfulapi.net/http-status-codes/
+>
+> REST Resource Naming Guide:
+>
+> https://restfulapi.net/resource-naming/
+
 #### 0x00 Host URL:
 
 ```
