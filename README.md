@@ -11,10 +11,17 @@ Related technologies:
 * Activiti for workflow
 * POI for import or export to Excel
 * Spring Security for access control
+* JQuery & Ajax for front-end 
 * JUnit for test
 * Maven for package management
 * Git for versioning
 * Tomcat as a web container
+
+Some technologies that have been considered, but not used:
+
+* Spring Rest: I do it by myself
+* Spring Web flow: unpopular, Activiti as its replacement
+* Shiro: not support OAuth 2.0 
 
 > You are a Chinese person, why did you write these documents in English instead of your mother tongue Chinese?
 >
