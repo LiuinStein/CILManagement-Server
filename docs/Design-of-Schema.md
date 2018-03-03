@@ -7,20 +7,59 @@ The Objects we should manager in this program includes **personnel**, **resource
 | Terms | Comment                                  |
 | ----- | ---------------------------------------- |
 | GMT   | Greenwich Mean Time (Beijing time is GMT+8) |
-|       |                                          |
+| RBAC  | Role-Based Access Control                |
+
+### 0x01 RBAC tables
+
+**RBAC user table (t_rbac_user)**
+
+| Name      | Type     | key  | Comment                                    | Example |
+| --------- | -------- | ---- | ------------------------------------------ | ------- |
+| id        | INT      | PK   | school id                                  | 151105  |
+| password  | CAHR(40) |      | SHA-1 password hash (Uppercase Hex string) |         |
+| hash_salt | CHAR(10) |      | random string                              | sddfs54 |
+
+**RBAC role table (t_rbac_role):**
+
+| Name | Type        | key  | Comment   | Example |
+| ---- | ----------- | ---- | --------- | ------- |
+| id   | TINYINT     | PK   | role id   | 1       |
+| name | VARCHAR(20) |      | role name | teacher |
+
+**RBAC user-role table (t_rbac_user_role):**
+
+| Name    | Type    | key  | Comment        | Example |
+| ------- | ------- | ---- | -------------- | ------- |
+| id      | INT     | PK   | independent id | 1       |
+| user_id | INT     |      | school id      | 151105  |
+| role_id | TINYINT |      | role id        | 1       |
+
+**RBAC permission table (t_rbac_permission):**
+
+| Name | Type        | key  | Comment       | Example   |
+| ---- | ----------- | ---- | ------------- | --------- |
+| id   | INT         | PK   | permission id | 1         |
+| name | VARCHAR(50) |      | name          | user info |
+
+**RBAC role-permission table (t_rbac_role_permission):**
+
+| Name          | Type    | key  | Comment         | Example |
+| ------------- | ------- | ---- | --------------- | ------- |
+| id            | INT     | PK   | independent id  | 1       |
+| role_id       | TINYINT |      | role id         | 1       |
+| permission_id | INT     |      | permission id   | 1       |
+| code          | CHAR(3) |      | permission code | 666     |
 
 
+### 0x02 Personnel management
 
-### 0x01 Personnel management
 
-**personnel table (t_personnel):**
+**personal information table (t_user_info):**
 
 | Name        | Type         | key  | Comment                                  | Example              |
 | ----------- | ------------ | ---- | ---------------------------------------- | -------------------- |
 | id          | INT          | PK   | school id                                | 151105               |
 | name        | VARCHAR(30)  |      | member's name                            | Jack Ma              |
-| password    | CAHR(40)     |      | SHA-1 password hash (Uppercase Hex string) |                      |
-| hash_salt   | CHAR(10)     |      | random string                            | sddfs54              |
 | gender      | TINYINT      |      | 0 is male, 1 is female                   | 0                    |
 | identify    | TINYINT      |      | 0 is student, 1 is teacher, 2 is administer | 0                    |
 | department  | INT          |      | for student that is class id, for teacher that is college id | 101                  |
@@ -31,31 +70,15 @@ The Objects we should manager in this program includes **personnel**, **resource
 | phone       | VARCHAR(20)  |      | phone number                             | 13512345678          |
 | achievement | VARCHAR(400) |      | -                                        | XXX contest Champion |
 
-> Password hash generate algorithm (for `password` column):
->
-> SHA1(hash_salt+clear_password+hash_salt)
->
-> Default hash_salt is `/HASHSALT/`
->
-> Default password is `666666` 
->
-> So default hash value:
->
-> ```
-> SHA1('/HASHSALT/666666/HASHSALT/') =>
-> 'CD9477E503432CE42DA4D2FC0665863619F2993B'
-> ```
-> For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
-
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
 
 **class table (t_class):**
 
-| Name    | Type        | key  | Comment               | Example |
-| ------- | ----------- | ---- | --------------------- | ------- |
-| id      | INT         | PK   | -                     | 101     |
-| name    | VARCHAR(20) |      | -                     | 软件1505  |
-| college | INT         |      | affiliated college id | 58      |
+| Name    | Type        | key  | Comment               | Example  |
+| ------- | ----------- | ---- | --------------------- | -------- |
+| id      | INT         | PK   | -                     | 101      |
+| name    | VARCHAR(20) |      | -                     | 软件1505 |
+| college | INT         | FK   | affiliated college id | 58       |
 
 **college table (t_college):**
 
@@ -74,7 +97,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 >
 > The incremental update is easy to implement, because the school support the **excel** of new classes' information every semester year.
 
-### 0x02 Project & Team management
+### 0x03 Project & Team management
 
 **project table (t_project):**
 
@@ -151,7 +174,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 >
 > There is **no** function in this program to modify this table's content.
 
-### 0x03 Resource & Usage management
+### 0x04 Resource & Usage management
 
 **resources' type table (t_resource_type):**
 

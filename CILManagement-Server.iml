@@ -15,6 +15,7 @@
       <configuration>
         <fileset id="fileset" name="ApplicationContext" removed="false">
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/configurations/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext-security.xml</file>
         </fileset>
       </configuration>
     </facet>

@@ -11,14 +11,54 @@
 -- --------------------------------- Database ---------------------------------------------
 DROP DATABASE IF EXISTS `cil_management`;
 CREATE DATABASE `cil_management` CHARACTER SET 'utf8mb4';
+-- --------------------------------- RBAC tables ------------------------------------------
+-- ----------------------------- RBAC user table (t_rbac_user) ----------------------------
+DROP TABLE IF EXISTS `cil_management`.`t_rbac_user`;
+CREATE TABLE `cil_management`.`t_rbac_user`  (
+  `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
+  `password` char(40) NOT NULL DEFAULT 'CD9477E503432CE42DA4D2FC0665863619F2993B' COMMENT 'SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)',
+  `hash_salt` char(10) NOT NULL DEFAULT '/HASHSALT/' COMMENT 'random string',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+-- ----------------------------- RBAC role table (t_rbac_role) ----------------------------
+DROP TABLE IF EXISTS `cil_management`.`t_rbac_role`;
+CREATE TABLE `cil_management`.`t_rbac_role`  (
+  `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'role id',
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT 'role name',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+-- ----------------------------- RBAC user-role table (t_rbac_user_role) ------------------
+DROP TABLE IF EXISTS `cil_management`.`t_rbac_user_role`;
+CREATE TABLE `cil_management`.`t_rbac_user_role`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
+  `user_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role name',
+  `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+-- ----------------------------- RBAC permission table (t_rbac_permission) ----------------
+DROP TABLE IF EXISTS `cil_management`.`t_rbac_permission`;
+CREATE TABLE `cil_management`.`t_rbac_permission`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'permission id',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
+  PRIMARY KEY (`id`),
+  INDEX `idx_permission_name`(`name`) USING BTREE
+) ENGINE = InnoDB;
+-- ----------------------------- RBAC role-permission table (t_rbac_role_permission) ------
+DROP TABLE IF EXISTS `cil_management`.`t_rbac_role_permission`;
+CREATE TABLE `cil_management`.`t_rbac_role_permission`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
+  `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
+  `permission_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'permission id',
+  `code` char(3) NOT NULL DEFAULT '000' COMMENT 'permission code',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
 -- --------------------------------- Personnel Management ---------------------------------
 -- ----------------------------- personnel table (t_personnel) ----------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_personnel`;
 CREATE TABLE `cil_management`.`t_personnel`  (
   `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT 'member\'s name',
-  `password` char(40) NOT NULL DEFAULT 'CD9477E503432CE42DA4D2FC0665863619F2993B' COMMENT 'SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)',
-  `hash_salt` char(10) NOT NULL DEFAULT '/HASHSALT/' COMMENT 'random string',
   `gender` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is male, 1 is female',
   `identify` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is student, 1 is teacher, 2 is administer',
   `department` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'for student that is class id, for teacher that is college id',

@@ -222,7 +222,7 @@ for others change your own information:
 }
 ```
 
-> Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
+> Only **administers** can modify the value of `enroll_time`&`exit_time` fields. If others input data has those field, it would be **ignored**.
 
 > The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
