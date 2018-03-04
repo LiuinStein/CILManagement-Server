@@ -15,7 +15,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 | Name      | Type     | key  | Comment                                    | Example |
 | --------- | -------- | ---- | ------------------------------------------ | ------- |
-| id        | INT      | PK   | school id                                  | 151105  |
+| id        | BIGINT   | PK   | school id                                  | 151105  |
 | password  | CAHR(40) |      | SHA-1 password hash (Uppercase Hex string) |         |
 | hash_salt | CHAR(10) |      | random string                              | sddfs54 |
 
@@ -31,7 +31,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | Name    | Type    | key  | Comment        | Example |
 | ------- | ------- | ---- | -------------- | ------- |
 | id      | INT     | PK   | independent id | 1       |
-| user_id | INT     |      | school id      | 151105  |
+| user_id | BIGINT  |      | school id      | 151105  |
 | role_id | TINYINT |      | role id        | 1       |
 
 **RBAC permission table (t_rbac_permission):**
@@ -56,19 +56,19 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **personal information table (t_user_info):**
 
-| Name        | Type         | key  | Comment                                  | Example              |
-| ----------- | ------------ | ---- | ---------------------------------------- | -------------------- |
-| id          | INT          | PK   | school id                                | 151105               |
-| name        | VARCHAR(30)  |      | member's name                            | Jack Ma              |
-| gender      | TINYINT      |      | 0 is male, 1 is female                   | 0                    |
-| identify    | TINYINT      |      | 0 is student, 1 is teacher, 2 is administer | 0                    |
+| Name        | Type         | key  | Comment                                                      | Example              |
+| ----------- | ------------ | ---- | ------------------------------------------------------------ | -------------------- |
+| id          | BIGINT       | PK   | school id                                                    | 151105               |
+| name        | VARCHAR(30)  |      | member's name                                                | Jack Ma              |
+| gender      | TINYINT      |      | 0 is male, 1 is female                                       | 0                    |
+| identify    | TINYINT      |      | 0 is student, 1 is teacher, 2 is administer                  | 0                    |
 | department  | INT          |      | for student that is class id, for teacher that is college id | 101                  |
-| enroll_time | DATE         |      | GMT, when did he join the lab            | 2017-8-15            |
+| enroll_time | DATE         |      | GMT, when did he join the lab                                | 2017-8-15            |
 | exit_time   | DATE         |      | GMT, when did he exit the lab, 1970-1-1 will be set if he didn't retire | 2018-2-13            |
-| birthday    | DATE         |      | when did he born                         | 1997-1-1             |
-| email       | VARCHAR(30)  |      | E-mail address                           | test@test.com        |
-| phone       | VARCHAR(20)  |      | phone number                             | 13512345678          |
-| achievement | VARCHAR(400) |      | -                                        | XXX contest Champion |
+| birthday    | DATE         |      | when did he born                                             | 1997-1-1             |
+| email       | VARCHAR(30)  |      | E-mail address                                               | test@test.com        |
+| phone       | VARCHAR(20)  |      | phone number                                                 | 13512345678          |
+| achievement | VARCHAR(400) |      | -                                                            | XXX contest Champion |
 
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
 
@@ -101,27 +101,27 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **project table (t_project):**
 
-| Name             | Type         | key  | Comment                                  | Example                    |
-| ---------------- | ------------ | ---- | ---------------------------------------- | -------------------------- |
-| id               | INT          | PK   | -                                        | 1                          |
-| topic            | VARCHAR(100) |      | -                                        | Some System Development    |
-| description      | VARCHAR(400) |      |                                          | This system ...            |
+| Name             | Type         | key  | Comment                                                      | Example                    |
+| ---------------- | ------------ | ---- | ------------------------------------------------------------ | -------------------------- |
+| id               | INT          | PK   | -                                                            | 1                          |
+| topic            | VARCHAR(100) |      | -                                                            | Some System Development    |
+| description      | VARCHAR(400) |      |                                                              | This system ...            |
 | code_uri         | VARCHAR(400) |      | code's position, if have no codes, empty string will be set. Every URI occupies one single line. | GitHub URL                 |
 | docs_uri         | VARCHAR(400) |      | documents position, if have no documents, empty string will be set. Every URI occupies one single line. | GitHub wiki                |
-| leader           | INT          |      | leader id                                | 151105                     |
-| discipline       | INT          |      | the bottom discipline id                 | 46                         |
-| funding          | BIGINT       |      | measured in cent                         | 5000000                    |
-| affiliation      | VARCHAR(200) |      | affiliated companies or schools          | Some company, Some college |
-| application_date | DATE         |      | GMT                                      | 2018/1/1                   |
-| start_date       | DATE         |      | GMT                                      | 2018/2/14                  |
-| deadline         | DATE         |      | GMT                                      | 2018/5/1                   |
+| leader           | BIGINT       |      | leader id                                                    | 151105                     |
+| discipline       | INT          |      | the bottom discipline id                                     | 46                         |
+| funding          | BIGINT       |      | measured in cent                                             | 5000000                    |
+| affiliation      | VARCHAR(200) |      | affiliated companies or schools                              | Some company, Some college |
+| application_date | DATE         |      | GMT                                                          | 2018/1/1                   |
+| start_date       | DATE         |      | GMT                                                          | 2018/2/14                  |
+| deadline         | DATE         |      | GMT                                                          | 2018/5/1                   |
 
 **project team table (t_team):**
 
 | Name        | Type         | key  | Comment   | Example      |
 | ----------- | ------------ | ---- | --------- | ------------ |
 | id          | INT          | PK   | team id   | 1            |
-| leader      | INT          |      | leader id | 151105       |
+| leader      | BIGINT       |      | leader id | 151105       |
 | title       | VARCHAR(30)  |      | team name | C++ team     |
 | description | VARCHAR(300) |      | -         | We ...       |
 | slogan      | VARCHAR(50)  |      | -         | Attitude ... |
@@ -130,13 +130,13 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **team-personnel table (t_team_personnel):**
 
-| Name      | Type         | key  | Comment                                  | Example      |
-| --------- | ------------ | ---- | ---------------------------------------- | ------------ |
-| id        | INT          | PK   | independent id                           | 1            |
-| team_id   | INT          |      | team id                                  | 3            |
-| person_id | INT          |      | person id                                | 2            |
+| Name      | Type         | key  | Comment                                                      | Example      |
+| --------- | ------------ | ---- | ------------------------------------------------------------ | ------------ |
+| id        | INT          | PK   | independent id                                               | 1            |
+| team_id   | INT          |      | team id                                                      | 3            |
+| person_id | BIGINT       |      | person id                                                    | 2            |
 | position  | TINYINT      |      | 0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others | 0            |
-| jobs      | VARCHAR(300) |      | work content                             | XXX features |
+| jobs      | VARCHAR(300) |      | work content                                                 | XXX features |
 
 **team-project table (t_team_project):**
 
@@ -191,7 +191,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | ------------ | ------ | ---- | ---------------------- | ------- |
 | id           | INT    | PK   | -                      | 1       |
 | type_id      | INT    |      | type                   | 2       |
-| purchaser_id | INT    |      | who bought it          | 151105  |
+| purchaser_id | BIGINT |      | who bought it          | 151105  |
 | unit_price   | BIGINT |      | unit price at purchase | 50000   |
 | remaining    | INT    |      | remaining amount       | 5       |
 | quantity     | INT    |      | all quantity           | 6       |
@@ -200,13 +200,13 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **resource usage table (t_resource_usage):**
 
-| Name         | Type         | key  | Comment                                  | Example        |
-| ------------ | ------------ | ---- | ---------------------------------------- | -------------- |
-| id           | INT          | PK   | -                                        | 1              |
-| resource_id  | INT          |      | -                                        | 2              |
-| user_id      | INT          |      | who use it                               | 151105         |
-| usage_amount | INT          |      | how many of they use                     | 5              |
-| start_date   | DATE         |      | GMT, when did he use it                  | 2018-2-1       |
+| Name         | Type         | key  | Comment                                                      | Example        |
+| ------------ | ------------ | ---- | ------------------------------------------------------------ | -------------- |
+| id           | INT          | PK   | -                                                            | 1              |
+| resource_id  | INT          |      | -                                                            | 2              |
+| user_id      | BIGINT       |      | who use it                                                   | 151105         |
+| usage_amount | INT          |      | how many of they use                                         | 5              |
+| start_date   | DATE         |      | GMT, when did he use it                                      | 2018-2-1       |
 | end_date     | DATE         |      | GMT, when did he return it, 1970-1-1 will be set when it still lending or it's disposable | 1970-1-1       |
-| purpose      | VARCHAR(200) |      | why did he use it                        | compose theory |
+| purpose      | VARCHAR(200) |      | why did he use it                                            | compose theory |
 
