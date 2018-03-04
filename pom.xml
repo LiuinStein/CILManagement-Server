@@ -13,8 +13,8 @@
         <!-- Artifact version -->
         <junit.version>4.12</junit.version>
         <activiti.version>5.22.0</activiti.version>
-        <spring.version>4.3.14.RELEASE</spring.version>
-        <spring.security.version>5.0.1.RELEASE</spring.security.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
+        <spring.security.version>5.0.3.RELEASE</spring.security.version>
         <spring.security.oauth2.version>2.2.1.RELEASE</spring.security.oauth2.version>
         <mybatis.version>3.4.5</mybatis.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
