@@ -1,14 +1,12 @@
 package com.shaoqunliu.security.rwx;
 
 public class SinglePermission {
-    private boolean yourOwn;
-    private boolean inGroup;
-    private boolean others;
+    private boolean yourOwn = false;
+    private boolean inGroup = false;
+    private boolean others = false;
 
     public SinglePermission() {
-        yourOwn = false;
-        inGroup = false;
-        others = false;
+        // nothing here
     }
 
     public SinglePermission(boolean own, boolean group, boolean others) {
