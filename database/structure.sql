@@ -15,7 +15,7 @@ CREATE DATABASE `cil_management` CHARACTER SET 'utf8mb4';
 -- ----------------------------- RBAC user table (t_rbac_user) ----------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user`;
 CREATE TABLE `cil_management`.`t_rbac_user`  (
-  `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
+  `id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
   `password` char(40) NOT NULL DEFAULT 'CD9477E503432CE42DA4D2FC0665863619F2993B' COMMENT 'SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)',
   `hash_salt` char(10) NOT NULL DEFAULT '/HASHSALT/' COMMENT 'random string',
   PRIMARY KEY (`id`)
@@ -31,7 +31,7 @@ CREATE TABLE `cil_management`.`t_rbac_role`  (
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user_role`;
 CREATE TABLE `cil_management`.`t_rbac_user_role`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
-  `user_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role name',
+  `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role name',
   `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
@@ -57,7 +57,7 @@ CREATE TABLE `cil_management`.`t_rbac_role_permission`  (
 -- ----------------------------- personnel table (t_personnel) ----------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_personnel`;
 CREATE TABLE `cil_management`.`t_personnel`  (
-  `id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
+  `id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT 'member\'s name',
   `gender` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is male, 1 is female',
   `identify` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is student, 1 is teacher, 2 is administer',
@@ -97,7 +97,7 @@ CREATE TABLE `cil_management`.`t_project`  (
   `description` varchar(400) NOT NULL DEFAULT '' COMMENT 'project abstract',
   `code_uri` varchar(400) NOT NULL DEFAULT '' COMMENT 'code\'s position, if have no codes, empty string will be set. Every URI occupies one single line.',
   `docs_uri` varchar(400) NOT NULL DEFAULT '' COMMENT 'documents position, if have no documents, empty string will be set. Every URI occupies one single line.',
-  `leader` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'leader id',
+  `leader` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'leader id',
   `discipline` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'the bottom discipline id',
   `funding` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'measured in cent',
   `affiliation` varchar(200) NOT NULL DEFAULT '' COMMENT 'affiliated companies or schools',
@@ -110,7 +110,7 @@ CREATE TABLE `cil_management`.`t_project`  (
 DROP TABLE IF EXISTS `cil_management`.`t_team`;
 CREATE TABLE `cil_management`.`t_team`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'team id',
-  `leader` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'leader id',
+  `leader` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'leader id',
   `title` varchar(30) NOT NULL DEFAULT '' COMMENT 'team name, all of the lab persons contributes a big team called "CIL home"',
   `description` varchar(300) NOT NULL DEFAULT '' COMMENT 'about project team ',
   `slogan` varchar(50) NOT NULL DEFAULT '' COMMENT 'team slogan',
@@ -121,7 +121,7 @@ DROP TABLE IF EXISTS `cil_management`.`t_team_personnel`;
 CREATE TABLE `cil_management`.`t_team_personnel`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
   `team_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'team id',
-  `person_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'person id',
+  `person_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'person id',
   `position` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others',
   `jobs` varchar(300) NOT NULL DEFAULT '' COMMENT 'work content',
   PRIMARY KEY (`id`)
@@ -173,7 +173,7 @@ DROP TABLE IF EXISTS `cil_management`.`t_resource`;
 CREATE TABLE `cil_management`.`t_resource`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'resource id',
   `type_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'type',
-  `purchaser_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who bought it',
+  `purchaser_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who bought it',
   `unit_price` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'unit price at purchase',
   `remaining` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'remaining amount',
   `quantity` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'all quantity, If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity',
@@ -184,7 +184,7 @@ DROP TABLE IF EXISTS `cil_management`.`t_resource_usage`;
 CREATE TABLE `cil_management`.`t_resource_usage`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
   `resource_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'resource id',
-  `user_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who use it',
+  `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who use it',
   `usage_amount` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'how many of they use',
   `start_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he use it',
   `end_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he return it, 1970-1-1 will be set when it still lending or it\'s disposable',
