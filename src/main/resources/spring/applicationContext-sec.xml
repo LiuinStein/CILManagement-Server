@@ -10,6 +10,37 @@
     <http pattern="/user/session" security="none"/>
 
     <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/user*" access="hasAnyRole()"/>
+
+
+        <session-management>
+            <concurrency-control max-sessions="1"/>
+        </session-management>
+
+        <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+
+
     </http>
+
+    <beans:bean id="securityFilter" class="cn.opencil.filter.SecurityFilter">
+        <!-- all of the permissions that user has -->
+        <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
+        <!-- check if the user has permissions to access this resource -->
+        <beans:property name="accessDecisionManager" ref=""/>
+
+    </beans:bean>
+
+    <authentication-manager alias="myAuthenticationManager">
+        <!-- access control -->
+        <authentication-provider user-service-ref="myRBACUserService">
+            <password-encoder ref="bCryptEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- BCrypt password encoder -->
+    <beans:bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
+
 
 </beans:beans>

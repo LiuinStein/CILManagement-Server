@@ -13,11 +13,11 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **RBAC user table (t_rbac_user)**
 
-| Name      | Type     | key  | Comment                                    | Example |
-| --------- | -------- | ---- | ------------------------------------------ | ------- |
-| id        | BIGINT   | PK   | school id                                  | 151105  |
-| password  | CAHR(40) |      | SHA-1 password hash (Uppercase Hex string) |         |
-| hash_salt | CHAR(10) |      | random string                              | sddfs54 |
+| Name     | Type     | key  | Comment                                             | Example |
+| -------- | -------- | ---- | --------------------------------------------------- | ------- |
+| id       | BIGINT   | PK   | school id                                           | 151105  |
+| password | CAHR(60) |      | use BCrypt, do not use SHA* here, default is 666666 | -       |
+| enabled  | TINYINT  |      | 0 is disabled, 1 otherwise                          | 0       |
 
 **RBAC role table (t_rbac_role):**
 

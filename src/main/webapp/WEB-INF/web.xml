@@ -20,6 +20,12 @@
     </listener>
     <!-- end of SpringMVC context loader listener -->
 
+    <!-- start of Spring Security listener -->
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+    <!-- end of Spring Security listener -->
+
     <!-- start of SpringMVC servlet -->
     <servlet>
         <servlet-name>SpringMVC</servlet-name>

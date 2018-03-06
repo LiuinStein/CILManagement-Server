@@ -1133,7 +1133,7 @@
     <column id="272" parent="236" name="id">
       <Position>1</Position>
       <Comment>member&apos;s id</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1269,7 +1269,7 @@
     <column id="290" parent="237" name="leader">
       <Position>6</Position>
       <Comment>leader id</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1412,25 +1412,25 @@
     <column id="310" parent="241" name="id">
       <Position>1</Position>
       <Comment>member&apos;s id</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="311" parent="241" name="password">
       <Position>2</Position>
-      <Comment>SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)</Comment>
-      <DataType>char(40)|0</DataType>
+      <Comment>BCrypt hash value, default is 666666</Comment>
+      <DataType>char(60)|0</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;CD9477E503432CE42DA4D2FC0665863619F2993B&apos;</DefaultExpression>
+      <DefaultExpression>&apos;$2a$11$RVC4jlZALvwA8Q2RsXeKyeKs8TAeOMlOvxdrEZbqVRs2/IugdOU3K&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="241" name="hash_salt">
+    <column id="312" parent="241" name="enabled">
       <Position>3</Position>
-      <Comment>random string</Comment>
-      <DataType>char(10)|0</DataType>
+      <Comment>0 is disabled, 1 otherwise</Comment>
+      <DataType>tinyint(3) unsigned|0</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;/HASHSALT/&apos;</DefaultExpression>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="313" parent="241" name="PRIMARY">
@@ -1449,7 +1449,7 @@
     <column id="315" parent="242" name="user_id">
       <Position>2</Position>
       <Comment>role name</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1486,7 +1486,7 @@
     <column id="320" parent="243" name="purchaser_id">
       <Position>3</Position>
       <Comment>who bought it</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1576,7 +1576,7 @@
     <column id="332" parent="245" name="user_id">
       <Position>3</Position>
       <Comment>who use it</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1629,7 +1629,7 @@
     <column id="339" parent="246" name="leader">
       <Position>2</Position>
       <Comment>leader id</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1682,7 +1682,7 @@
     <column id="346" parent="247" name="person_id">
       <Position>3</Position>
       <Comment>person id</Comment>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>

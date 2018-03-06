@@ -10,22 +10,30 @@ Look at the design of RBAC table in document `Design-of-Schema`
 
 #### 0x00 Password Hash Algorithm
 
-```
-SHA1(hash_salt+clear_password+hash_salt)
-```
+According to [CWE-257](http://cwe.mitre.org/data/definitions/257.html) & [Securing Web Application Technologies[SWAT] Checklist](https://software-security.sans.org/resources/swat), We should use secure hashing techniques with strong algorithms like PBKDF2, bcrypt, or SHA-512, and SHA1, SHA256, and SHA512 are all **fast hashes** and are **bad for passwords**. SCRYPT and BCRYPT are both a *slow hash* and are good for passwords. Always use slow hashes, never fast hashes.
 
-Default hash_salt is `/HASHSALT/`
+So, we use **BCrypt** algorithm with **11 rounds hash strength** to hash password here.
 
-Default password is `666666` 
-
-So default hash value:
-
-```
-SHA1('/HASHSALT/666666/HASHSALT/') =>
-'CD9477E503432CE42DA4D2FC0665863619F2993B'
-```
-
-For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
+> **Deprecated:**
+>
+> This algorithm only existed in initial design and deprecated later.
+>
+> ```
+> SHA1(hash_salt+clear_password+hash_salt)
+> ```
+>
+> Default hash_salt is `/HASHSALT/`
+>
+> Default password is `666666` 
+>
+> So default hash value:
+>
+> ```
+> SHA1('/HASHSALT/666666/HASHSALT/') =>
+> 'CD9477E503432CE42DA4D2FC0665863619F2993B'
+> ```
+>
+> For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
 
 #### 0x01 Access Control Algorithm
 

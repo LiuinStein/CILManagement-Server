@@ -17,11 +17,11 @@ TRUNCATE TABLE `cil_management`.`t_rbac_user_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_permission`;
 
 -- --------------------------- example users --------------------------------
--- example default password is 666666
-INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `hash_salt`) VALUE (10001, 'CD9477E503432CE42DA4D2FC0665863619F2993B', '/HASHSALT/');
-INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `hash_salt`) VALUE (1203001, 'CD9477E503432CE42DA4D2FC0665863619F2993B', '/HASHSALT/');
-INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `hash_salt`) VALUE (15110506001, 'CD9477E503432CE42DA4D2FC0665863619F2993B', '/HASHSALT/');
-INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `hash_salt`) VALUE (15110506002, 'CD9477E503432CE42DA4D2FC0665863619F2993B', '/HASHSALT/');
+-- all example default password is 666666
+INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `enabled`) VALUE (10001, '$2a$11$j.hn1ti0Pnm.4D54jDyBRuJQmCPDOIqBmcse6Q7.5OOlEGz1ui/tC', 1);
+INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `enabled`) VALUE (1203001, '$2a$11$Ii3YzhvEWnh8J0jcjR1l7eBHE8G1HXxEPIMluL3ntfY0mrty7Oxvq', 1);
+INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `enabled`) VALUE (15110506001, '$2a$11$oOgh68N2X2DpzC93H.XAa.HdPlaTak6IQujcDqiSOml7eRGLhdbwO', 1);
+INSERT INTO `cil_management`.`t_rbac_user` (`id`, `password`, `enabled`) VALUE (15110506002, '$2a$11$MOe2cDisBZJ0i9YC91aIie/Dai//PLkU3zCnHnXIrU07xYeJSMVku', 1);
 
 -- --------------------------- example roles --------------------------------
 INSERT INTO `cil_management`.`t_rbac_role` (`id`, `name`) VALUE (1, 'admin');

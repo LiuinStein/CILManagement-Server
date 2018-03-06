@@ -16,8 +16,8 @@ CREATE DATABASE `cil_management` CHARACTER SET 'utf8mb4';
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user`;
 CREATE TABLE `cil_management`.`t_rbac_user`  (
   `id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
-  `password` char(40) NOT NULL DEFAULT 'CD9477E503432CE42DA4D2FC0665863619F2993B' COMMENT 'SHA-1 password hash (Uppercase Hex string), default password is 666666, algorithm: SHA1(hash_salt+clear_password+hash_salt)',
-  `hash_salt` char(10) NOT NULL DEFAULT '/HASHSALT/' COMMENT 'random string',
+  `password` char(60) NOT NULL DEFAULT '$2a$11$RVC4jlZALvwA8Q2RsXeKyeKs8TAeOMlOvxdrEZbqVRs2/IugdOU3K' COMMENT 'BCrypt hash value, default is 666666',
+  `enabled` tinyint UNSIGNED NOT NULL DEFAULT 1 COMMENT '0 is disabled, 1 otherwise',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 -- ----------------------------- RBAC role table (t_rbac_role) ----------------------------
