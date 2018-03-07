@@ -6,22 +6,22 @@ CIL Management System is an internal program for the Co-innovation Laboratory of
 
 Related technologies:
 
-* SpringMVC for web
-* MyBatis+DBCP+MySQL for database persistence
-* Activiti for workflow
-* POI for import or export to Excel
-* Spring Security for access control
-* JQuery & Ajax for front-end 
-* JUnit for test
-* Maven for package management
-* Git for versioning
-* Tomcat as a web container
+* **SpringMVC**for web
+* **MyBatis**+**DBCP**+**MySQL** for database persistence
+* **Activiti** for workflow
+* **POI** for import or export to Excel
+* **Spring Security** for access control
+* **JQuery** & **Ajax** for front-end 
+* **JUnit** for test
+* **Maven** for package management
+* **Git** for versioning
+* **Tomcat** as a web container
 
 Some technologies that have been considered, but not used:
 
-* Spring Rest: I do it by myself
-* Spring Web flow: unpopular, Activiti as its replacement
-* Shiro: not support OAuth 2.0 
+* **Spring Rest**: I do it by myself
+* **Spring Web flow**: unpopular, Activiti as its replacement
+* **Shiro**: not support OAuth 2.0 
 
 > You are a Chinese person, why did you write these documents in English instead of your mother tongue Chinese?
 >
@@ -65,7 +65,7 @@ Workflow.md
 
 > How every function works. This file includes the workflow image of Activiti framework.
 
-## 0x01 Version Control
+## 0x01 Versioning
 
 ### 0x00 Branches
 
