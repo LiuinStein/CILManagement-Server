@@ -16,7 +16,7 @@ CREATE DATABASE `cil_management` CHARACTER SET 'utf8mb4';
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user`;
 CREATE TABLE `cil_management`.`t_rbac_user`  (
   `id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
-  `password` char(60) NOT NULL DEFAULT '$2a$11$RVC4jlZALvwA8Q2RsXeKyeKs8TAeOMlOvxdrEZbqVRs2/IugdOU3K' COMMENT 'BCrypt hash value, default is 666666',
+  `password` char(60) NOT NULL DEFAULT '$2a$11$RVC4jlZALvwA8Q2RsXeKyeKs8TAeOMlOvxdrEZbqVRs2/IugdOU3K' COMMENT 'BCrypt hash value, default password is 666666',
   `enabled` tinyint UNSIGNED NOT NULL DEFAULT 1 COMMENT '0 is disabled, 1 otherwise',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
@@ -40,8 +40,12 @@ DROP TABLE IF EXISTS `cil_management`.`t_rbac_permission`;
 CREATE TABLE `cil_management`.`t_rbac_permission`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'permission id',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
+  `uri` varchar(75) NOT NULL DEFAULT '' COMMENT 'the uri',
+  `method` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'http request method, 0 is GET, 1 is HEAD, 2 is POST, 3 is PUT, 4 is PATCH, 5 is DELETE, 6 is OPTIONS, 7 is TRACE',
   PRIMARY KEY (`id`),
-  INDEX `idx_permission_name`(`name`) USING BTREE
+#   INDEX `idx_permission_name`(`name`) USING BTREE,  # undeserving
+  INDEX `idx_permission_uri_method`(`uri`, `method`) USING BTREE,
+  UNIQUE (`uri`, `method`)
 ) ENGINE = InnoDB;
 -- ----------------------------- RBAC role-permission table (t_rbac_role_permission) ------
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_role_permission`;
@@ -49,7 +53,7 @@ CREATE TABLE `cil_management`.`t_rbac_role_permission`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
   `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
   `permission_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'permission id',
-  `code` char(3) NOT NULL DEFAULT '000' COMMENT 'permission code',
+#   `code` char(3) NOT NULL DEFAULT '000' COMMENT 'permission code',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 

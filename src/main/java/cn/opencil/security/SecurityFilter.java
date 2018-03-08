@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class SecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
+    // inject from xml configuration
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -23,9 +24,11 @@ public class SecurityFilter extends AbstractSecurityInterceptor implements Filte
     }
 
     private void invoke(FilterInvocation filterInvocation) throws IOException, ServletException {
+        // beforeInvocation will invoke MySecurityMetadataSource.getAttributes get the permission of filtered URL
+        // then, it'll invoke MyAccessDecisionManager.decide to check if the accession has enough permissions
         InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
+        // thereafter, do the next filter
         try {
-            // do next filter
             filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
         } finally {
             super.afterInvocation(token, null);

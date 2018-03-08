@@ -169,7 +169,7 @@ DELETE /v1/user/ HTTP/1.1
 
 ```json
 {
-  "id":15110506001
+  "the-man-who-forgot-password":15110506001
 }
 ```
 
@@ -190,8 +190,6 @@ PUT /v1/user/info/ HTTP/1.1
 
 **Input:**
 
-for administers change everyone's information:
-
 ```json
 {
   "id":15110506001,
@@ -207,22 +205,9 @@ for administers change everyone's information:
   "achievement":"some achievements"
 }
 ```
-for others change your own information:
+> **Only send those fields that need to be modified!**
 
-```json
-{
-  "name":"Jack Ma",
-  "gender":0,
-  "identify":0,
-  "department":101,
-  "birthday":"1997-1-1",
-  "email":"test@test.com",
-  "phone":"13512345678",
-  "achievement":"some achievements"
-}
-```
-
-> Only **administers** can modify the value of `enroll_time`&`exit_time` fields. If others input data has those field, it would be **ignored**.
+> Only **administers** can modify the value of `enroll_time`&`exit_time` fields. If **others** submit that, it would be **ignored**.
 
 > The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
@@ -234,10 +219,17 @@ Modify success:
 HTTP/1.1 201 CREATED
 Content-Length: None
 ```
+The id field is not equals to the logged-in user id & he is not an administer:
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Length: 0
+```
+
 #### 0x05 Modify password
 
 ```http
-PATCH /v1/user/password/ HTTP/1.1
+PUT /v1/user/password/ HTTP/1.1
 ```
 
 **Input:**
@@ -265,18 +257,13 @@ HTTP/1.1 403 Forbidden
 Content-Length: 0
 ```
 
-Non-himself or he is trying to modify others password:
-
-```http
-HTTP/1.1 401 Unauthorized
-Content-Length: None
-```
-
 #### 0x06 Initialize password
 
 ```http
 PATCH /v1/user/password/ HTTP/1.1
 ```
+
+> The default password is 666666.
 
 **Input:**
 

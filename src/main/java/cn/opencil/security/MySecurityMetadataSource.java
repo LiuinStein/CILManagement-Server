@@ -1,7 +1,9 @@
 package cn.opencil.security;
 
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
 
@@ -12,7 +14,13 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     }
 
     @Override
-    public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
+    public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        // get the permission of URL
+        FilterInvocation filterInvocation = (FilterInvocation) object;
+        String url = filterInvocation.getRequestUrl();
+
+
+        // return all of the permissions of this URL
         return null;
     }
 

@@ -36,20 +36,22 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 **RBAC permission table (t_rbac_permission):**
 
-| Name | Type        | key  | Comment       | Example   |
-| ---- | ----------- | ---- | ------------- | --------- |
-| id   | INT         | PK   | permission id | 1         |
-| name | VARCHAR(50) |      | name          | user info |
+| Name   | Type        | key               | Comment                                                      | Example   |
+| ------ | ----------- | ----------------- | ------------------------------------------------------------ | --------- |
+| id     | INT         | PK                | permission id                                                | 1         |
+| name   | VARCHAR(50) |                   | name                                                         | user info |
+| uri    | VARCHAR(75) | Index_1, Unique_1 | request uri                                                  | /v1/user/ |
+| method | TINYINT     | Index_1, Unique_1 | http request method, 0 is GET, 1 is HEAD, 2 is POST, 3 is PUT, 4 is PATCH, 5 is DELETE, 6 is OPTIONS, 7 is TRACE | 0         |
 
 **RBAC role-permission table (t_rbac_role_permission):**
 
-| Name          | Type    | key  | Comment         | Example |
-| ------------- | ------- | ---- | --------------- | ------- |
-| id            | INT     | PK   | independent id  | 1       |
-| role_id       | TINYINT |      | role id         | 1       |
-| permission_id | INT     |      | permission id   | 1       |
-| code          | CHAR(3) |      | permission code | 666     |
+| Name          | Type    | key  | Comment        | Example |
+| ------------- | ------- | ---- | -------------- | ------- |
+| id            | INT     | PK   | independent id | 1       |
+| role_id       | TINYINT |      | role id        | 1       |
+| permission_id | INT     |      | permission id  | 1       |
 
+> If the role has the permission, insert into this table, otherwise, delete it from this table.
 
 ### 0x02 Personnel management
 
