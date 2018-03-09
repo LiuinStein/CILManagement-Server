@@ -6,7 +6,7 @@ CIL Management System is an internal program for the Co-innovation Laboratory of
 
 Related technologies:
 
-* **SpringMVC**for web
+* **SpringMVC** for web
 * **MyBatis**+**DBCP**+**MySQL** for database persistence
 * **Activiti** for workflow
 * **POI** for import or export to Excel
