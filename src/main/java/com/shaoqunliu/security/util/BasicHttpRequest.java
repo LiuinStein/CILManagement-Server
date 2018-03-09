@@ -4,6 +4,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
+import com.shaoqunliu.security.SecurityComponentException;
 
 public class BasicHttpRequest {
 
@@ -92,9 +93,9 @@ public class BasicHttpRequest {
         this.nMethod = httpMethod2IntMethod(method);
     }
 
-    public BasicHttpRequest(HttpServletRequest servletRequest) {
+    public BasicHttpRequest(HttpServletRequest servletRequest) throws SecurityComponentException {
         if (servletRequest == null) {
-            throw new SecurityException("ERROR: HttpServletRequest, can not construct");
+            throw new SecurityComponentException("ERROR: HttpServletRequest, can not construct");
         }
         this.url = servletRequest.getRequestURI();
         this.nMethod = stringMethod2IntMethod(servletRequest.getMethod());
