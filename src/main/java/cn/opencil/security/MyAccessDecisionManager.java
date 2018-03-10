@@ -7,6 +7,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
 
 import java.util.Collection;
 
@@ -34,7 +35,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
                 }
             }
         }
-        throw new AccessDeniedException("Access Denied to page " + ((HttpRequest) object).getURI());
+        throw new AccessDeniedException("Access Denied to page " + ((FilterInvocation) object).getRequestUrl());
     }
 
     @Override
