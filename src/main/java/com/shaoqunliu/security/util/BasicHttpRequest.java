@@ -4,6 +4,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
+
 import com.shaoqunliu.security.SecurityComponentException;
 
 public class BasicHttpRequest {
@@ -11,7 +12,7 @@ public class BasicHttpRequest {
     private String url;
     private Integer nMethod;
 
-    public static HttpMethod intMethod2HttpMethod(Integer method) {
+    public static HttpMethod intMethod2HttpMethod(Integer method) throws SecurityComponentException {
         switch (method) {
             case 0:
                 return HttpMethod.GET;
@@ -30,11 +31,11 @@ public class BasicHttpRequest {
             case 7:
                 return HttpMethod.TRACE;
             default:
-                return null;
+                throw new SecurityComponentException("ERROR: illegal arguments");
         }
     }
 
-    public static Integer httpMethod2IntMethod(HttpMethod method) {
+    public static Integer httpMethod2IntMethod(HttpMethod method) throws SecurityComponentException {
         // I just want to make it safe
         switch (method) {
             case GET:
@@ -54,13 +55,13 @@ public class BasicHttpRequest {
             case TRACE:
                 return 7;
             default:
-                return -1;
+                throw new SecurityComponentException("ERROR: illegal arguments");
         }
         // do not use enum.ordinal method here!
         // return method.ordinal();
     }
 
-    public static Integer stringMethod2IntMethod(String method) {
+    public static Integer stringMethod2IntMethod(String method) throws SecurityComponentException {
         switch (method.toUpperCase()) {
             case "GET":
                 return 0;
@@ -79,8 +80,13 @@ public class BasicHttpRequest {
             case "TRACE":
                 return 7;
             default:
-                return -1;
+                throw new SecurityComponentException("ERROR: illegal arguments");
         }
+    }
+
+    public BasicHttpRequest() {
+        url = "/";
+        nMethod = 0;
     }
 
     public BasicHttpRequest(String url, Integer method) {
@@ -88,7 +94,7 @@ public class BasicHttpRequest {
         this.nMethod = method;
     }
 
-    public BasicHttpRequest(String url, HttpMethod method) {
+    public BasicHttpRequest(String url, HttpMethod method) throws SecurityComponentException {
         this.url = url;
         this.nMethod = httpMethod2IntMethod(method);
     }
@@ -104,5 +110,24 @@ public class BasicHttpRequest {
     public boolean match(BasicHttpRequest obj) {
         return obj.nMethod.equals(this.nMethod) &&
                 (new AntPathMatcher()).match(obj.url, this.url);
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Integer getIntMethod() {
+        return nMethod;
+    }
+
+    public void setIntMethod(Integer nMethod) throws SecurityComponentException {
+        if (nMethod < 0 || nMethod > 7) {
+            throw new SecurityComponentException("ERROR: illegal http request code");
+        }
+        this.nMethod = nMethod;
     }
 }

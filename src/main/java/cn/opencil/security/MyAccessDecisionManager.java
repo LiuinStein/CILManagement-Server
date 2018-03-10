@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public class MyAccessDecisionManager implements AccessDecisionManager {
     @Override
-    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
 
     }
 
