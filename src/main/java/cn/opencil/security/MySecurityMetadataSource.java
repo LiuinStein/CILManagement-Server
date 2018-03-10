@@ -52,15 +52,20 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         }
     }
 
+    /**
+     * Get the permission of URL
+     *
+     * @param object is an instance of FilterInvocation, included a HttpRequest
+     * @return all of the permissions of this URL
+     * @throws IllegalArgumentException when the input argument is illegal
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        // get the permission of URL
         FilterInvocation filterInvocation = (FilterInvocation) object;
         try {
             BasicHttpRequest request = new BasicHttpRequest(filterInvocation.getRequest());
             for (BasicHttpRequest iterateRequest : resourcePermissionMap.keySet()) {
                 if (request.match(iterateRequest)) {
-                    // return all of the permissions of this URL
                     return resourcePermissionMap.get(iterateRequest);
                 }
             }
