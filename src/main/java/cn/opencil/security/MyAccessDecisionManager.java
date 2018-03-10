@@ -35,7 +35,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
                 }
             }
         }
-        throw new AccessDeniedException("Access Denied to page " + ((FilterInvocation) object).getRequestUrl());
+        throw new AccessDeniedException("Access Denied to page");
     }
 
     @Override

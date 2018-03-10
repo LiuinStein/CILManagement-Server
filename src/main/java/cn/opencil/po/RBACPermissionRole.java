@@ -6,7 +6,7 @@ import com.shaoqunliu.security.util.BasicHttpRequest;
 public class RBACPermissionRole {
 //    private String url;
 //    private Integer method;
-    private BasicHttpRequest request;
+    private BasicHttpRequest request = new BasicHttpRequest();
     private String name;
 
     public String getUrl() {

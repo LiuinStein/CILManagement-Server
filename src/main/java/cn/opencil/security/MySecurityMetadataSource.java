@@ -25,11 +25,12 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
      */
     private static Map<BasicHttpRequest, Collection<ConfigAttribute>> resourcePermissionMap;
 
-    @Autowired
-    private RBACPermissionRoleMapper permissionRoleMapper;
+    private final RBACPermissionRoleMapper permissionRoleMapper;
 
-    public MySecurityMetadataSource() {
+    @Autowired
+    public MySecurityMetadataSource(RBACPermissionRoleMapper permissionRoleMapper) {
         // only invoke once when tomcat container start
+        this.permissionRoleMapper = permissionRoleMapper;
         refreshPermissions();
     }
 
