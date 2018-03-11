@@ -1,9 +1,12 @@
 package cn.opencil.po;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,7 +16,11 @@ public class RBACUser implements UserDetails {
     private Long id;
     private String password;
     private Boolean enabled;
-    private Set<GrantedAuthority> authorities;
+    private List<GrantedAuthority> authorities = new ArrayList<>();
+
+    public void setRole(String role) {
+        authorities.add(new SimpleGrantedAuthority(role));
+    }
 
     public Long getId() {
         return id;
@@ -63,9 +70,9 @@ public class RBACUser implements UserDetails {
     }
 
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
+//    public Boolean getEnabled() {
+//        return enabled;
+//    }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;

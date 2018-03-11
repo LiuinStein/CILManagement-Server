@@ -7,18 +7,16 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <http pattern="/user/session" security="none"/>
-
-    <http auto-config="true" use-expressions="true">
+    <http auto-config="false" create-session="stateless" entry-point-ref="restAuthenticationEntryPoint">
         <intercept-url pattern="/user/*/info" access="hasRole('someone')" method="POST"/>
 
+        <form-login login-processing-url="/v1/user/session"
+                    authentication-success-handler-ref="mySuccessHandle"
+                    authentication-failure-handler-ref="myFailureHandle"/>
 
-        <session-management>
-            <concurrency-control max-sessions="1"/>
-        </session-management>
+        <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
 
-        <!--<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>-->
-
+        <csrf disabled="true"/>
 
     </http>
 
@@ -33,6 +31,10 @@
 
     <beans:bean id="myAccessDecisionManager" class="cn.opencil.security.MyAccessDecisionManager"/>
     <beans:bean id="mySecurityMetadataSource" class="cn.opencil.security.MySecurityMetadataSource"/>
+
+    <beans:bean id="restAuthenticationEntryPoint" class="cn.opencil.security.MyAuthenticationEntryPoint"/>
+    <beans:bean id="mySuccessHandle" class="cn.opencil.security.MySuccessHandle"/>
+    <beans:bean id="myFailureHandle" class="cn.opencil.security.MyFailureHandle"/>
 
     <authentication-manager alias="myAuthenticationManager">
         <!-- access control -->

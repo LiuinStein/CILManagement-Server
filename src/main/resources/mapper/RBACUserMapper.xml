@@ -4,9 +4,17 @@
 <mapper namespace="cn.opencil.mapper.RBACUserMapper">
     <select id="getUserByUserId" resultType="cn.opencil.po.RBACUser" parameterType="java.lang.Long">
         SELECT
-            password,
-            enabled
-        FROM t_rbac_user
-        WHERE id = #{id}
+            A.id,
+            A.password,
+            A.enabled,
+            C.name AS 'role'
+        FROM
+            t_rbac_user AS A
+            LEFT JOIN t_rbac_user_role AS B
+                ON A.id = B.user_id
+            LEFT JOIN t_rbac_role AS C
+                ON B.role_id = C.id
+        WHERE
+            A.id = #{id}
     </select>
 </mapper>
