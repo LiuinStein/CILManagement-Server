@@ -8,18 +8,22 @@
            http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <http auto-config="false" create-session="stateless" entry-point-ref="restAuthenticationEntryPoint">
-        <intercept-url pattern="/user/*/info" access="hasRole('someone')" method="POST"/>
 
-        <form-login login-processing-url="/v1/user/session"
-                    authentication-success-handler-ref="mySuccessHandle"
-                    authentication-failure-handler-ref="myFailureHandle"/>
+        <!-- The tag <form-login > will also add a FORM_LOGIN_FILTER  -->
+        <!-- So do NOT use it combined with a <custom-filter > that has a position in FORM_LOGIN_FILTER -->
+        <!-- and MAKE SURE the auto-config is false -->
+        <!--<form-login login-processing-url="/v1/user/session"-->
+        <!--authentication-success-handler-ref="mySuccessHandle"-->
+        <!--authentication-failure-handler-ref="myFailureHandle"/>-->
 
         <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
 
         <csrf disabled="true"/>
 
     </http>
 
+    <!-- securityFilter before FILTER_SECURITY_INTERCEPTOR -->
     <beans:bean id="securityFilter" class="cn.opencil.security.SecurityFilter">
         <!-- all of the permissions that user has -->
         <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
@@ -32,10 +36,21 @@
     <beans:bean id="myAccessDecisionManager" class="cn.opencil.security.MyAccessDecisionManager"/>
     <beans:bean id="mySecurityMetadataSource" class="cn.opencil.security.MySecurityMetadataSource"/>
 
+    <!-- myAuthenticationFilter in position FORM_LOGIN_FILTER -->
+    <beans:bean id="myAuthenticationFilter" class="cn.opencil.security.MyAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="authenticationSuccessHandler" ref="mySuccessHandle"/>
+        <beans:property name="authenticationFailureHandler" ref="myFailureHandle"/>
+        <beans:property name="usernameParameter" value="username"/>
+        <beans:property name="passwordParameter" value="password"/>
+    </beans:bean>
+
     <beans:bean id="restAuthenticationEntryPoint" class="cn.opencil.security.MyAuthenticationEntryPoint"/>
     <beans:bean id="mySuccessHandle" class="cn.opencil.security.MySuccessHandle"/>
     <beans:bean id="myFailureHandle" class="cn.opencil.security.MyFailureHandle"/>
 
+    <!-- Authentication Manager -->
     <authentication-manager alias="myAuthenticationManager">
         <!-- access control -->
         <authentication-provider user-service-ref="myRBACUserService">

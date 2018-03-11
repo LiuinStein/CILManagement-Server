@@ -69,7 +69,8 @@ public class RBACUser implements UserDetails {
         this.password = password;
     }
 
-
+//    ERROR: Illegal overloaded getter method with ambiguous type for property
+//    The getter of a boolean value is isValueName rather than getValueName
 //    public Boolean getEnabled() {
 //        return enabled;
 //    }
