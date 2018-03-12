@@ -4,7 +4,9 @@ Here is the client request and the server response agreements and examples of Js
 
 The design of Json API comply with **Restful API standard**. 
 
-I just consult the tutorial of Restful API, in some case, **I didn't strictly abide by this standard**, for example, I didn't add the user-id or username to the URI, I don't like this design, truly, I think the user-id or username should be a part of input data and I do in my code. The tutorial tells me to consider OAuth, I'm not, I use the session, about the usage of session and cookie, I wrote an article and listed a table in the file `Usage-of-Session-and-Cookie.md`
+We **only support JSON-formatted request data**, meanwhile, we **both support JSON-formatted and XML-formatted response data**, which one will be responded depends on your request header property `Accept`. In this introduction, we only use the JSON-formatted response data as an example.
+
+I just consult the tutorial of Restful API, in some case, **I didn't strictly abide by this standard**, for example, I didn't add the user-id or username to the URI, I don't like this design, truly, I think the user-id or username should be a part of input data and I do it in my code. 
 
 > Reference:
 >
@@ -32,12 +34,53 @@ api.mgr.opencil.cn
 
 #### 0x01 Universal HTTP request headers:
 
+If you want the server to response the JSON-formatted data:
+
 ```
 Content-Type: application/json
-Cache-Control: no-cache
+Accept: application/json
 ```
 
-#### 0x02 Universal default Error Response
+If you want the server to response the XML-formatted data:
+
+```
+Content-Type: application/json
+Accept: application/xml
+```
+
+#### 0x02 Server Response Data Formatting
+
+JSON-Formatting
+
+```json
+{
+    "code": 0,
+    "message": "something was happened",
+    "data": [
+        
+    ]
+}
+```
+
+XML-Formatting
+
+```xml
+<RestfulResult>
+    <code>0</code>
+    <message>something was happened</message>
+    <data></data>
+</RestfulResult>
+```
+
+The names & meanings of this default fields
+
+* `code` integer: error code
+  * 0 means success
+  * non-zero integer means failure
+* `message` string: error message or server status message
+* `data` array: includes query result data  
+
+#### 0x03 Universal default Error Response Code
 
 **Input invalid or type mismatched data:**
 
@@ -49,7 +92,6 @@ HTTP/1.1 400 INVALID REQUEST
 
 ```http
 HTTP/1.1 401 Unauthorized
-Content-Length: None
 ```
 
 **Operators has no authority to do this:**
@@ -62,7 +104,6 @@ HTTP/1.1 403 Forbidden
 
 ```http
 HTTP/1.1 500 INTERNAL SERVER ERROR
-Content-Length: 0
 ```
 
 **Error message (MAY BE returned only when status code is like `4xx`):**
@@ -96,21 +137,18 @@ Sign in success:
 
 ```http
 HTTP/1.1 201 Created
-Content-Length: 0
 ```
 
 Account doesn't exist:
 
 ```http
 HTTP/1.1 404 NOT FOUND
-Content-Length: None
 ```
 
 Password error:
 
 ```http
 HTTP/1.1 401 Unauthorized
-Content-Length: None
 ```
 
 #### 0x01 Sign out
@@ -127,7 +165,6 @@ Nothing
 
 ```http
 HTTP/1.1 204 NO CONTENT
-Content-Length: None
 ```
 
 #### 0x02 Sign up
@@ -156,7 +193,6 @@ Sign up success:
 
 ```http
 HTTP/1.1 201 CREATED
-Content-Length: None
 ```
 
 #### 0x03 Delete an account 
@@ -179,7 +215,6 @@ Delete success:
 
 ```http
 HTTP/1.1 204 NO CONTENT
-Content-Length: None
 ```
 
 #### 0x04 Modify member's info
@@ -217,13 +252,11 @@ Modify success:
 
 ```http
 HTTP/1.1 201 CREATED
-Content-Length: None
 ```
 The id field is not equals to the logged-in user id & he is not an administer:
 
 ```http
 HTTP/1.1 403 Forbidden
-Content-Length: 0
 ```
 
 #### 0x05 Modify password
@@ -247,14 +280,12 @@ Modify success:
 
 ```http
 HTTP/1.1 201 CREATED
-Content-Length: None
 ```
 
 Old password error:
 
 ```http
 HTTP/1.1 403 Forbidden
-Content-Length: 0
 ```
 
 #### 0x06 Initialize password
@@ -279,14 +310,12 @@ Modify success:
 
 ```http
 HTTP/1.1 201 CREATED
-Content-Length: None
 ```
 
 Non-admin user submit data:
 
 ```http
 HTTP/1.1 403 Forbidden
-Content-Length: 0
 ```
 
 #### 0x07 Query member's info 
@@ -360,7 +389,6 @@ Query success but no matched person:
 
 ```http
 HTTP/1.1 404 NOT FOUND
-Content-Length: 0
 ```
 
 
