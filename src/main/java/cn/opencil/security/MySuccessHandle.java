@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class MySuccessHandle implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // run to here when log in success
-
+        response.setStatus(HttpServletResponse.SC_CREATED);
     }
 }

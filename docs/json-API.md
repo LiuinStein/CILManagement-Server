@@ -85,7 +85,7 @@ POST /v1/user/session/ HTTP/1.1
 
 ```json
 {
-  "username":"test_name",
+  "username":15110506001,
   "password":"666666"
 }
 ```

@@ -1,6 +1,7 @@
 package cn.opencil.security;
 
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.servlet.ServletException;
@@ -12,5 +13,10 @@ public class MyFailureHandle implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         // run to here when log in failed
+        if (e instanceof UsernameNotFoundException) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 }

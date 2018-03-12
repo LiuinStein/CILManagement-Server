@@ -6,12 +6,14 @@ CIL Management System is an internal program for the Co-innovation Laboratory of
 
 Related technologies:
 
-* **SpringMVC** for web
+* **Spring MVC** for web MVC
+* **Spring Rest** for view object Restful presentation
+* **Spring Security** for access control & authorization
 * **MyBatis**+**DBCP**+**MySQL** for database persistence
 * **Activiti** for workflow
-* **POI** for import or export to Excel
-* **Spring Security** for access control
-* **JQuery** & **Ajax** for front-end 
+* **Apache POI** for import or export to Excel
+* **Fast Json (made by Alibaba)** for Json parser
+* **JQuery** & **Ajax** for front-end & data transmission
 * **JUnit** for test
 * **Maven** for package management
 * **Git** for versioning
@@ -19,19 +21,10 @@ Related technologies:
 
 Some technologies that have been considered, but not used:
 
-* **Spring Rest**: I do it by myself
-* **Spring Web flow**: unpopular, Activiti as its replacement
-* **Shiro**: not support OAuth 2.0 
+* **Spring Web flow**: has been replaced by **Activiti**
+* **Shiro**: has been replaced by **Spring Security** 
 
-> You are a Chinese person, why did you write these documents in English instead of your mother tongue Chinese?
->
-> This is the most frequent questions asked by my classmates, my teachers and someone else.
->
-> There is only ONE reason for it:
->
-> I want to find a job in an international giant company such as Alibaba, Tencent (in China) and even Microsoft or Google (in the USA).
->
-> Maybe there is one day, I hand in my resume to HR of a company in Silicon Valley and then ... ...
+> **Java is the engine then Spring is the fuel**.
 
 ## 0x00 Documents
 

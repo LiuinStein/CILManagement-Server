@@ -17,29 +17,4 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!-- make controller return JSONObject directly -->
-    <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-        <!--<property name="objectMapper">-->
-            <!--<bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
-                <!--<property name="dateFormat">-->
-                    <!--<bean class="java.text.SimpleDateFormat">-->
-                        <!--<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>-->
-                    <!--</bean>-->
-                <!--</property>-->
-            <!--</bean>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <!-- Spring Security -->
-    <!--<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>-->
-    <!--<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">-->
-        <!--<property name="tokenStore" ref="tokenStore"/>-->
-        <!--<property name="supportRefreshToken" value="true"/>-->
-        <!--&lt;!&ndash;<property name="clientDetailsService" ref="clientDetailsService"/>&ndash;&gt;-->
-    <!--</bean>-->
-    <!--<bean id="clinetAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"/>-->
-    <!--<bean id="accessDeniedHandler" class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>-->
-    <!--<bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.DefaultUserApprovalHandler"/>-->
-
-
 </beans>
