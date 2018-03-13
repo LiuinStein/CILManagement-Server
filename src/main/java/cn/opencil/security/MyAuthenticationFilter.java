@@ -18,7 +18,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
     @Override
     protected String obtainPassword(HttpServletRequest request) {
         if ("application/json".equals(request.getHeader("Content-Type"))) {
-            return userId.toString();
+            return password;
         }
         return super.obtainPassword(request);
     }
@@ -26,7 +26,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
     @Override
     protected String obtainUsername(HttpServletRequest request) {
         if ("application/json".equals(request.getHeader("Content-Type"))) {
-            return password;
+            return userId.toString();
         }
         return super.obtainUsername(request);
     }

@@ -21,6 +21,6 @@ public class MyRBACUserService implements RBACUserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // get user form database
-        return userMapper.getUserByUserId(15110506001L);
+        return userMapper.getUserByUserId(Long.parseLong(username));
     }
 }

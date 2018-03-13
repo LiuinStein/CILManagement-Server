@@ -15,6 +15,7 @@ TRUNCATE TABLE `cil_management`.`t_rbac_user`;
 TRUNCATE TABLE `cil_management`.`t_rbac_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_user_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_permission`;
+TRUNCATE TABLE `cil_management`.`t_rbac_role_permission`;
 
 -- --------------------------- example users --------------------------------
 -- all example default password is 666666
@@ -38,11 +39,7 @@ INSERT INTO `cil_management`.`t_rbac_user_role` (`id`, `user_id`, `role_id`) VAL
 -- --------------------------- example permissions --------------------------
 INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (1, 'Sign in', '/v1/user/session', 2);
 INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (2, 'Sign out', '/v1/user/session/', 5);
-
-# INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (1, 'Sign in');
-# INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (2, 'Account');
-# INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (3, 'Personal Information');
-# INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (4, 'Password');
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (3, 'Sign up', '/v1/user/', 2);
 
 # -- --------------------------- example role's permissions -------------------
 INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permission_id`) VALUE (1, 1, 1);
@@ -53,22 +50,6 @@ INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permissi
 INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permission_id`) VALUE (6, 3, 2);
 INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permission_id`) VALUE (7, 4, 1);
 INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permission_id`) VALUE (8, 4, 2);
-
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (1, 1, 1, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (2, 1, 2, '666');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (3, 1, 3, '666');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (4, 1, 4, '622');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (5, 2, 1, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (6, 2, 2, '444');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (7, 2, 3, '664');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (8, 2, 4, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (9, 3, 1, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (10, 3, 2, '444');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (11, 3, 3, '664');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (12, 3, 4, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (13, 4, 1, '600');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (14, 4, 2, '444');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (15, 4, 3, '644');
-# INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`, `code`) VALUE (16, 4, 4, '600');
+INSERT INTO `cil_management`.`t_rbac_role_permission`(`id`, `role_id`, `permission_id`) VALUE (9, 1, 3);
 
 
