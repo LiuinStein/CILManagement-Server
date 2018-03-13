@@ -7,7 +7,7 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <http auto-config="false" create-session="stateless" entry-point-ref="restAuthenticationEntryPoint">
+    <http auto-config="false" create-session="always" entry-point-ref="restAuthenticationEntryPoint">
 
         <!-- The tag <form-login > will also add a FORM_LOGIN_FILTER  -->
         <!-- So do NOT use it combined with a <custom-filter > that has a position in FORM_LOGIN_FILTER -->
@@ -42,8 +42,6 @@
         <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
         <beans:property name="authenticationSuccessHandler" ref="mySuccessHandle"/>
         <beans:property name="authenticationFailureHandler" ref="myFailureHandle"/>
-        <beans:property name="usernameParameter" value="username"/>
-        <beans:property name="passwordParameter" value="password"/>
     </beans:bean>
 
     <beans:bean id="restAuthenticationEntryPoint" class="cn.opencil.security.MyAuthenticationEntryPoint"/>
