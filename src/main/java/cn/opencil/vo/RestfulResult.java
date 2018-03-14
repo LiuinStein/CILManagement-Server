@@ -1,14 +1,14 @@
 package cn.opencil.vo;
 
-import java.util.ArrayList;
+import java.util.Map;
 
-public class RestfulResult<T> {
+public class RestfulResult {
 
     private long code;
     private String message;
-    private ArrayList<T> data;
+    private Map<String, Object> data;
 
-    public RestfulResult(long code, String message, ArrayList<T> data) {
+    public RestfulResult(long code, String message, Map<String, Object> data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -34,7 +34,7 @@ public class RestfulResult<T> {
         return data;
     }
 
-    public void setData(ArrayList<T> data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 }

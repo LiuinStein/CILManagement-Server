@@ -26,7 +26,7 @@ public class RBACPermissionRole {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "anonymous" : name;
     }
 
     public void setName(String name) {

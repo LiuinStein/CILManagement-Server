@@ -16,6 +16,10 @@
         <!--authentication-success-handler-ref="mySuccessHandle"-->
         <!--authentication-failure-handler-ref="myFailureHandle"/>-->
 
+        <session-management>
+            <concurrency-control max-sessions="1"/>
+        </session-management>
+
         <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
         <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
 

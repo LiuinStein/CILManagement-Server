@@ -56,9 +56,9 @@ JSON-Formatting
 {
     "code": 0,
     "message": "something was happened",
-    "data": [
+    "data": {
         
-    ]
+    }
 }
 ```
 
@@ -106,14 +106,6 @@ HTTP/1.1 403 Forbidden
 HTTP/1.1 500 INTERNAL SERVER ERROR
 ```
 
-**Error message (MAY BE returned only when status code is like `4xx`):**
-
-```json
-{
-  "error": "Some Error messages"
-}
-```
-
 ### 0x01 Personnel Management
 
 #### 0x00 Sign in 
@@ -137,6 +129,16 @@ Sign in success:
 
 ```http
 HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        
+    }
+}
 ```
 
 Account doesn't exist:
