@@ -58,7 +58,7 @@ public class RestfulResult {
      * I wrote this only for Spring Security Authorization Handle Response
      * You can use Spring REST in your SpringMVC project to transfer this to XML instead of using this method
      *
-     * @return an empty string
+     * @return a XML String converted from this object
      */
     public String toXmlString() {
         StringBuilder result = new StringBuilder(200);
