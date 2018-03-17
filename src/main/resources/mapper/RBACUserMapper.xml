@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.opencil.mapper.RBACUserMapper">
+    <select id="getUserByUserId" resultType="cn.opencil.po.RBACUser" parameterType="java.lang.Long">
+        SELECT
+            A.id,
+            A.password,
+            A.enabled,
+            C.name AS 'role'
+        FROM
+            t_rbac_user AS A
+            LEFT JOIN t_rbac_user_role AS B
+                ON A.id = B.user_id
+            LEFT JOIN t_rbac_role AS C
+                ON B.role_id = C.id
+        WHERE
+            A.id = #{id}
+    </select>
+</mapper>

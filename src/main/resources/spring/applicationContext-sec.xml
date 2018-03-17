@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <http auto-config="false" create-session="always" entry-point-ref="restAuthenticationEntryPoint">
+
+        <!-- The tag <form-login > will also add a FORM_LOGIN_FILTER  -->
+        <!-- So do NOT use it combined with a <custom-filter > that has a position in FORM_LOGIN_FILTER -->
+        <!-- and MAKE SURE the auto-config is false -->
+        <!--<form-login login-processing-url="/v1/user/session"-->
+        <!--authentication-success-handler-ref="mySuccessHandle"-->
+        <!--authentication-failure-handler-ref="myFailureHandle"/>-->
+
+        <session-management>
+            <concurrency-control max-sessions="1"/>
+        </session-management>
+
+        <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+
+        <csrf disabled="true"/>
+
+    </http>
+
+    <!-- securityFilter before FILTER_SECURITY_INTERCEPTOR -->
+    <beans:bean id="securityFilter" class="cn.opencil.security.SecurityFilter">
+        <!-- all of the permissions that user has -->
+        <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
+        <!-- check if the user has permissions to access this resource -->
+        <beans:property name="accessDecisionManager" ref="myAccessDecisionManager"/>
+        <!-- define the relationship between resources & permissions -->
+        <beans:property name="securityMetadataSource" ref="mySecurityMetadataSource"/>
+    </beans:bean>
+
+    <beans:bean id="myAccessDecisionManager" class="cn.opencil.security.MyAccessDecisionManager"/>
+    <beans:bean id="mySecurityMetadataSource" class="cn.opencil.security.MySecurityMetadataSource"/>
+
+    <!-- myAuthenticationFilter in position FORM_LOGIN_FILTER -->
+    <beans:bean id="myAuthenticationFilter" class="cn.opencil.security.MyAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="authenticationSuccessHandler" ref="mySuccessHandle"/>
+        <beans:property name="authenticationFailureHandler" ref="myFailureHandle"/>
+    </beans:bean>
+
+    <beans:bean id="restAuthenticationEntryPoint" class="cn.opencil.security.MyAuthenticationEntryPoint"/>
+    <beans:bean id="mySuccessHandle" class="cn.opencil.security.MySuccessHandle"/>
+    <beans:bean id="myFailureHandle" class="cn.opencil.security.MyFailureHandle"/>
+
+    <!-- Authentication Manager -->
+    <authentication-manager alias="myAuthenticationManager">
+        <!-- access control -->
+        <authentication-provider user-service-ref="myRBACUserService">
+            <password-encoder ref="bCryptEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="myRBACUserService" class="cn.opencil.service.implementation.MyRBACUserService"/>
+
+    <!-- BCrypt password encoder -->
+    <beans:bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
+
+
+</beans:beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.opencil.mapper.RBACPermissionRoleMapper">
+    
+    <resultMap id="permissionRoleList" type="cn.opencil.po.RBACPermissionRole">
+        <result column="uri" property="url"/>
+        <result column="method" property="method"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    
+    <select id="getPermissionRoleMapper" resultMap="permissionRoleList">
+        SELECT
+            A.uri,
+            A.method,
+            C.name
+        FROM
+            t_rbac_permission AS A
+            LEFT JOIN t_rbac_role_permission AS B
+                ON B.permission_id = A.id
+            LEFT JOIN t_rbac_role AS C
+                ON B.role_id = C.id
+    </select>
+</mapper>
