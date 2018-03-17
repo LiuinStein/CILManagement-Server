@@ -2,9 +2,12 @@
 
 This program splits into 3 sub-systems and N sub-functions:
 
+- Permission management (only for administer)
+  - grant&revoke permission to/from roles
+  - set&unset role to users  
 - Personnel management
-  - Sign in
-  - Sign up
+  - sign in
+  - sign up
   - delete an account
   - store & modify member's info
   - administer initialize password

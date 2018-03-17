@@ -1,20 +1,18 @@
 package cn.opencil.vo;
 
-import com.google.gson.GsonBuilder;
+import com.shaoqunliu.rest.AbstractRestfulResult;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class RestfulResult {
+public class RestfulResult extends AbstractRestfulResult {
 
     private long code;
     private String message;
-    private Map<String, Object> data;
 
     public RestfulResult(long code, String message, Map<String, Object> data) {
+        super(data);
         this.code = code;
         this.message = message;
-        this.data = data == null ? new HashMap<>() : data;
     }
 
     public long getCode() {
@@ -33,24 +31,6 @@ public class RestfulResult {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Map<String, Object> data) {
-        this.data = data == null ? new HashMap<>() : data;
-    }
-
-    /**
-     * Transfer this object to a JSON String
-     *
-     * @return a JSON String converted from this object
-     * @apiNote require com.google.gson dependency
-     */
-    public String toJsonString() {
-        return new GsonBuilder().enableComplexMapKeySerialization().create().toJson(this);
-    }
-
     /**
      * Transfer this object to an XML String
      * it only provides limited ability to XML transformation.
@@ -61,18 +41,10 @@ public class RestfulResult {
      * @return a XML String converted from this object
      */
     public String toXmlString() {
-        StringBuilder result = new StringBuilder(200);
-        result.append("<RestfulResult>")
-                .append("<code>").append(code).append("</code>")
-                .append("<message>").append(message).append("</message>")
-                .append("<data>");
-        for (String key : data.keySet()) {
-            result.append("<").append(key).append(">")
-                    .append(data.get(key).toString())
-                    .append("</").append(key).append(">");
-        }
-        result.append("</data>")
-                .append("</RestfulResult>");
-        return result.toString();
+        return "<RestfulResult>" +
+                "<code>" + code + "</code>" +
+                "<message>" + message + "</message>" +
+                toXmlString("data") +
+                "</RestfulResult>";
     }
 }
