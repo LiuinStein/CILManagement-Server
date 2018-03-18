@@ -9,10 +9,13 @@ Related technologies:
 * **Spring MVC** for web MVC
 * **Spring Rest** for view object Restful presentation
 * **Spring Security** for access control & authorization
+* **Spring Session** for distributed session management
+* **Redis** for the memory storage of session 
 * **MyBatis**+**DBCP**+**MySQL** for database persistence
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel
 * **Fast Json (made by Alibaba)** for Json parser
+* **Gson (made by Google)** for Json-Object transition
 * **JQuery** & **Ajax** for front-end & data transmission
 * **JUnit** for test
 * **Maven** for package management

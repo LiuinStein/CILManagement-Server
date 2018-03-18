@@ -4,13 +4,7 @@ This file maintains two tables of the usage of sessions & cookies.
 
 ### 0x01 Session
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
-|      |      |             |
-|      |      |             |
-
-
+**The session was only used by Spring Security!**
 
 ### 0x02 Cookie
 
