@@ -2,13 +2,21 @@
 
 Here is the client request and the server response agreements and examples of Json-API.
 
-The design of Json API comply with **Restful API standard**. 
+The design of Json API comply with **Rest API standard**.
 
 We **only support JSON-formatted request data**, meanwhile, we **both support JSON-formatted and XML-formatted response data**, which one will be responded depends on your request header property `Accept`. In this introduction, we only use the JSON-formatted response data as an example.
 
 I just consult the tutorial of Restful API, in some case, **I didn't strictly abide by this standard**, for example, I didn't add the user-id or username to the URI, I don't like this design, truly, I think the user-id or username should be a part of input data and I do it in my code. 
 
+For a Restful API design, the request should be **stateless**, that means each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server, all of the states is kept entirely on the client, so we can't use the session in server, but in this program, I use session (only for Spring Security to store security contexts), this violate one of the six basic guiding principles of REST, so **this API should NOT be named as a Restful API**, just a **Restful-like API**, O(∩_∩)O haha~
+
+In future design, we will consider the **OAuth2 or JWT** to replace the session and current authorization method. Meanwhile, this also one of the reasons for why I'm using the Spring Security instead of Shiro.
+
 > Reference:
+>
+> Guiding Principles of REST:
+>
+> https://restfulapi.net/
 >
 > Rest HTTP Methods:
 >
@@ -30,7 +38,7 @@ api.mgr.opencil.cn
 
 > DO NOT USE IP ADDRESS DIRECTLY IN ANY CASE!
 >
-> For more URLs information, please refer to the second part `0x01 URL Arrangement` of document `How-to-deploy.md`
+> For more URL arrangement information, look at the second part `0x01 URL Arrangement` of document `How-to-deploy.md`
 
 #### 0x01 Universal HTTP request headers:
 
@@ -72,13 +80,13 @@ XML-Formatting
 </RestfulResult>
 ```
 
-The names & meanings of this default fields
+The names and its meanings of this default fields
 
 * `code` integer: error code
   * 0 means success
   * non-zero integer means failure
 * `message` string: error message or server status message
-* `data` array: includes query result data  
+* `data` array: result data  
 
 #### 0x03 Universal default Error Response Code
 
@@ -135,9 +143,7 @@ HTTP/1.1 201 Created
 {
     "code": 0,
     "message": "",
-    "data": {
-        
-    }
+    "data": { }
 }
 ```
 
