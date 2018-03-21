@@ -16,7 +16,7 @@
         <!--authentication-success-handler-ref="mySuccessHandle"-->
         <!--authentication-failure-handler-ref="myFailureHandle"/>-->
 
-        <session-management>
+        <session-management session-fixation-protection="migrateSession">
             <concurrency-control max-sessions="1" session-registry-ref="sessionRegistry"/>
         </session-management>
 

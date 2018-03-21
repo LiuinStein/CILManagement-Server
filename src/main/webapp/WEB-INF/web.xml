@@ -14,6 +14,10 @@
         <param-value>classpath:spring/applicationContext*.xml</param-value>
     </context-param>
 
+    <session-config>
+        <session-timeout>15</session-timeout>
+    </session-config>
+
     <!-- start of SpringMVC context loader listener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
