@@ -30,7 +30,7 @@ In future design, we will consider the **OAuth2 or JWT** to replace the session 
 >
 > https://restfulapi.net/resource-naming/
 
-#### 0x00 Host URL:
+#### 0x00 Host URL
 
 ```
 api.mgr.opencil.cn
@@ -40,7 +40,7 @@ api.mgr.opencil.cn
 >
 > For more URL arrangement information, look at the second part `0x01 URL Arrangement` of document `How-to-deploy.md`
 
-#### 0x01 Universal HTTP request headers:
+#### 0x01 Universal HTTP request headers
 
 If you want the server to response the JSON-formatted data:
 

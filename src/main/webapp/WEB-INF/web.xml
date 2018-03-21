@@ -61,6 +61,19 @@
     </filter-mapping>
     <!-- end of forceUtf8Encoding filter -->
 
+    <!-- start of springSessionRepositoryFilter -->
+    <filter>
+        <filter-name>springSessionRepositoryFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSessionRepositoryFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <!-- end of springSessionRepositoryFilter -->
+
     <!-- start of springSecurityFilterChain filter -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

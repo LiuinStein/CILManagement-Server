@@ -10,7 +10,7 @@ Related technologies:
 * **Spring Rest** for view object Restful presentation
 * **Spring Security** for access control & authorization
 * **Spring Session** for distributed session management
-* **Redis** for the memory storage of session 
+* **Redis+lettuce** for the memory storage of session
 * **MyBatis**+**DBCP**+**MySQL** for database persistence
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel
@@ -26,6 +26,11 @@ Some technologies that have been considered, but not used:
 
 * **Spring Web flow**: has been replaced by **Activiti**
 * **Shiro**: has been replaced by **Spring Security** 
+
+Further development:
+
+* **Spring HATEOAS** for creating REST representations that follow the HATEOAS principle
+* **Spring Security for OAuth2** for OAuth2 authorization & get rid of the usage of session
 
 > **Java is the engine then Spring is the fuel**.
 

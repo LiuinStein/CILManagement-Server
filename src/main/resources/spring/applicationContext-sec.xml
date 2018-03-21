@@ -17,8 +17,10 @@
         <!--authentication-failure-handler-ref="myFailureHandle"/>-->
 
         <session-management>
-            <concurrency-control max-sessions="1"/>
+            <concurrency-control max-sessions="1" session-registry-ref="sessionRegistry"/>
         </session-management>
+
+        <remember-me services-ref="rememberMeServices"/>
 
         <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
         <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
@@ -61,6 +63,17 @@
     </authentication-manager>
 
     <beans:bean id="myRBACUserService" class="cn.opencil.service.implementation.MyRBACUserService"/>
+
+
+    <!-- Spring Session -->
+    <beans:bean id="rememberMeServices"
+                class="org.springframework.session.security.web.authentication.SpringSessionRememberMeServices"/>
+
+    <beans:bean id="sessionRegistry"
+                class="org.springframework.session.security.SpringSessionBackedSessionRegistry">
+        <beans:constructor-arg ref="sessionRepository"/>
+    </beans:bean>
+
 
     <!-- BCrypt password encoder -->
     <beans:bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
