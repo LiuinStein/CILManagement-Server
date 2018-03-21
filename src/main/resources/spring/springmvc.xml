@@ -17,4 +17,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <bean class="cn.opencil.exception.GlobalExceptionResolver"/>
+
 </beans>
