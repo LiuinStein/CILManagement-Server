@@ -20,28 +20,26 @@
     http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import resource="applicationContext-properties.xml"/>
+    <import resource="applicationContext-dao.xml"/>
 
-    <!-- data source configuration -->
-    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
-          destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-
-    <!-- SqlSessionFactoryBean -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!-- Spring transaction manager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="cn.opencil.po"/>
-        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
     </bean>
 
-    <!-- mybatis-spring mapper scanner -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="cn.opencil.mapper"/>
-    </bean>
+    <!-- Configure the transactions' propagation -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="loadUserByUsername" read-only="true"
+                       no-rollback-for="org.springframework.security.core.userdetails.UsernameNotFoundException"/>
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- Configure the class that take part in a transaction -->
+    <aop:config>
+        <aop:pointcut id="serviceMethod" expression="execution(* cn.opencil.service.implementation.*.* (..))"/>
+        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
+    </aop:config>
 
 </beans>
