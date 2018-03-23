@@ -18,9 +18,7 @@ public class MyFailureHandle implements AuthenticationFailureHandler {
         RestfulResult result = new RestfulResult(1, e.getMessage(), new HashMap<>());
         SecurityRestfulResponsePrinter responseHandle = new SecurityRestfulResponsePrinter();
         responseHandle.print(request, response, result);
-        // run to here when log in failed
-        if (e instanceof InternalAuthenticationServiceException) {
-            // an InternalAuthenticationServiceException will be threw when username is not existent
+        if (e instanceof UsernameNotFoundException) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

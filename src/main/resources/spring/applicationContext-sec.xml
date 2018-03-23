@@ -16,9 +16,11 @@
         <!--authentication-success-handler-ref="mySuccessHandle"-->
         <!--authentication-failure-handler-ref="myFailureHandle"/>-->
 
-        <session-management>
-            <concurrency-control max-sessions="1"/>
+        <session-management session-fixation-protection="migrateSession">
+            <concurrency-control max-sessions="1" session-registry-ref="sessionRegistry"/>
         </session-management>
+
+        <remember-me services-ref="rememberMeServices"/>
 
         <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
         <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
@@ -55,12 +57,32 @@
     <!-- Authentication Manager -->
     <authentication-manager alias="myAuthenticationManager">
         <!-- access control -->
-        <authentication-provider user-service-ref="myRBACUserService">
-            <password-encoder ref="bCryptEncoder"/>
-        </authentication-provider>
+        <!--<authentication-provider user-service-ref="myRBACUserService">-->
+        <!--<password-encoder ref="bCryptEncoder"/>-->
+        <!--</authentication-provider>-->
+        <authentication-provider ref="authenticationProvider"/>
     </authentication-manager>
 
+    <!-- Authentication Provider -->
+    <beans:bean id="authenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="hideUserNotFoundExceptions" value="false"/>
+        <beans:property name="userDetailsService" ref="myRBACUserService"/>
+        <beans:property name="passwordEncoder" ref="bCryptEncoder"/>
+    </beans:bean>
+
     <beans:bean id="myRBACUserService" class="cn.opencil.service.implementation.MyRBACUserService"/>
+
+
+    <!-- Spring Session -->
+    <beans:bean id="rememberMeServices"
+                class="org.springframework.session.security.web.authentication.SpringSessionRememberMeServices"/>
+
+    <beans:bean id="sessionRegistry"
+                class="org.springframework.session.security.SpringSessionBackedSessionRegistry">
+        <beans:constructor-arg ref="sessionRepository"/>
+    </beans:bean>
+
 
     <!-- BCrypt password encoder -->
     <beans:bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

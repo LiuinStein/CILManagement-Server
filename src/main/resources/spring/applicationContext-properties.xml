@@ -20,28 +20,15 @@
     http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import resource="applicationContext-properties.xml"/>
-
-    <!-- data source configuration -->
-    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
-          destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-
-    <!-- SqlSessionFactoryBean -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="cn.opencil.po"/>
-        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
-    </bean>
-
-    <!-- mybatis-spring mapper scanner -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="cn.opencil.mapper"/>
+    <!-- read configurations from jdbc.properties-->
+    <bean id="propertyConfiguration"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
     </bean>
 
 </beans>
