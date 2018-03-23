@@ -57,10 +57,19 @@
     <!-- Authentication Manager -->
     <authentication-manager alias="myAuthenticationManager">
         <!-- access control -->
-        <authentication-provider user-service-ref="myRBACUserService">
-            <password-encoder ref="bCryptEncoder"/>
-        </authentication-provider>
+        <!--<authentication-provider user-service-ref="myRBACUserService">-->
+        <!--<password-encoder ref="bCryptEncoder"/>-->
+        <!--</authentication-provider>-->
+        <authentication-provider ref="authenticationProvider"/>
     </authentication-manager>
+
+    <!-- Authentication Provider -->
+    <beans:bean id="authenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="hideUserNotFoundExceptions" value="false"/>
+        <beans:property name="userDetailsService" ref="myRBACUserService"/>
+        <beans:property name="passwordEncoder" ref="bCryptEncoder"/>
+    </beans:bean>
 
     <beans:bean id="myRBACUserService" class="cn.opencil.service.implementation.MyRBACUserService"/>
 
