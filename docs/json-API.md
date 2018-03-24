@@ -122,7 +122,7 @@ HTTP/1.1 500 INTERNAL SERVER ERROR
 POST /v1/user/session/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -131,9 +131,9 @@ POST /v1/user/session/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
-Sign in success:
+**Sign in success:**
 
 ```http
 HTTP/1.1 201 Created
@@ -142,21 +142,41 @@ HTTP/1.1 201 Created
 ```json
 {
     "code": 0,
-    "message": "",
-    "data": { }
+    "message": "log in success",
+    "data": {
+        "auth": "[admin]"
+    }
 }
 ```
 
-Account doesn't exist:
+The `auth` field of data is the permission of just logged-in user.
+
+**Account doesn't exist:**
 
 ```http
 HTTP/1.1 404 NOT FOUND
 ```
 
-Password error:
+```json
+{
+    "code": 1,
+    "message": "someone was not found.",
+    "data": {}
+}
+```
+
+**Password error:**
 
 ```http
 HTTP/1.1 401 Unauthorized
+```
+
+```json
+{
+    "code": 1,
+    "message": "Bad credentials",
+    "data": {}
+}
 ```
 
 #### 0x01 Sign out
@@ -165,11 +185,11 @@ HTTP/1.1 401 Unauthorized
 DELETE /v1/user/session/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 Nothing
 
-**Output:**
+##### Output
 
 ```http
 HTTP/1.1 204 NO CONTENT
@@ -181,7 +201,7 @@ HTTP/1.1 204 NO CONTENT
 POST /v1/user/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -195,7 +215,7 @@ POST /v1/user/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
 Sign up success:
 
@@ -209,7 +229,7 @@ HTTP/1.1 201 CREATED
 DELETE /v1/user/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -217,7 +237,7 @@ DELETE /v1/user/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
 Delete success:
 
@@ -231,7 +251,7 @@ HTTP/1.1 204 NO CONTENT
 PUT /v1/user/info/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -254,7 +274,7 @@ PUT /v1/user/info/ HTTP/1.1
 
 > The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -273,7 +293,7 @@ HTTP/1.1 403 Forbidden
 PUT /v1/user/password/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -282,7 +302,7 @@ PUT /v1/user/password/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -304,7 +324,7 @@ PATCH /v1/user/password/ HTTP/1.1
 
 > The default password is 666666.
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -312,7 +332,7 @@ PATCH /v1/user/password/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -332,7 +352,7 @@ HTTP/1.1 403 Forbidden
 GET /v1/user/info?mode={m}&condition={c}&value={v} HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 by user's id (only for exact query):
 
@@ -365,7 +385,7 @@ GET /v1/user/info?mode=summary&condition=identify&value=0  HTTP/1.1
 > | all        | id, name, gender, identify, department, enroll-time, exit-time, birthday, email, phone, achievement |
 > |            |                                          |
 
-**Output:**
+##### Output
 
 Query success & there is return data:
 

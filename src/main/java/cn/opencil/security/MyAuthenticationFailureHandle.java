@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class MyFailureHandle implements AuthenticationFailureHandler {
+public class MyAuthenticationFailureHandle implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         RestfulResult result = new RestfulResult(1, e.getMessage(), new HashMap<>());
