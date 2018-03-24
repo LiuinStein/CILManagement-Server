@@ -1,18 +1,24 @@
 package cn.opencil.vo;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.shaoqunliu.rest.AbstractRestfulResult;
 
 import java.util.Map;
 
+@JsonPropertyOrder({"code", "message", "data"})
 public class RestfulResult extends AbstractRestfulResult {
 
     private long code;
+    /**
+     * Make sure this value is not null
+     * If it is null, this field will be ignored by Spring @RestController at result json/xml String
+     */
     private String message;
 
     public RestfulResult(long code, String message, Map<String, Object> data) {
         super(data);
         this.code = code;
-        this.message = message;
+        this.message = message == null ? "" : message;
     }
 
     public long getCode() {
@@ -28,7 +34,7 @@ public class RestfulResult extends AbstractRestfulResult {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.message = message == null ? "" : message;
     }
 
     /**

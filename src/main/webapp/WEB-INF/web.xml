@@ -89,5 +89,15 @@
     </filter-mapping>
     <!-- end of springSecurityFilterChain filter -->
 
+    <!-- start of error control -->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/exception/</location>
+    </error-page>
+
+    <error-page>
+        <location>/error/</location>
+    </error-page>
+    <!-- end of error control -->
 
 </web-app>
