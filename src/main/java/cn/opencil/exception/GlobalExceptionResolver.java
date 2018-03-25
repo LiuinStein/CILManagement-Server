@@ -14,12 +14,13 @@ import java.util.HashMap;
 public class GlobalExceptionResolver implements HandlerExceptionResolver {
     /**
      * Resolve the exception form controller
-     * @param request http request
-     * @param response http response
-     * @param o the executed handler, or null if none chosen at the time of the exception (for example, if multipart resolution failed)
+     *
+     * @param request   http request
+     * @param response  http response
+     * @param o         the executed handler, or null if none chosen at the time of the exception (for example, if multipart resolution failed)
      * @param exception the exception that threw from controller
-     * @implNote https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/HandlerExceptionResolver.html
      * @return a new ModelAndView
+     * @implNote https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/HandlerExceptionResolver.html
      */
     @NotNull
     @Override
@@ -28,10 +29,15 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         if (exception instanceof SimpleException) {
             result.setCode(((SimpleException) exception).getCode());
         }
+        if (exception instanceof SimpleHttpException) {
+            response.setStatus(((SimpleHttpException) exception).getHttpStatusToReturn().value());
+        }
         try {
             if ("application/xml".equals(request.getHeader("Accept"))) {
+                response.setHeader("Content-Type","application/xml;charset=UTF-8");
                 response.getWriter().print(result.toXmlString());
             } else {
+                response.setHeader("Content-Type","application/json;charset=UTF-8");
                 response.getWriter().print(result.toJsonString());
             }
         } catch (IOException e) {

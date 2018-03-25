@@ -1,19 +1,32 @@
 package cn.opencil.controller.user;
 
 import cn.opencil.exception.SimpleException;
+import cn.opencil.exception.SimpleHttpException;
+import cn.opencil.po.RBACUser;
+import cn.opencil.service.RBACUserService;
 import cn.opencil.vo.RestfulResult;
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
+
+    private final RBACUserService userService;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserController(RBACUserService userService, BCryptPasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      * Sign up a new member
@@ -56,24 +69,49 @@ public class UserController {
     }
 
     /**
-     * Modify user's password
-     *
-     * @return
+     * Modify your own password
      */
     @RequestMapping(value = "/password/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult modifyPassword() {
-        return null;
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestfulResult modifyPassword(@RequestBody JSONObject input) throws SimpleHttpException {
+        Long username;
+        try {
+            username = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        } catch (NumberFormatException e) {
+            throw new SimpleHttpException(401, e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+
+        String oldPassword = input.getString("old_password");
+        String newPassword = input.getString("new_password");
+        if (oldPassword == null || newPassword == null) {
+            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
+        }
+
+        RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!passwordEncoder.matches(oldPassword, userDetails.getPassword())) {
+            throw new SimpleHttpException(403, "Old password error", HttpStatus.FORBIDDEN);
+        }
+        if (!userService.changeUserPassword(username, newPassword)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "Password has been changed!", new HashMap<>());
     }
 
     /**
      * For admin to initialize someone's password
-     * The default password is 666666
-     *
-     * @return
+     * The default password for everyone is 666666
      */
     @RequestMapping(value = "/password/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult initPassword() {
-        return null;
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestfulResult initPassword(@RequestBody JSONObject input) throws SimpleHttpException {
+        Long username = input.getLong("the-man-who-forgot-password");
+        if (username == null) {
+            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
+        }
+        if (!userService.changeUserPassword(username, "666666")) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "Password has been initialized!", new HashMap<>());
     }
 
 

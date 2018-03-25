@@ -17,4 +17,10 @@
         WHERE
             A.id = #{id}
     </select>
+
+    <update id="changePassword" parameterType="cn.opencil.po.RBACUser">
+        UPDATE t_rbac_user
+        SET password = #{password}
+        WHERE id = #{id}
+    </update>
 </mapper>

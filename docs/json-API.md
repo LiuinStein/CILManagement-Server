@@ -93,7 +93,7 @@ The names and its meanings of this default fields
 **Input invalid or type mismatched data:**
 
 ```http
-HTTP/1.1 400 INVALID REQUEST
+HTTP/1.1 400 BAD REQUEST
 ```
 
 **Session out of date or invalid, authorization failed, need re-login:**
