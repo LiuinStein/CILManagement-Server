@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Artifact version -->
         <junit.version>4.12</junit.version>
-        <activiti.version>5.22.0</activiti.version>
+        <activiti.version>6.0.0</activiti.version>
         <spring.version>5.0.4.RELEASE</spring.version>
         <spring.security.version>5.0.3.RELEASE</spring.security.version>
         <spring.security.oauth2.version>2.2.1.RELEASE</spring.security.oauth2.version>

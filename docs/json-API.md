@@ -233,7 +233,7 @@ DELETE /v1/user/ HTTP/1.1
 
 ```json
 {
-  "the-man-who-forgot-password":15110506001
+  "user-id-to-be-deleted":15110506001
 }
 ```
 
