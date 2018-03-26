@@ -64,7 +64,6 @@ CREATE TABLE `cil_management`.`t_personnel`  (
   `id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'member\'s id',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT 'member\'s name',
   `gender` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is male, 1 is female',
-  `identify` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is student, 1 is teacher, 2 is administer',
   `department` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'for student that is class id, for teacher that is college id',
   `enroll_time` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he join the lab',
   `exit_time` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he exit the lab, 1970-1-1 will be set if he didn\'t retire',

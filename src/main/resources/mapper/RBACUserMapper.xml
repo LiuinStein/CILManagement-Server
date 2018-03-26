@@ -23,4 +23,8 @@
         SET password = #{password}
         WHERE id = #{id}
     </update>
+
+    <insert id="addMember" parameterType="cn.opencil.po.RBACUser">
+        INSERT INTO t_rbac_user (id, password, enabled) VALUE (#{id}, #{password}, #{enabled})
+    </insert>
 </mapper>

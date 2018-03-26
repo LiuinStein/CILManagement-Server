@@ -13,6 +13,7 @@ Related technologies:
 * **AspectJ** for AOP and support to data source transaction
 * **Redis+lettuce** for the memory storage of session
 * **MyBatis**+**MySQL** for database persistence
+* **MyBatis Generator** for creating entities code
 * **Tomcat JDBC Pool** for database connection pooling
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel

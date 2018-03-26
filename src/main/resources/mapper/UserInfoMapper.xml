@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.UserInfoMapper">
+    <insert id="addMember" parameterType="cn.opencil.po.UserInfo">
+        INSERT INTO t_personnel(
+        id, name, gender, department, enroll_time
+        <if test="exitTime != null">
+            , exit_time
+        </if>
+        <if test="birthday != null">
+            , birthday
+        </if>
+        <if test="email != null">
+            , email
+        </if>
+        <if test="phone != null">
+            , phone
+        </if>
+        <if test="achievement != null">
+            , achievement
+        </if>
+        ) VALUE (
+        #{id}, #{name}, #{gender}, #{department}, #{enrollTime}
+        <if test="exitTime != null">
+            , #{exitTime}
+        </if>
+        <if test="birthday != null">
+            , #{birthday}
+        </if>
+        <if test="email != null">
+            , #{email}
+        </if>
+        <if test="phone != null">
+            , #{phone}
+        </if>
+        <if test="achievement != null">
+            , #{achievement}
+        </if>
+        )
+    </insert>
+</mapper>

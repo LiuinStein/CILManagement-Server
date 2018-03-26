@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * for t_rbac_user table
@@ -76,6 +75,6 @@ public class RBACUser implements UserDetails {
 //    }
 
     public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+        this.enabled = enabled == null ? false : enabled;
     }
 }

@@ -114,6 +114,16 @@ HTTP/1.1 403 Forbidden
 HTTP/1.1 500 INTERNAL SERVER ERROR
 ```
 
+#### 0x04 Data formatting contract
+
+The pure date:
+
+> `yyyy-MM-dd` for example: 1997-10-21
+
+The date-time:
+
+> `yyyy-MM-dd HH:mm:ss` for example: 1997-10-21 15:06:33
+
 ### 0x01 Personnel Management
 
 #### 0x00 Sign in 
@@ -208,12 +218,17 @@ POST /v1/user/ HTTP/1.1
   "id":15110506001,
   "name":"Jack Ma",
   "password":"666666",
+  "enabled":true,
   "gender":0,
-  "identify":0,
+  "role":1,
   "department":1,
   "enroll_time":"2018-2-22"
 }
 ```
+
+> The above is the minimal input data set.
+>
+> For more fields that you want to set when you sign up, 
 
 ##### Output
 

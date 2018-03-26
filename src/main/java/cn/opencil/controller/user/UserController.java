@@ -1,8 +1,9 @@
 package cn.opencil.controller.user;
 
-import cn.opencil.exception.SimpleException;
 import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.RBACUser;
+import cn.opencil.po.RBACUserRole;
+import cn.opencil.po.UserInfo;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
@@ -30,14 +31,24 @@ public class UserController {
 
     /**
      * Sign up a new member
-     *
-     * @throws SimpleException
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult register() throws SimpleException {
-        throw new SimpleException(22, "sss");
-//        Map<String, Object> test = new HashMap<>();
-//        return new RestfulResult(1, "hello", test);
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException {
+        RBACUser user = input.toJavaObject(RBACUser.class);
+        UserInfo info = input.toJavaObject(UserInfo.class);
+        RBACUserRole role = input.toJavaObject(RBACUserRole.class);
+        if (user.getId() == null || user.getPassword() == null ||
+                user.getPassword().length() < 6 || user.getUsername() == null ||
+                info.getName().equals("") || info.getGender() == null ||
+                info.getDepartment() == null || info.getEnrollTime() == null ||
+                role.getRoleId() == null) {
+            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
+        }
+        if (!userService.addMember(user, info, role)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "new member created", new HashMap<>());
     }
 
     /**
@@ -83,7 +94,7 @@ public class UserController {
 
         String oldPassword = input.getString("old_password");
         String newPassword = input.getString("new_password");
-        if (oldPassword == null || newPassword == null) {
+        if (oldPassword == null || newPassword == null || newPassword.length() < 6) {
             throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
         }
 
