@@ -14,6 +14,7 @@ Related technologies:
 * **Redis+lettuce** for the memory storage of session
 * **MyBatis**+**MySQL** for database persistence
 * **MyBatis Generator** for creating entities code
+* **Hibernate Validator** for data validation checking
 * **Tomcat JDBC Pool** for database connection pooling
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel
