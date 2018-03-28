@@ -5,8 +5,11 @@ import cn.opencil.po.RBACUser;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
 import cn.opencil.service.RBACUserService;
+import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
+import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,17 +37,10 @@ public class UserController {
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException {
-        RBACUser user = input.toJavaObject(RBACUser.class);
-        UserInfo info = input.toJavaObject(UserInfo.class);
-        RBACUserRole role = input.toJavaObject(RBACUserRole.class);
-        if (user.getId() == null || user.getPassword() == null ||
-                user.getPassword().length() < 6 || user.getUsername() == null ||
-                info.getName().equals("") || info.getGender() == null ||
-                info.getDepartment() == null || info.getEnrollTime() == null ||
-                role.getRoleId() == null) {
-            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
-        }
+    public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
+        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
+        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class);
+        RBACUserRole role = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
         if (!userService.addMember(user, info, role)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

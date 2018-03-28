@@ -1,8 +1,10 @@
 package cn.opencil.exception;
 
 import cn.opencil.vo.RestfulResult;
+import com.shaoqunliu.validation.ValidationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +33,9 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         }
         if (exception instanceof SimpleHttpException) {
             response.setStatus(((SimpleHttpException) exception).getHttpStatusToReturn().value());
+        }
+        if (exception instanceof ValidationException) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
         try {
             if ("application/xml".equals(request.getHeader("Accept"))) {

@@ -1,9 +1,13 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.RegisterValidation;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,9 +16,17 @@ import java.util.List;
  * for t_rbac_user table
  */
 public class RBACUser implements UserDetails {
+    @Positive
+    @NotNull(groups = {RegisterValidation.class})
     private Long id;
+
+    @NotNull(groups = {RegisterValidation.class})
+    @Size(min = 6, max = 20, groups = {RegisterValidation.class})
     private String password;
+
+    @NotNull(groups = {RegisterValidation.class})
     private Boolean enabled;
+
     private List<GrantedAuthority> authorities = new ArrayList<>();
 
     public void setRole(String role) {

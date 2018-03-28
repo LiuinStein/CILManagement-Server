@@ -1,26 +1,46 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.RegisterValidation;
+
+import javax.validation.constraints.*;
 import java.util.Date;
 
 public class UserInfo {
+    @Positive
+    @NotNull(groups = {RegisterValidation.class})
     private Long id;
 
+    @Size(max = 30)
+    @NotEmpty(groups = {RegisterValidation.class})
     private String name;
 
+    @Min(value = 0)
+    @Max(value = 1)
+    @NotNull(groups = {RegisterValidation.class})
     private Byte gender;
 
+    @Positive
+    @NotNull(groups = {RegisterValidation.class})
     private Integer department;
 
+    @Past
+    @NotNull(groups = {RegisterValidation.class})
     private Date enrollTime;
 
+    @Past
     private Date exitTime;
 
+    @Past
     private Date birthday;
 
+    @Email
+    @Size(max = 30)
     private String email;
 
+    @Size(max = 20)
     private String phone;
 
+    @Size(max = 400)
     private String achievement;
 
     public Long getId() {
