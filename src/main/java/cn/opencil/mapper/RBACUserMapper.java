@@ -8,4 +8,6 @@ public interface RBACUserMapper {
     Integer changePassword(RBACUser user);
 
     Integer addMember(RBACUser user);
+
+    Integer deleteMember(Long id);
 }

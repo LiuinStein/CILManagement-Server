@@ -27,4 +27,18 @@
     <insert id="addMember" parameterType="cn.opencil.po.RBACUser">
         INSERT INTO t_rbac_user (id, password, enabled) VALUE (#{id}, #{password}, #{enabled})
     </insert>
+
+    <delete id="deleteMember" parameterType="java.lang.Long">
+        DELETE
+        FROM
+            t_personnel,
+            t_rbac_user,
+            t_rbac_user_role USING t_personnel
+            INNER JOIN t_rbac_user
+            INNER JOIN t_rbac_user_role
+        WHERE
+            t_personnel.id = t_rbac_user.id AND
+            t_personnel.id = t_rbac_user_role.user_id AND
+            t_personnel.id = #{id}
+    </delete>
 </mapper>

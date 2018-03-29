@@ -54,4 +54,9 @@ public class MyRBACUserService implements RBACUserService {
                 infoMapper.addMember(info) == 1 &&
                 roleMapper.addMember(role) == 1;
     }
+
+    @Override
+    public boolean deleteMember(Long username) {
+        return userMapper.deleteMember(username) != 0;
+    }
 }

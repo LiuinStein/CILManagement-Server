@@ -4,6 +4,7 @@ import cn.opencil.vo.RestfulResult;
 import com.shaoqunliu.validation.ValidationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,12 +38,16 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         if (exception instanceof ValidationException) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
+        if (exception instanceof DataAccessException) {
+            result.setMessage("database access error");
+        }
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         try {
             if ("application/xml".equals(request.getHeader("Accept"))) {
-                response.setHeader("Content-Type","application/xml;charset=UTF-8");
+                response.setHeader("Content-Type", "application/xml;charset=UTF-8");
                 response.getWriter().print(result.toXmlString());
             } else {
-                response.setHeader("Content-Type","application/json;charset=UTF-8");
+                response.setHeader("Content-Type", "application/json;charset=UTF-8");
                 response.getWriter().print(result.toJsonString());
             }
         } catch (IOException e) {

@@ -248,7 +248,7 @@ DELETE /v1/user/ HTTP/1.1
 
 ```json
 {
-  "user-id-to-be-deleted":15110506001
+  "id":15110506001
 }
 ```
 

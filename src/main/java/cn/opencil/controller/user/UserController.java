@@ -49,10 +49,14 @@ public class UserController {
 
     /**
      * Delete a member
+     *
+     * Http status 204 doesn't have any response body, so make the function return void
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult deleteMember() {
-        return null;
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMember(@RequestBody JSONObject input) throws ValidationException {
+        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class));
+        userService.deleteMember(user.getId());
     }
 
     /**
