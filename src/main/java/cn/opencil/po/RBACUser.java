@@ -1,6 +1,7 @@
 package cn.opencil.po;
 
 import cn.opencil.validation.group.RegisterValidation;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

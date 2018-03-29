@@ -343,7 +343,7 @@ PATCH /v1/user/password/ HTTP/1.1
 
 ```json
 {
-  "the-man-who-forgot-password":15110506001
+  "id":15110506001
 }
 ```
 

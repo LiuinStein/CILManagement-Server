@@ -6,7 +6,7 @@ import cn.opencil.po.UserInfo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface RBACUserService extends UserDetailsService {
-    boolean changeUserPassword(Long username, String newPassword);
+    boolean changeUserPassword(RBACUser user);
     boolean addMember(RBACUser user, UserInfo info, RBACUserRole role);
-    boolean deleteMember(Long username);
+    void deleteMember(Long username);
 }

@@ -15,8 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
@@ -49,7 +51,6 @@ public class UserController {
 
     /**
      * Delete a member
-     *
      * Http status 204 doesn't have any response body, so make the function return void
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -84,27 +85,18 @@ public class UserController {
      */
     @RequestMapping(value = "/password/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyPassword(@RequestBody JSONObject input) throws SimpleHttpException {
-        Long username;
-        try {
-            username = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
-        } catch (NumberFormatException e) {
-            throw new SimpleHttpException(401, e.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
+    public RestfulResult modifyPassword(@RequestBody JSONObject input, HttpServletRequest request) throws SimpleHttpException, ValidationException {
         String oldPassword = input.getString("old_password");
-        String newPassword = input.getString("new_password");
-        if (oldPassword == null || newPassword == null || newPassword.length() < 6) {
-            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
-        }
-
         RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!passwordEncoder.matches(oldPassword, userDetails.getPassword())) {
+        if (oldPassword == null || !passwordEncoder.matches(oldPassword, userDetails.getPassword())) {
             throw new SimpleHttpException(403, "Old password error", HttpStatus.FORBIDDEN);
         }
-        if (!userService.changeUserPassword(username, newPassword)) {
+        userDetails.setPassword(input.getString("new_password"));
+        if (!userService.changeUserPassword(ValidationUtils.validate(userDetails))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        // must re-login after password changing, otherwise, replay attacks maybe occurred
+        new SecurityContextLogoutHandler().logout(request, null, SecurityContextHolder.getContext().getAuthentication());
         return new RestfulResult(0, "Password has been changed!", new HashMap<>());
     }
 
@@ -114,12 +106,10 @@ public class UserController {
      */
     @RequestMapping(value = "/password/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult initPassword(@RequestBody JSONObject input) throws SimpleHttpException {
-        Long username = input.getLong("the-man-who-forgot-password");
-        if (username == null) {
-            throw new SimpleHttpException(400, "invalid input data", HttpStatus.BAD_REQUEST);
-        }
-        if (!userService.changeUserPassword(username, "666666")) {
+    public RestfulResult initPassword(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
+        RBACUser user = input.toJavaObject(RBACUser.class);
+        user.setPassword("666666");
+        if (!userService.changeUserPassword(ValidationUtils.validate(user))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new RestfulResult(0, "Password has been initialized!", new HashMap<>());

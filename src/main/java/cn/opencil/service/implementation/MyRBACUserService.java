@@ -40,10 +40,8 @@ public class MyRBACUserService implements RBACUserService {
     }
 
     @Override
-    public boolean changeUserPassword(Long username, String newPassword) {
-        RBACUser user = new RBACUser();
-        user.setId(username);
-        user.setPassword(passwordEncoder.encode(newPassword));
+    public boolean changeUserPassword(RBACUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.changePassword(user) == 1;
     }
 
@@ -56,7 +54,7 @@ public class MyRBACUserService implements RBACUserService {
     }
 
     @Override
-    public boolean deleteMember(Long username) {
-        return userMapper.deleteMember(username) != 0;
+    public void deleteMember(Long username) {
+        userMapper.deleteMember(username);
     }
 }
