@@ -432,6 +432,24 @@ HTTP/1.1 404 NOT FOUND
 
 ### 0x02 Authorization Management
 
+#### 0x00 Grant some permissions to some role
+
+
+
+#### 0x01 Revoke permissions from some role
+
+
+
+#### 0x02 Assign a new role to somebody
+
+
+
+#### 0x03 Add a new role
+
+
+
+#### 0x04 delete a role
+
 
 
 ### 0x03 Project & Team Management
