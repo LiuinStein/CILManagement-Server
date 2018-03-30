@@ -1,5 +1,7 @@
 package cn.opencil.service;
 
-public interface UserInfoService {
+import cn.opencil.po.UserInfo;
 
+public interface UserInfoService {
+    boolean modifyUserInfo(UserInfo info);
 }

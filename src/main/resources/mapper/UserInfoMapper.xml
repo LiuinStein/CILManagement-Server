@@ -38,4 +38,38 @@
         </if>
         )
     </insert>
+
+    <update id="modifyInfo" parameterType="cn.opencil.po.UserInfo">
+        UPDATE t_personnel
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="department != null">
+                department = #{department},
+            </if>
+            <if test="enrollTime != null">
+                enroll_time = #{enrollTime},
+            </if>
+            <if test="exitTime != null">
+                exit_time = #{exitTime},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="achievement != null">
+                achievement = #{achievement}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

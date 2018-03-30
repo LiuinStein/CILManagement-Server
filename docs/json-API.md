@@ -275,9 +275,9 @@ PUT /v1/user/info/ HTTP/1.1
   "gender":0,
   "identify":0,
   "department":101,
-  "enroll_time":"2017-8-15",
-  "exit_time":"1970-1-1",
-  "birthday":"1997-1-1",
+  "enroll_time":"2017-08-15",
+  "exit_time":"1970-01-01",
+  "birthday":"1997-11-01",
   "email":"test@test.com",
   "phone":"13512345678",
   "achievement":"some achievements"

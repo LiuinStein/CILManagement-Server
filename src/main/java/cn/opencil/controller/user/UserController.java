@@ -5,6 +5,7 @@ import cn.opencil.po.RBACUser;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
 import cn.opencil.service.RBACUserService;
+import cn.opencil.service.UserInfoService;
 import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
@@ -26,11 +27,13 @@ import java.util.HashMap;
 public class UserController {
 
     private final RBACUserService userService;
+    private final UserInfoService infoService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(RBACUserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(RBACUserService userService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.infoService = infoService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -62,12 +65,24 @@ public class UserController {
 
     /**
      * Modify someone's personal information
-     *
-     * @return
      */
     @RequestMapping(value = "/info/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult modifyInfo() {
-        return null;
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestfulResult modifyInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class));
+        RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if ((info.getEnrollTime() != null || info.getExitTime() != null) && !userDetails.getAuthorities().toString().equals("[admin]")) {
+            // Only administers can modify the value of enroll_time&exit_time fields. If others submit that, it would be ignored.
+            info.setEnrollTime(null);
+            info.setExitTime(null);
+        }
+        if (!info.getId().equals(userDetails.getId()) && !userDetails.getAuthorities().toString().equals("[admin]")) {
+            throw new SimpleHttpException(401, "need administer privilege", HttpStatus.UNAUTHORIZED);
+        }
+        if (!infoService.modifyUserInfo(info)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "information has been changed!", new HashMap<>());
     }
 
     /**

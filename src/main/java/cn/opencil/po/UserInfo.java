@@ -1,5 +1,6 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.ModifyUserInfoValidation;
 import cn.opencil.validation.group.RegisterValidation;
 
 import javax.validation.constraints.*;
@@ -7,24 +8,35 @@ import java.util.Date;
 
 public class UserInfo {
     @Positive
-    @NotNull(groups = {RegisterValidation.class})
+    @NotNull(groups = {
+            RegisterValidation.class,
+            ModifyUserInfoValidation.class
+    })
     private Long id;
 
     @Size(max = 30)
-    @NotEmpty(groups = {RegisterValidation.class})
+    @NotEmpty(groups = {
+            RegisterValidation.class
+    })
     private String name;
 
     @Min(value = 0)
     @Max(value = 1)
-    @NotNull(groups = {RegisterValidation.class})
+    @NotNull(groups = {
+            RegisterValidation.class
+    })
     private Byte gender;
 
     @Positive
-    @NotNull(groups = {RegisterValidation.class})
+    @NotNull(groups = {
+            RegisterValidation.class
+    })
     private Integer department;
 
     @Past
-    @NotNull(groups = {RegisterValidation.class})
+    @NotNull(groups = {
+            RegisterValidation.class
+    })
     private Date enrollTime;
 
     @Past
