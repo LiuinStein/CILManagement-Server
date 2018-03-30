@@ -386,19 +386,13 @@ by user's department:
 GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 ```
 
-by user's identify:
-
-```http
-GET /v1/user/info?mode=summary&condition=identify&value=0  HTTP/1.1
-```
-
 > The mode field controls which data are returned.
 >
-> | When it is | Returned fields                          |
-> | ---------- | ---------------------------------------- |
-> | summary    | id, name, gender, identify, department   |
-> | all        | id, name, gender, identify, department, enroll-time, exit-time, birthday, email, phone, achievement |
-> |            |                                          |
+> | When it is | Returned fields                                              |
+> | ---------- | ------------------------------------------------------------ |
+> | summary    | id, name, gender, department                                 |
+> | all        | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
+> |            |                                                              |
 
 ##### Output
 
@@ -409,22 +403,24 @@ HTTP/1.1 200 OK
 ```
 ```json
 {
-  "users":[
-    {
-      "id":15110506001,
-      "name":"Jack Ma",
-      "gender":0,
-      "identify":0,
-      "department":101
-    },
-    {
-      "id":15110506002,
-      "name":"Pony Ma",
-      "gender":0,
-      "identify":0,
-      "department":201
-    }
-  ]
+  "code":0,
+  "message":"",
+  "data":{
+    "users":[
+      {
+        "id":15110506001,
+        "name":"Jack Ma",
+        "gender":0,
+        "department":101
+      },
+      {
+        "id":15110506002,
+        "name":"Pony Ma",
+        "gender":0,
+        "department":201
+      }
+    ]
+  }
 }
 ```
 
@@ -434,16 +430,24 @@ Query success but no matched person:
 HTTP/1.1 404 NOT FOUND
 ```
 
-
-### 0x02 Project & Team Management
-
+### 0x02 Authorization Management
 
 
 
-
-### 0x03 Resource & Usage Management
-
+### 0x03 Project & Team Management
 
 
 
+### 0x04 Resource & Usage Management
 
+
+
+### 0x05 Error code
+
+The error code for Json-API `code` field.
+
+| Code | Description                 |
+| :--: | :-------------------------- |
+|  0   | success                     |
+|  1   | universal server error code |
+|  2   | universal client error code |

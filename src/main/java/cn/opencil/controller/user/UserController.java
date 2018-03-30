@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -87,12 +88,42 @@ public class UserController {
 
     /**
      * Query someone's information by given condition
-     *
-     * @return
      */
-    @RequestMapping(value = "/info/", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public RestfulResult queryMemberInfo() {
-        return null;
+    @RequestMapping(value = "/info", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public RestfulResult queryMemberInfo(@RequestParam("mode") String mode, @RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+        UserInfo info = new UserInfo();
+        switch (condition.toLowerCase()) {
+            case "id":
+                info.setId(Long.parseLong(value));
+                break;
+            case "name":
+                info.setName(value);
+                break;
+            case "department":
+                info.setDepartment(Integer.parseInt(value));
+                break;
+            default:
+                throw new SimpleHttpException(2, "condition is not supported", HttpStatus.BAD_REQUEST);
+        }
+        info = ValidationUtils.validate(info);
+        List<UserInfo> result;
+        switch (mode.toLowerCase()) {
+            case "summary":
+                result = infoService.querySummaryUserInfo(info);
+                break;
+            case "all":
+                result = infoService.queryAllUserInfo(info);
+                break;
+            default:
+                result = null;
+        }
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "user not found", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("users", result);
+        return new RestfulResult(0, "", data);
     }
 
     /**

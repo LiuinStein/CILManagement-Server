@@ -24,9 +24,18 @@
     <bean id="mappingJackson2HttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes" value="application/json"/>
+        <property name="objectMapper">
+            <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                <property name="serializationInclusion">
+                    <!-- exclude null value at the return json data -->
+                    <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+                </property>
+            </bean>
+        </property>
     </bean>
 
-    <bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter">
+    <bean id="xmlMessageConverter"
+          class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter">
         <property name="supportedMediaTypes" value="application/xml"/>
     </bean>
 

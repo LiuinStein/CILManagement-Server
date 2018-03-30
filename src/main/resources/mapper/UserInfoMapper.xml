@@ -4,40 +4,36 @@
     <insert id="addMember" parameterType="cn.opencil.po.UserInfo">
         INSERT INTO t_personnel(
         id, name, gender, department, enroll_time
-        <if test="exitTime != null">
-            , exit_time
-        </if>
-        <if test="birthday != null">
-            , birthday
-        </if>
-        <if test="email != null">
-            , email
-        </if>
-        <if test="phone != null">
-            , phone
-        </if>
-        <if test="achievement != null">
-            , achievement
-        </if>
+        <include refid="insertAdditionalOption">
+            <property name="prefix" value=""/>
+            <property name="suffix" value=""/>
+        </include>
         ) VALUE (
         #{id}, #{name}, #{gender}, #{department}, #{enrollTime}
-        <if test="exitTime != null">
-            , #{exitTime}
-        </if>
-        <if test="birthday != null">
-            , #{birthday}
-        </if>
-        <if test="email != null">
-            , #{email}
-        </if>
-        <if test="phone != null">
-            , #{phone}
-        </if>
-        <if test="achievement != null">
-            , #{achievement}
-        </if>
+        <include refid="insertAdditionalOption">
+            <property name="prefix" value="#{"/>
+            <property name="suffix" value="}"/>
+        </include>
         )
     </insert>
+
+    <sql id="insertAdditionalOption">
+        <if test="exitTime != null">
+            , ${prefix}exit_time${suffix}
+        </if>
+        <if test="birthday != null">
+            , ${prefix}birthday${suffix}
+        </if>
+        <if test="email != null">
+            , ${prefix}email${suffix}
+        </if>
+        <if test="phone != null">
+            , ${prefix}phone${suffix}
+        </if>
+        <if test="achievement != null">
+            , ${prefix}achievement${suffix}
+        </if>
+    </sql>
 
     <update id="modifyInfo" parameterType="cn.opencil.po.UserInfo">
         UPDATE t_personnel
@@ -72,4 +68,56 @@
         </set>
         WHERE id = #{id}
     </update>
+
+
+    <!-- SQL SECURITY WARNING
+    Use WHERE key word directly instead of mybatis <where> tag
+    due to if hacker bypass the controller verify and pass all null object here,
+    <where> tag will automatically deleted by mybatis and then return all data
+    but empty WHERE statement will cause a SQL syntax error
+    -->
+    <select id="querySummaryInfo" parameterType="cn.opencil.po.UserInfo" resultMap="userInfo">
+        SELECT
+          <include refid="queryBasicOption"/>
+        FROM t_personnel
+        WHERE
+          <include refid="queryWhereOption"/>
+    </select>
+
+    <!-- For security concern, do not use * on SELECT statement -->
+    <select id="queryAllInfo" parameterType="cn.opencil.po.UserInfo" resultMap="userInfo">
+        SELECT
+          <include refid="queryBasicOption"/>
+          <include refid="queryAddtionalOption"/>
+        FROM t_personnel
+        WHERE
+          <include refid="queryWhereOption"/>
+    </select>
+
+    <resultMap id="userInfo" type="cn.opencil.po.UserInfo"/>
+
+    <sql id="queryBasicOption">
+        id, name, gender, department
+    </sql>
+
+    <sql id="queryAddtionalOption">
+        , enroll_time, exit_time, birthday, email, phone, achievement
+    </sql>
+
+    <sql id="queryWhereOption">
+        <choose>
+            <when test="id != null">
+                id = #{id}
+            </when>
+            <when test="name != null">
+                name = #{name}
+            </when>
+            <when test="department != null">
+                department = #{department}
+            </when>
+            <otherwise>
+                1 = 2
+            </otherwise>
+        </choose>
+    </sql>
 </mapper>

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,19 +30,21 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @Nullable Object o, @NotNull Exception exception) {
         RestfulResult result = new RestfulResult(1, exception.getMessage(), new HashMap<>());
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         if (exception instanceof SimpleException) {
             result.setCode(((SimpleException) exception).getCode());
         }
         if (exception instanceof SimpleHttpException) {
             response.setStatus(((SimpleHttpException) exception).getHttpStatusToReturn().value());
         }
-        if (exception instanceof ValidationException) {
+        if (exception instanceof ValidationException ||
+                exception instanceof ServletRequestBindingException ||
+                exception instanceof IllegalArgumentException) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
         if (exception instanceof DataAccessException) {
             result.setMessage("database access error");
         }
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         try {
             if ("application/xml".equals(request.getHeader("Accept"))) {
                 response.setHeader("Content-Type", "application/xml;charset=UTF-8");
