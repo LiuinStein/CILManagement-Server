@@ -6,6 +6,7 @@ import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.service.UserInfoService;
+import cn.opencil.validation.group.NotNullUserIdValidation;
 import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
@@ -78,7 +79,7 @@ public class UserController {
             info.setExitTime(null);
         }
         if (!info.getId().equals(userDetails.getId()) && !userDetails.getAuthorities().toString().equals("[admin]")) {
-            throw new SimpleHttpException(401, "need administer privilege", HttpStatus.UNAUTHORIZED);
+            throw new SimpleHttpException(403, "need administer privilege", HttpStatus.FORBIDDEN);
         }
         if (!infoService.modifyUserInfo(info)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -161,5 +162,18 @@ public class UserController {
         return new RestfulResult(0, "Password has been initialized!", new HashMap<>());
     }
 
+    /**
+     * Disable an account (set the enabled flag to false)
+     * The disabled user can not log in and do any jobs
+     */
+    @RequestMapping(value = "/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestfulResult disableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
+        if (!userService.enableOrDisableUser(user)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "Account has been " + (user.isEnabled() ? "enabled" : "disabled") + "!", new HashMap<>());
+    }
 
 }

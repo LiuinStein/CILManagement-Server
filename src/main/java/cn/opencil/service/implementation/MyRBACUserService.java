@@ -54,6 +54,11 @@ public class MyRBACUserService implements RBACUserService {
     }
 
     @Override
+    public boolean enableOrDisableUser(RBACUser user) {
+        return userMapper.enableOrDisableUser(user) == 1;
+    }
+
+    @Override
     public void deleteMember(Long username) {
         userMapper.deleteMember(username);
     }

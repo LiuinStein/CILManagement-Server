@@ -45,7 +45,20 @@ INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
   VALUE (1, 'Sign in', '/v1/user/session', 2);
 INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
   VALUE (2, 'Sign out', '/v1/user/session/', 5);
-INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`) VALUE (3, 'Sign up', '/v1/user/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (3, 'Sign up', '/v1/user/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (4, 'Delete an account', '/v1/user/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (5, 'Modify member\'s info', '/v1/user/info/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (6, 'Modify password', '/v1/user/password/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (7, 'Initialize password', '/v1/user/password/', 4);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (8, 'Query member\'s info', '/v1/user/info', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (9, 'Enable or disable an account', '/v1/user/', 4);
 
 -- --------------------------- example role's permissions -------------------
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (1, 1, 1);

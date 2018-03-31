@@ -24,6 +24,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="enableOrDisableUser" parameterType="cn.opencil.po.RBACUser">
+        UPDATE t_rbac_user
+        SET enabled = #{enabled}
+        WHERE id = #{id}
+    </update>
+
     <insert id="addMember" parameterType="cn.opencil.po.RBACUser">
         INSERT INTO t_rbac_user (id, password, enabled) VALUE (#{id}, #{password}, #{enabled})
     </insert>

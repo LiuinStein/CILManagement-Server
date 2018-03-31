@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +37,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         }
         if (exception instanceof SimpleHttpException) {
             response.setStatus(((SimpleHttpException) exception).getHttpStatusToReturn().value());
+        }
+        if (exception instanceof HttpRequestMethodNotSupportedException) {
+            result.setCode(405);
+            response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
         }
         if (exception instanceof ValidationException ||
                 exception instanceof ServletRequestBindingException ||

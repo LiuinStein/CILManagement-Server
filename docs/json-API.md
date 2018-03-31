@@ -102,7 +102,7 @@ HTTP/1.1 400 BAD REQUEST
 HTTP/1.1 401 Unauthorized
 ```
 
-**Operators has no authority to do this:**
+**Higher permission required:**
 
 ```http
 HTTP/1.1 403 Forbidden
@@ -430,25 +430,195 @@ Query success but no matched person:
 HTTP/1.1 404 NOT FOUND
 ```
 
+#### 0x08 Enable/Disable an account
+
+```http
+PATCH /v1/user/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":15110506001,
+  "enabled":false
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 CREATED
+```
+
+
+
 ### 0x02 Authorization Management
 
 #### 0x00 Grant some permissions to some role
+
+```http
+PUT /v1/auth/role/permission HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1,
+  "permission":1
+}
+```
+
+> The role `administer` or `admin` have the superior permission, anyone can't grant or revoke permissions to or form him.
+
+##### Output
+
+Grant permission success
+
+```http
+HTTP/1.1 201 CREATED
+```
 
 
 
 #### 0x01 Revoke permissions from some role
 
+```http
+DELETE /v1/auth/role/permission HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1,
+  "permission":1
+}
+```
+
+> The role `administer` have the superior permission, anyone can't grant or revoke permissions to or form him.
+
+##### Output
+
+Revoke permission success
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
 
 
 #### 0x02 Assign a new role to somebody
 
+```http
+
+```
+
+##### Input
+
+```json
+
+```
 
 
-#### 0x03 Add a new role
+
+##### Output
+
+```json
+
+```
 
 
 
-#### 0x04 delete a role
+#### 0x03 Take back a role from someone
+
+```http
+
+```
+
+##### Input
+
+```json
+
+```
+
+
+
+##### Output
+
+```json
+
+```
+
+
+
+#### 0x04 Add a new role
+
+```http
+POST /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "name":"some role"
+}
+```
+
+##### Output
+
+Role add successfully
+
+```http
+HTTP/1.1 201 Created
+```
+
+#### 0x05 Delete a role
+
+```http
+DELETE /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1
+}
+```
+
+##### Output
+
+Role delete successfully
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x05 Rename a role
+
+```http
+PUT /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1,
+  "name":"other name"
+}
+```
+
+##### Output
+
+Rename successfully
+
+```http
+HTTP/1.1 201 Created
+```
 
 
 

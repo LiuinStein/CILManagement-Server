@@ -10,4 +10,6 @@ public interface RBACUserMapper {
     Integer addMember(RBACUser user);
 
     Integer deleteMember(Long id);
+
+    Integer enableOrDisableUser(RBACUser user);
 }
