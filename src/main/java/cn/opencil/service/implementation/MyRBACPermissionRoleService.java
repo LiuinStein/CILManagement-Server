@@ -44,4 +44,9 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
         // no need for refresh role-permission table here
         return permissionRoleMapper.addRole(permissionRole) == 1;
     }
+
+    @Override
+    public void deleteRole(RBACPermissionRole permissionRole) {
+        permissionRoleMapper.deleteRole(permissionRole.getRoleId());
+    }
 }

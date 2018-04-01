@@ -1,5 +1,6 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
 import cn.opencil.validation.group.RoleOperationValidation;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -35,7 +36,8 @@ public class RBACPermissionRole {
 
     @Positive
     @NotNull(groups = {
-            PermissionRoleIdVaildation.class
+            PermissionRoleIdVaildation.class,
+            NotNullRoleIdValidation.class
     })
     @JSONField(name = "role")
     private Integer roleId;

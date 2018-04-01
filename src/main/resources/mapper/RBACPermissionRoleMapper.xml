@@ -31,6 +31,20 @@
         INSERT INTO t_rbac_role (name) VALUE (#{name})
     </insert>
 
+    <delete id="deleteRole" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_rbac_role,
+            t_rbac_user_role,
+            t_rbac_role_permission USING t_rbac_role
+            INNER JOIN t_rbac_user_role
+            INNER JOIN t_rbac_role_permission
+        WHERE
+            t_rbac_user_role.id = t_rbac_role.id AND
+            t_rbac_role_permission.role_id = t_rbac_role.id AND
+            t_rbac_role.id = #{id}
+    </delete>
+
     <delete id="revokePermissionFromRole" parameterType="cn.opencil.po.RBACPermissionRole">
         DELETE FROM t_rbac_role_permission
         WHERE role_id = #{roleId} AND

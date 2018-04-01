@@ -16,6 +16,7 @@ TRUNCATE TABLE `cil_management`.`t_rbac_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_user_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_permission`;
 TRUNCATE TABLE `cil_management`.`t_rbac_role_permission`;
+TRUNCATE TABLE `cil_management`.`t_personnel`;
 
 -- --------------------------- example users --------------------------------
 -- all example default password is 666666

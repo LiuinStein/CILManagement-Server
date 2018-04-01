@@ -9,4 +9,6 @@ public interface RBACPermissionRoleService {
     boolean revokePermissionFromRole(RBACPermissionRole permissionRole);
 
     boolean addRole(RBACPermissionRole permissionRole);
+
+    void deleteRole(RBACPermissionRole permissionRole);
 }
