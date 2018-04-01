@@ -45,8 +45,11 @@ public class AuthRoleController {
      */
     @RequestMapping(value = "/permission/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void revokePermissionFromRole(@RequestBody JSONObject input) {
-
+    public void revokePermissionFromRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
+        if (!permissionRoleService.revokePermissionFromRole(permissionRole)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

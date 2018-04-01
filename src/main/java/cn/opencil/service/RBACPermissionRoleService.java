@@ -5,4 +5,6 @@ import cn.opencil.po.RBACPermissionRole;
 public interface RBACPermissionRoleService {
 
     boolean grantPermissionToRole(RBACPermissionRole permissionRole);
+
+    boolean revokePermissionFromRole(RBACPermissionRole permissionRole);
 }

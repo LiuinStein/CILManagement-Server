@@ -17,13 +17,22 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
         this.permissionRoleMapper = permissionRoleMapper;
     }
 
-    public void refreshPermission() {
+    private void refreshPermission() {
         new MySecurityMetadataSource(permissionRoleMapper).refreshPermissions();
     }
 
     @Override
     public boolean grantPermissionToRole(RBACPermissionRole permissionRole) {
         if (permissionRoleMapper.grantPermissionToRole(permissionRole) == 1) {
+            refreshPermission();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean revokePermissionFromRole(RBACPermissionRole permissionRole) {
+        if (permissionRoleMapper.revokePermissionFromRole(permissionRole) == 1) {
             refreshPermission();
             return true;
         }

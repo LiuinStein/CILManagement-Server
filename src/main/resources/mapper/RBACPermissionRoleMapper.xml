@@ -26,4 +26,10 @@
         INSERT t_rbac_role_permission (role_id, permission_id)
             VALUE (#{roleId}, #{permissionId})
     </insert>
+
+    <delete id="revokePermissionFromRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        DELETE FROM t_rbac_role_permission
+        WHERE role_id = #{roleId} AND
+              permission_id = #{permissionId}
+    </delete>
 </mapper>
