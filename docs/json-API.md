@@ -480,7 +480,13 @@ Grant permission success
 HTTP/1.1 201 CREATED
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "granted success",
+    "data": {}
+}
+```
 
 #### 0x01 Revoke permissions from role
 
@@ -506,8 +512,6 @@ Revoke permission success
 ```http
 HTTP/1.1 204 NO CONTENT
 ```
-
-
 
 #### 0x02 Assign a new role to somebody
 
@@ -569,7 +573,7 @@ POST /v1/auth/role/ HTTP/1.1
 
 ```json
 {
-  "name":"some role"
+  "role_name":"some role"
 }
 ```
 
@@ -579,6 +583,14 @@ Role add successfully
 
 ```http
 HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "role add successfully",
+    "data": {}
+}
 ```
 
 #### 0x05 Delete a role

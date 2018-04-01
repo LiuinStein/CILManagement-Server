@@ -38,4 +38,10 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
         }
         return false;
     }
+
+    @Override
+    public boolean addRole(RBACPermissionRole permissionRole) {
+        // no need for refresh role-permission table here
+        return permissionRoleMapper.addRole(permissionRole) == 1;
+    }
 }

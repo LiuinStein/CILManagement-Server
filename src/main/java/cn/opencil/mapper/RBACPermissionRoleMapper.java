@@ -10,4 +10,6 @@ public interface RBACPermissionRoleMapper {
     Integer grantPermissionToRole(RBACPermissionRole permissionRole);
 
     Integer revokePermissionFromRole(RBACPermissionRole permissionRole);
+
+    Integer addRole(RBACPermissionRole permissionRole);
 }
