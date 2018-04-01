@@ -455,10 +455,10 @@ HTTP/1.1 201 CREATED
 
 ### 0x02 Authorization Management
 
-#### 0x00 Grant some permissions to some role
+#### 0x00 Grant some permissions to a role
 
 ```http
-PUT /v1/auth/role/permission HTTP/1.1
+PUT /v1/auth/role/permission/ HTTP/1.1
 ```
 
 ##### Input
@@ -482,10 +482,10 @@ HTTP/1.1 201 CREATED
 
 
 
-#### 0x01 Revoke permissions from some role
+#### 0x01 Revoke permissions from role
 
 ```http
-DELETE /v1/auth/role/permission HTTP/1.1
+DELETE /v1/auth/role/permission/ HTTP/1.1
 ```
 
 ##### Input
@@ -512,21 +512,24 @@ HTTP/1.1 204 NO CONTENT
 #### 0x02 Assign a new role to somebody
 
 ```http
-
+POST /v1/auth/user/role/ HTTP/1.1
 ```
 
 ##### Input
 
 ```json
-
+{
+  "id":15110506001,
+  "role":1
+}
 ```
 
 
 
 ##### Output
 
-```json
-
+```http
+HTTP/1.1 201 CREATED
 ```
 
 
@@ -534,21 +537,24 @@ HTTP/1.1 204 NO CONTENT
 #### 0x03 Take back a role from someone
 
 ```http
-
+DELETE /v1/auth/user/role/ HTTP/1.1
 ```
 
 ##### Input
 
 ```json
-
+{
+  "id":15110506001,
+  "role":1
+}
 ```
 
-
+> Allow someone has no role, then, the account is equals to an anonymous user or a guest account.
 
 ##### Output
 
-```json
-
+```http
+HTTP/1.1 204 NO CONTENT
 ```
 
 
@@ -597,7 +603,7 @@ Role delete successfully
 HTTP/1.1 204 NO CONTENT
 ```
 
-#### 0x05 Rename a role
+#### 0x06 Rename a role
 
 ```http
 PUT /v1/auth/role/ HTTP/1.1
@@ -611,6 +617,24 @@ PUT /v1/auth/role/ HTTP/1.1
   "name":"other name"
 }
 ```
+
+##### Output
+
+Rename successfully
+
+```http
+HTTP/1.1 201 Created
+```
+
+#### 0x07 Query roles
+
+```http
+GET /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+
 
 ##### Output
 
