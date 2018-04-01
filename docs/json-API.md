@@ -396,7 +396,7 @@ GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 
 ##### Output
 
-Query success & there is return data:
+Query success response header & return data:
 
 ```http
 HTTP/1.1 200 OK
@@ -561,8 +561,6 @@ DELETE /v1/auth/user/role/ HTTP/1.1
 HTTP/1.1 204 NO CONTENT
 ```
 
-
-
 #### 0x04 Add a new role
 
 ```http
@@ -625,8 +623,8 @@ PUT /v1/auth/role/ HTTP/1.1
 
 ```json
 {
-  "role":1,
-  "name":"other name"
+  "role":4,
+  "role_name":"other name"
 }
 ```
 
@@ -638,10 +636,18 @@ Rename successfully
 HTTP/1.1 201 Created
 ```
 
+```json
+{
+    "code": 0,
+    "message": "role rename successfully",
+    "data": {}
+}
+```
+
 #### 0x07 Query roles
 
 ```http
-GET /v1/auth/role/ HTTP/1.1
+GET /v1/auth/role HTTP/1.1
 ```
 
 ##### Input
@@ -650,10 +656,10 @@ GET /v1/auth/role/ HTTP/1.1
 
 ##### Output
 
-Rename successfully
+Query success response header & return data:
 
 ```http
-HTTP/1.1 201 Created
+HTTP/1.1 200 OK
 ```
 
 
