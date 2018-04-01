@@ -14,4 +14,6 @@ public interface RBACPermissionRoleMapper {
     Integer addRole(RBACPermissionRole permissionRole);
 
     Integer deleteRole(Integer id);
+
+    Integer renameRole(RBACPermissionRole permissionRole);
 }

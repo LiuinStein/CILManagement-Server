@@ -49,4 +49,13 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
     public void deleteRole(RBACPermissionRole permissionRole) {
         permissionRoleMapper.deleteRole(permissionRole.getRoleId());
     }
+
+    @Override
+    public boolean renameRole(RBACPermissionRole permissionRole) {
+        if (permissionRoleMapper.renameRole(permissionRole) == 1) {
+            refreshPermission();
+            return true;
+        }
+        return false;
+    }
 }

@@ -45,6 +45,12 @@
             t_rbac_role.id = #{id}
     </delete>
 
+    <update id="renameRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        UPDATE t_rbac_role
+        SET name = #{name}
+        WHERE id = #{roleId}
+    </update>
+
     <delete id="revokePermissionFromRole" parameterType="cn.opencil.po.RBACPermissionRole">
         DELETE FROM t_rbac_role_permission
         WHERE role_id = #{roleId} AND

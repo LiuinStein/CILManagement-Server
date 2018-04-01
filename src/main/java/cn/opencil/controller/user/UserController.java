@@ -163,12 +163,12 @@ public class UserController {
     }
 
     /**
-     * Disable an account (set the enabled flag to false)
+     * Enable or disable an account (set the enabled flag to true or false)
      * The disabled user can not log in and do any jobs
      */
     @RequestMapping(value = "/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult disableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+    public RestfulResult enableOrDisableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
         RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
         if (!userService.enableOrDisableUser(user)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);

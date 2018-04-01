@@ -2,7 +2,6 @@ package cn.opencil.controller.authorization;
 
 import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.RBACPermissionRole;
-import cn.opencil.security.MySecurityMetadataSource;
 import cn.opencil.service.RBACPermissionRoleService;
 import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
@@ -67,7 +66,6 @@ public class AuthRoleController {
         return new RestfulResult(0, "role add successfully", new HashMap<>());
     }
 
-
     /**
      * Delete a role
      */
@@ -83,8 +81,12 @@ public class AuthRoleController {
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult renameRole(@RequestBody JSONObject input) {
-        return null;
+    public RestfulResult renameRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), NotNullRoleIdValidation.class, RoleOperationValidation.class);
+        if (!permissionRoleService.renameRole(permissionRole)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "role rename successfully", new HashMap<>());
     }
 
     /**
