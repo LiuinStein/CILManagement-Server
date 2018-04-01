@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RBACPermissionRoleMapper {
     List<RBACPermissionRole> getPermissionRoleMapper();
+
+    Integer grantPermissionToRole(RBACPermissionRole permissionRole);
 }
