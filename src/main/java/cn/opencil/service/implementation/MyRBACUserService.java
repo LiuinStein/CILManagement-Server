@@ -50,7 +50,7 @@ public class MyRBACUserService implements RBACUserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.addMember(user) == 1 &&
                 infoMapper.addMember(info) == 1 &&
-                roleMapper.addMember(role) == 1;
+                roleMapper.addUserRole(role) == 1;
     }
 
     @Override
@@ -60,6 +60,10 @@ public class MyRBACUserService implements RBACUserService {
 
     @Override
     public void deleteMember(Long username) {
+        // The default admin user with id 10001 can not be deleted!
+        if (username.equals(10001L)) {
+            return;
+        }
         userMapper.deleteMember(username);
     }
 }

@@ -33,7 +33,8 @@ CREATE TABLE `cil_management`.`t_rbac_user_role`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
   `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role name',
   `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`user_id`, `role_id`)
 ) ENGINE = InnoDB;
 -- ----------------------------- RBAC permission table (t_rbac_permission) ----------------
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_permission`;

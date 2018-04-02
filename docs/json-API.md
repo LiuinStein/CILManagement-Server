@@ -252,6 +252,8 @@ DELETE /v1/user/ HTTP/1.1
 }
 ```
 
+> The default `admin` user with id `10001` can not be deleted!
+
 ##### Output
 
 Delete success:
@@ -513,7 +515,7 @@ Revoke permission success
 HTTP/1.1 204 NO CONTENT
 ```
 
-#### 0x02 Assign a new role to somebody
+#### 0x02 Assign role to somebody
 
 ```http
 POST /v1/auth/user/role/ HTTP/1.1
@@ -528,7 +530,9 @@ POST /v1/auth/user/role/ HTTP/1.1
 }
 ```
 
-
+> If the assignee's current role is `admin` or the new role is `admin`, then the assign operation will first take back his current role and reassign the new role.
+>
+> Otherwise, the new role will be added to the user.
 
 ##### Output
 
@@ -536,7 +540,13 @@ POST /v1/auth/user/role/ HTTP/1.1
 HTTP/1.1 201 CREATED
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "role assign successfully",
+    "data": {}
+}
+```
 
 #### 0x03 Take back a role from someone
 
@@ -575,6 +585,8 @@ POST /v1/auth/role/ HTTP/1.1
 }
 ```
 
+> The server will refuse the request of add a role that named `admin`.
+
 ##### Output
 
 Role add successfully
@@ -605,6 +617,8 @@ DELETE /v1/auth/role/ HTTP/1.1
 }
 ```
 
+> The server will refuse the request of delete the `admin` role.
+
 ##### Output
 
 Role delete successfully
@@ -627,6 +641,8 @@ PUT /v1/auth/role/ HTTP/1.1
   "role_name":"other name"
 }
 ```
+
+> The server will refuse the request of rename the `admin` role.
 
 ##### Output
 

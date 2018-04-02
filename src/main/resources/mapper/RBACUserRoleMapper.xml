@@ -3,7 +3,23 @@
 
 <mapper namespace="cn.opencil.mapper.RBACUserRoleMapper">
 
-    <insert id="addMember" parameterType="cn.opencil.po.RBACUserRole">
+    <insert id="addUserRole" parameterType="cn.opencil.po.RBACUserRole">
         INSERT INTO t_rbac_user_role (user_id, role_id) VALUE (#{userId}, #{roleId})
     </insert>
+
+    <resultMap id="roleIdMap" type="java.lang.Byte"/>
+
+    <select id="getRoleByUser" parameterType="java.lang.Long" resultMap="roleIdMap">
+        SELECT role_id
+        FROM t_rbac_user_role
+        WHERE user_id = #{id}
+    </select>
+
+    <delete id="revokeRoleFromUser" parameterType="cn.opencil.po.RBACUserRole">
+        DELETE FROM t_rbac_user_role
+        WHERE user_id = #{userId}
+        <if test="roleId != null">
+            AND role_id = #{roleId}
+        </if>
+    </delete>
 </mapper>
