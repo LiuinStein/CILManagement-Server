@@ -25,6 +25,10 @@ public class MyRBACUserRoleService implements RBACUserRoleService {
     @Override
     public boolean revokeRoleFromUser(RBACUserRole userRole) {
         if (userRole.getUserId().equals(10001L)) {
+            /*
+             * must be true here!
+             * look at the assignRoleToUser method
+             */
             return true;
         }
         return userRoleMapper.revokeRoleFromUser(userRole) != 0;

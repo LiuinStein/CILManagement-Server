@@ -44,8 +44,12 @@ public class AuthUserController {
      */
     @RequestMapping(value = "/role/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void revokeRoleFormUser(@RequestBody JSONObject input) {
-
+    public void revokeRoleFormUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        RBACUserRole userRole = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        if (userRole.getUserId().equals(10001L)) {
+            throw new SimpleHttpException(400, "10001 is the default admin, we can not revoke permission from him", HttpStatus.BAD_REQUEST);
+        }
+        userRoleService.revokeRoleFromUser(userRole);
     }
 
 
