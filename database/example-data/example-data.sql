@@ -71,6 +71,8 @@ INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permiss
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (7, 4, 1);
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (8, 4, 2);
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (9, 1, 3);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (10, 1, 9);
+
 
 -- --------------------------- example users' info --------------------------------
 INSERT INTO `cil_management`.`t_personnel` (id, name, gender, department, enroll_time, exit_time, birthday, email, phone, achievement)

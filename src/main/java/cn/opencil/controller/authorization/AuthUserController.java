@@ -51,6 +51,4 @@ public class AuthUserController {
         }
         userRoleService.revokeRoleFromUser(userRole);
     }
-
-
 }

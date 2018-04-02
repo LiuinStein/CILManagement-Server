@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS `cil_management`.`t_rbac_role`;
 CREATE TABLE `cil_management`.`t_rbac_role`  (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'role id',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT 'role name',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`name`)
 ) ENGINE = InnoDB;
 -- ----------------------------- RBAC user-role table (t_rbac_user_role) ------------------
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user_role`;

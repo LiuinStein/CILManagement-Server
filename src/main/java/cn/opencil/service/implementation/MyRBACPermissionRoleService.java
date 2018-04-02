@@ -23,6 +23,9 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
 
     @Override
     public boolean grantPermissionToRole(RBACPermissionRole permissionRole) {
+        if (permissionRole.getRoleId().equals(1)) {
+            return true;
+        }
         if (permissionRoleMapper.grantPermissionToRole(permissionRole) == 1) {
             refreshPermission();
             return true;
@@ -32,6 +35,9 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
 
     @Override
     public boolean revokePermissionFromRole(RBACPermissionRole permissionRole) {
+        if (permissionRole.getRoleId().equals(1)) {
+            return true;
+        }
         if (permissionRoleMapper.revokePermissionFromRole(permissionRole) == 1) {
             refreshPermission();
             return true;
@@ -42,16 +48,23 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
     @Override
     public boolean addRole(RBACPermissionRole permissionRole) {
         // no need for refresh role-permission table here
+        // we use UNIQUE key at database to ensure only one default role named admin
         return permissionRoleMapper.addRole(permissionRole) == 1;
     }
 
     @Override
     public void deleteRole(RBACPermissionRole permissionRole) {
+        if (permissionRole.getRoleId().equals(1)) {
+            return;
+        }
         permissionRoleMapper.deleteRole(permissionRole.getRoleId());
     }
 
     @Override
     public boolean renameRole(RBACPermissionRole permissionRole) {
+        if (permissionRole.getRoleId().equals(1)) {
+            return true;
+        }
         if (permissionRoleMapper.renameRole(permissionRole) == 1) {
             refreshPermission();
             return true;

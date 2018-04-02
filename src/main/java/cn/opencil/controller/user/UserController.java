@@ -170,6 +170,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult enableOrDisableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
         RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
+        if (user.getId().equals(10001L)) {
+            throw new SimpleHttpException(400, "the default admin user can not be disabled", HttpStatus.BAD_REQUEST);
+        }
         if (!userService.enableOrDisableUser(user)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

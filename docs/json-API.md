@@ -447,13 +447,21 @@ PATCH /v1/user/ HTTP/1.1
 }
 ```
 
+> The default admin user with id 10001 can not be disable!
+
 ##### Output
 
 ```http
 HTTP/1.1 201 CREATED
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "Account has been disabled!",
+    "data": {}
+}
+```
 
 ### 0x02 Authorization Management
 
