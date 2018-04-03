@@ -2,10 +2,13 @@ package cn.opencil.service.implementation;
 
 import cn.opencil.mapper.RBACPermissionRoleMapper;
 import cn.opencil.po.RBACPermissionRole;
+import cn.opencil.po.RBACRole;
 import cn.opencil.security.MySecurityMetadataSource;
 import cn.opencil.service.RBACPermissionRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("myRBACPermissionRoleService")
 public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
@@ -70,5 +73,10 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<RBACRole> getRoleByPermission(Integer permissionId) {
+        return permissionRoleMapper.getRoleByPermission(permissionId);
     }
 }

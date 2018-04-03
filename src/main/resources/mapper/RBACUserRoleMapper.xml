@@ -7,12 +7,18 @@
         INSERT INTO t_rbac_user_role (user_id, role_id) VALUE (#{userId}, #{roleId})
     </insert>
 
-    <resultMap id="roleIdMap" type="java.lang.Byte"/>
+    <resultMap id="roleIdMap" type="cn.opencil.po.RBACRole"/>
 
     <select id="getRoleByUser" parameterType="java.lang.Long" resultMap="roleIdMap">
-        SELECT role_id
-        FROM t_rbac_user_role
-        WHERE user_id = #{id}
+        SELECT
+            A.id,
+            A.name
+        FROM
+            t_rbac_role AS A
+            LEFT JOIN t_rbac_user_role AS B
+                ON A.id = B.role_id
+        WHERE
+            user_id = #{id}
     </select>
 
     <delete id="revokeRoleFromUser" parameterType="cn.opencil.po.RBACUserRole">

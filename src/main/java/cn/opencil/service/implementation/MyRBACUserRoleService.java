@@ -1,6 +1,7 @@
 package cn.opencil.service.implementation;
 
 import cn.opencil.mapper.RBACUserRoleMapper;
+import cn.opencil.po.RBACRole;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.service.RBACUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class MyRBACUserRoleService implements RBACUserRoleService {
     }
 
     @Override
-    public List<Byte> getRoleByUser(Long userId) {
+    public List<RBACRole> getRoleByUser(Long userId) {
         return userRoleMapper.getRoleByUser(userId);
     }
 
@@ -41,7 +42,8 @@ public class MyRBACUserRoleService implements RBACUserRoleService {
          * then the assign operation will first take back his current role and
          * reassign the new role.
          */
-        if (userRole.getRoleId().equals((byte) 1) || getRoleByUser(userRole.getUserId()).contains((byte) 1)) {
+        if (userRole.getRoleId().equals((byte) 1) ||
+                getRoleByUser(userRole.getUserId()).get(0).getId().equals((byte) 1)) {
             RBACUserRole tmp = new RBACUserRole();
             tmp.setUserId(userRole.getUserId());
             tmp.setRoleId(null);

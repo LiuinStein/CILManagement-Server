@@ -1,6 +1,9 @@
 package cn.opencil.service;
 
 import cn.opencil.po.RBACPermissionRole;
+import cn.opencil.po.RBACRole;
+
+import java.util.List;
 
 public interface RBACPermissionRoleService {
 
@@ -13,4 +16,6 @@ public interface RBACPermissionRoleService {
     void deleteRole(RBACPermissionRole permissionRole);
 
     boolean renameRole(RBACPermissionRole permissionRole);
+
+    List<RBACRole> getRoleByPermission(Integer permissionId);
 }

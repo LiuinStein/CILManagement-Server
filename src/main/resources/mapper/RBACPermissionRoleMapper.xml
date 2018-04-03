@@ -22,6 +22,20 @@
                 ON B.role_id = C.id
     </select>
 
+    <resultMap id="roleMap" type="cn.opencil.po.RBACRole"/>
+
+    <select id="getRoleByPermission" parameterType="java.lang.Integer" resultMap="roleMap">
+        SELECT
+            A.id,
+            A.name
+        FROM
+            t_rbac_role AS A
+            LEFT JOIN t_rbac_role_permission AS B
+                ON A.id = B.role_id
+        WHERE
+            B.permission_id = #{id}
+    </select>
+
     <insert id="grantPermissionToRole" parameterType="cn.opencil.po.RBACPermissionRole">
         INSERT t_rbac_role_permission (role_id, permission_id)
             VALUE (#{roleId}, #{permissionId})

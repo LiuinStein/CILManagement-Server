@@ -671,12 +671,34 @@ HTTP/1.1 201 Created
 #### 0x07 Query roles
 
 ```http
-GET /v1/auth/role HTTP/1.1
+GET /v1/auth/role?condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
+by role id:
 
+```http
+GET /v1/auth/role?condition=id&value=1 HTTP/1.1
+```
+
+by role name:
+
+```http
+GET /v1/auth/role?condition=name&value=admin HTTP/1.1
+```
+
+by user id:
+
+```http
+GET /v1/auth/role?condition=user_id&value=15110506001 HTTP/1.1
+```
+
+by permission id:
+
+```http
+GET /v1/auth/role?condition=permission&value=1 HTTP/1.1
+```
 
 ##### Output
 
@@ -686,7 +708,24 @@ Query success response header & return data:
 HTTP/1.1 200 OK
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "roles": [
+            {
+                "id": 1,
+                "name": "admin"
+            },
+            {
+                "id": 2,
+                "name": "teacher"
+            }
+        ]
+    }
+}
+```
 
 ### 0x03 Project & Team Management
 

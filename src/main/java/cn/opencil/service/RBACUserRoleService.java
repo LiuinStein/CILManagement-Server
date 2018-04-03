@@ -1,5 +1,6 @@
 package cn.opencil.service;
 
+import cn.opencil.po.RBACRole;
 import cn.opencil.po.RBACUserRole;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public interface RBACUserRoleService {
     boolean assignRoleToUser(RBACUserRole userRole);
 
-    List<Byte> getRoleByUser(Long userId);
+    List<RBACRole> getRoleByUser(Long userId);
 
     boolean revokeRoleFromUser(RBACUserRole userRole);
 }

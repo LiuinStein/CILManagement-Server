@@ -2,7 +2,10 @@ package cn.opencil.controller.authorization;
 
 import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.RBACPermissionRole;
+import cn.opencil.po.RBACRole;
 import cn.opencil.service.RBACPermissionRoleService;
+import cn.opencil.service.RBACRoleService;
+import cn.opencil.service.RBACUserRoleService;
 import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
 import cn.opencil.validation.group.RoleOperationValidation;
@@ -16,16 +19,21 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/auth/role")
 public class AuthRoleController {
 
     private final RBACPermissionRoleService permissionRoleService;
+    private final RBACUserRoleService userRoleService;
+    private final RBACRoleService roleService;
 
     @Autowired
-    public AuthRoleController(RBACPermissionRoleService permissionRoleService) {
+    public AuthRoleController(RBACPermissionRoleService permissionRoleService, RBACUserRoleService userRoleService, RBACRoleService roleService) {
         this.permissionRoleService = permissionRoleService;
+        this.userRoleService = userRoleService;
+        this.roleService = roleService;
     }
 
     /**
@@ -104,10 +112,44 @@ public class AuthRoleController {
     /**
      * Query roles
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryRoles() {
-        return null;
+    public RestfulResult queryRoles(@RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+        List<RBACRole> roles;
+        try {
+            switch (condition) {
+                case "user_id":
+                    Long userId = Long.parseLong(value);
+                    roles = userRoleService.getRoleByUser(userId);
+                    break;
+                case "permission":
+                    Integer permissionId = Integer.parseInt(value);
+                    roles = permissionRoleService.getRoleByPermission(permissionId);
+                    break;
+                default:
+                    RBACRole role = new RBACRole();
+                    switch (condition) {
+                        case "id":
+                            role.setId(Byte.parseByte(value));
+                            break;
+                        case "name":
+                            role.setName(value);
+                            break;
+                        default:
+                            throw new SimpleHttpException(400, "invalid query value", HttpStatus.BAD_REQUEST);
+                    }
+                    roles = roleService.getRole(ValidationUtils.validate(role));
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            throw new SimpleHttpException(400, "invalid query value", HttpStatus.BAD_REQUEST);
+        }
+        if (roles == null) {
+            throw new SimpleHttpException(404, "no role matched", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("roles", roles);
+        return new RestfulResult(0, "", data);
     }
 
 }
