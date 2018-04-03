@@ -11,22 +11,22 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 ### 0x01 RBAC tables
 
-**RBAC user table (t_rbac_user)**
+#### 0x00 User table (t_rbac_user)
 
-| Name     | Type     | key  | Comment                                             | Example |
-| -------- | -------- | ---- | --------------------------------------------------- | ------- |
-| id       | BIGINT   | PK   | school id                                           | 151105  |
-| password | CAHR(60) |      | use BCrypt, do not use SHA* here, default is 666666 | -       |
-| enabled  | TINYINT  |      | 0 is disabled, 1 otherwise                          | 0       |
+| Name     | Type     | key  | Comment                                                      | Example |
+| -------- | -------- | ---- | ------------------------------------------------------------ | ------- |
+| id       | BIGINT   | PK   | school id                                                    | 151105  |
+| password | CAHR(60) |      | use BCrypt, do not use SHA* here, default password is 666666 | -       |
+| enabled  | TINYINT  |      | 0 is disabled, 1 otherwise                                   | 0       |
 
-**RBAC role table (t_rbac_role):**
+#### 0x01 Role table (t_rbac_role):
 
 | Name | Type        | key  | Comment   | Example |
 | ---- | ----------- | ---- | --------- | ------- |
 | id   | TINYINT     | PK   | role id   | 1       |
 | name | VARCHAR(20) |      | role name | teacher |
 
-**RBAC user-role table (t_rbac_user_role):**
+#### 0x02 User-Role table (t_rbac_user_role):
 
 | Name    | Type    | key  | Comment        | Example |
 | ------- | ------- | ---- | -------------- | ------- |
@@ -34,7 +34,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | user_id | BIGINT  |      | school id      | 151105  |
 | role_id | TINYINT |      | role id        | 1       |
 
-**RBAC permission table (t_rbac_permission):**
+#### 0x03 Permission table (t_rbac_permission):
 
 | Name   | Type        | key               | Comment                                                      | Example   |
 | ------ | ----------- | ----------------- | ------------------------------------------------------------ | --------- |
@@ -43,7 +43,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | uri    | VARCHAR(75) | Index_1, Unique_1 | request uri                                                  | /v1/user/ |
 | method | TINYINT     | Index_1, Unique_1 | http request method, 0 is GET, 1 is HEAD, 2 is POST, 3 is PUT, 4 is PATCH, 5 is DELETE, 6 is OPTIONS, 7 is TRACE | 0         |
 
-**RBAC role-permission table (t_rbac_role_permission):**
+#### 0x04 Role-Permission table (t_rbac_role_permission):
 
 | Name          | Type    | key  | Comment        | Example |
 | ------------- | ------- | ---- | -------------- | ------- |
@@ -55,16 +55,14 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 ### 0x02 Personnel management
 
-
-**personal information table (t_user_info):**
+#### 0x00 Personal information table (t_personnel):
 
 | Name        | Type         | key  | Comment                                                      | Example              |
 | ----------- | ------------ | ---- | ------------------------------------------------------------ | -------------------- |
 | id          | BIGINT       | PK   | school id                                                    | 151105               |
 | name        | VARCHAR(30)  |      | member's name                                                | Jack Ma              |
 | gender      | TINYINT      |      | 0 is male, 1 is female                                       | 0                    |
-| identify    | TINYINT      |      | 0 is student, 1 is teacher, 2 is administer                  | 0                    |
-| department  | INT          |      | for student that is class id, for teacher that is college id | 101                  |
+| department  | INT          |      | for student that is class id, for teacher & admin that is college id | 101                  |
 | enroll_time | DATE         |      | GMT, when did he join the lab                                | 2017-8-15            |
 | exit_time   | DATE         |      | GMT, when did he exit the lab, 1970-1-1 will be set if he didn't retire | 2018-2-13            |
 | birthday    | DATE         |      | when did he born                                             | 1997-1-1             |
@@ -74,7 +72,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields.
 
-**class table (t_class):**
+#### 0x01 Class table (t_class):
 
 | Name    | Type        | key  | Comment               | Example  |
 | ------- | ----------- | ---- | --------------------- | -------- |
@@ -82,7 +80,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | name    | VARCHAR(20) |      | -                     | 软件1505 |
 | college | INT         | FK   | affiliated college id | 58       |
 
-**college table (t_college):**
+#### 0x02 College table (t_college):
 
 | Name | Type        | key  | Comment | Example    |
 | ---- | ----------- | ---- | ------- | ---------- |
@@ -101,7 +99,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 ### 0x03 Project & Team management
 
-**project table (t_project):**
+#### 0x00 Project table (t_project):
 
 | Name             | Type         | key  | Comment                                                      | Example                    |
 | ---------------- | ------------ | ---- | ------------------------------------------------------------ | -------------------------- |
@@ -118,7 +116,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | start_date       | DATE         |      | GMT                                                          | 2018/2/14                  |
 | deadline         | DATE         |      | GMT                                                          | 2018/5/1                   |
 
-**project team table (t_team):**
+#### 0x01 Project team table (t_team):
 
 | Name        | Type         | key  | Comment   | Example      |
 | ----------- | ------------ | ---- | --------- | ------------ |
@@ -130,7 +128,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 > All of the lab persons contributes a big team called "CIL home"
 
-**team-personnel table (t_team_personnel):**
+#### 0x02 Team-personnel table (t_team_personnel):
 
 | Name      | Type         | key  | Comment                                                      | Example      |
 | --------- | ------------ | ---- | ------------------------------------------------------------ | ------------ |
@@ -140,7 +138,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | position  | TINYINT      |      | 0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others | 0            |
 | jobs      | VARCHAR(300) |      | work content                                                 | XXX features |
 
-**team-project table (t_team_project):**
+#### 0x03 Team-Project table (t_team_project):
 
 | Name       | Type | key  | Comment        | Example |
 | ---------- | ---- | ---- | -------------- | ------- |
@@ -148,7 +146,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | team_id    | INT  |      | -              | 3       |
 | project_id | INT  |      | -              | 1       |
 
-**funding's expenditures table (t_expenditure):**
+#### 0x04 Funding's expenditures table (t_expenditure):
 
 | Name         | Type         | key  | Comment                               | Example       |
 | ------------ | ------------ | ---- | ------------------------------------- | ------------- |
@@ -160,7 +158,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | note         | VARCHAR(100) |      | description                           | buy something |
 | revenue_date | DATE         |      | when did you spend or earn this money | 2018-2-1      |
 
-**academic subjects' table (t_academic_subject):**
+#### 0x05 Academic subjects' table (t_academic_subject):
 
 | Name   | Type        | key  | Comment                                  | Example |
 | ------ | ----------- | ---- | ---------------------------------------- | ------- |
@@ -178,7 +176,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 ### 0x04 Resource & Usage management
 
-**resources' type table (t_resource_type):**
+#### 0x00 Resources' type table (t_resource_type):
 
 | Name        | Type         | key  | Comment       | Example          |
 | ----------- | ------------ | ---- | ------------- | ---------------- |
@@ -187,7 +185,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 | description | VARCHAR(300) |      | detail        | i7-4710MQ, ...   |
 | disposable  | TINYINT      |      | 0: no, 1: yes | 1                |
 
-**resource table (t_resource):**
+#### 0x01 Resource table (t_resource):
 
 | Name         | Type   | key  | Comment                | Example |
 | ------------ | ------ | ---- | ---------------------- | ------- |
@@ -200,7 +198,7 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 > If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity
 
-**resource usage table (t_resource_usage):**
+#### 0x02 Resource usage table (t_resource_usage):
 
 | Name         | Type         | key  | Comment                                                      | Example        |
 | ------------ | ------------ | ---- | ------------------------------------------------------------ | -------------- |

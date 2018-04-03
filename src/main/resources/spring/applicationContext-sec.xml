@@ -24,6 +24,7 @@
 
         <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
         <custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+        <custom-filter ref="myLogoutFilter" position="LOGOUT_FILTER"/>
 
         <csrf disabled="true"/>
 
@@ -51,8 +52,8 @@
     </beans:bean>
 
     <beans:bean id="restAuthenticationEntryPoint" class="cn.opencil.security.MyAuthenticationEntryPoint"/>
-    <beans:bean id="mySuccessHandle" class="cn.opencil.security.MySuccessHandle"/>
-    <beans:bean id="myFailureHandle" class="cn.opencil.security.MyFailureHandle"/>
+    <beans:bean id="mySuccessHandle" class="cn.opencil.security.MyAuthenticationSuccessHandle"/>
+    <beans:bean id="myFailureHandle" class="cn.opencil.security.MyAuthenticationFailureHandle"/>
 
     <!-- Authentication Manager -->
     <authentication-manager alias="myAuthenticationManager">
@@ -73,6 +74,25 @@
 
     <beans:bean id="myRBACUserService" class="cn.opencil.service.implementation.MyRBACUserService"/>
 
+    <!-- Log out filter -->
+    <beans:bean id="myLogoutFilter" class="cn.opencil.security.MyLogoutFilter">
+        <beans:constructor-arg name="logoutSuccessHandler" ref="logoutSuccessHandler"/>
+        <beans:constructor-arg name="handlers">
+            <beans:list>
+                <beans:ref bean="securityContextLogoutHandler"/>
+            </beans:list>
+        </beans:constructor-arg>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="method" value="DELETE"/>
+    </beans:bean>
+
+    <beans:bean id="securityContextLogoutHandler"
+                class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+    <beans:bean id="logoutSuccessHandler"
+                class="cn.opencil.security.MyLogoutSuccessHandle">
+        <beans:property name="httpStatusToReturn" value="NO_CONTENT"/>
+        <beans:property name="messageReturning" value="false"/>
+    </beans:bean>
 
     <!-- Spring Session -->
     <beans:bean id="rememberMeServices"

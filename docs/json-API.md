@@ -93,7 +93,7 @@ The names and its meanings of this default fields
 **Input invalid or type mismatched data:**
 
 ```http
-HTTP/1.1 400 INVALID REQUEST
+HTTP/1.1 400 BAD REQUEST
 ```
 
 **Session out of date or invalid, authorization failed, need re-login:**
@@ -102,7 +102,7 @@ HTTP/1.1 400 INVALID REQUEST
 HTTP/1.1 401 Unauthorized
 ```
 
-**Operators has no authority to do this:**
+**Higher permission required:**
 
 ```http
 HTTP/1.1 403 Forbidden
@@ -114,6 +114,16 @@ HTTP/1.1 403 Forbidden
 HTTP/1.1 500 INTERNAL SERVER ERROR
 ```
 
+#### 0x04 Data formatting contract
+
+The pure date:
+
+> `yyyy-MM-dd` for example: 1997-10-21
+
+The date-time:
+
+> `yyyy-MM-dd HH:mm:ss` for example: 1997-10-21 15:06:33
+
 ### 0x01 Personnel Management
 
 #### 0x00 Sign in 
@@ -122,7 +132,7 @@ HTTP/1.1 500 INTERNAL SERVER ERROR
 POST /v1/user/session/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -131,9 +141,9 @@ POST /v1/user/session/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
-Sign in success:
+**Sign in success:**
 
 ```http
 HTTP/1.1 201 Created
@@ -142,21 +152,41 @@ HTTP/1.1 201 Created
 ```json
 {
     "code": 0,
-    "message": "",
-    "data": { }
+    "message": "log in success",
+    "data": {
+        "auth": "[admin]"
+    }
 }
 ```
 
-Account doesn't exist:
+The `auth` field of data is the permission of just logged-in user.
+
+**Account doesn't exist:**
 
 ```http
 HTTP/1.1 404 NOT FOUND
 ```
 
-Password error:
+```json
+{
+    "code": 1,
+    "message": "someone was not found.",
+    "data": {}
+}
+```
+
+**Password error:**
 
 ```http
 HTTP/1.1 401 Unauthorized
+```
+
+```json
+{
+    "code": 1,
+    "message": "Bad credentials",
+    "data": {}
+}
 ```
 
 #### 0x01 Sign out
@@ -165,11 +195,11 @@ HTTP/1.1 401 Unauthorized
 DELETE /v1/user/session/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 Nothing
 
-**Output:**
+##### Output
 
 ```http
 HTTP/1.1 204 NO CONTENT
@@ -181,21 +211,26 @@ HTTP/1.1 204 NO CONTENT
 POST /v1/user/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
   "id":15110506001,
   "name":"Jack Ma",
   "password":"666666",
+  "enabled":true,
   "gender":0,
-  "identify":0,
+  "role":1,
   "department":1,
   "enroll_time":"2018-2-22"
 }
 ```
 
-**Output:**
+> The above is the minimal input data set.
+>
+> For more fields that you want to set when you sign up, 
+
+##### Output
 
 Sign up success:
 
@@ -209,15 +244,17 @@ HTTP/1.1 201 CREATED
 DELETE /v1/user/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
-  "the-man-who-forgot-password":15110506001
+  "id":15110506001
 }
 ```
 
-**Output:**
+> The default `admin` user with id `10001` can not be deleted!
+
+##### Output
 
 Delete success:
 
@@ -231,7 +268,7 @@ HTTP/1.1 204 NO CONTENT
 PUT /v1/user/info/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -240,9 +277,9 @@ PUT /v1/user/info/ HTTP/1.1
   "gender":0,
   "identify":0,
   "department":101,
-  "enroll_time":"2017-8-15",
-  "exit_time":"1970-1-1",
-  "birthday":"1997-1-1",
+  "enroll_time":"2017-08-15",
+  "exit_time":"1970-01-01",
+  "birthday":"1997-11-01",
   "email":"test@test.com",
   "phone":"13512345678",
   "achievement":"some achievements"
@@ -254,7 +291,7 @@ PUT /v1/user/info/ HTTP/1.1
 
 > The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -273,7 +310,7 @@ HTTP/1.1 403 Forbidden
 PUT /v1/user/password/ HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 ```json
 {
@@ -282,7 +319,7 @@ PUT /v1/user/password/ HTTP/1.1
 }
 ```
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -304,15 +341,15 @@ PATCH /v1/user/password/ HTTP/1.1
 
 > The default password is 666666.
 
-**Input:**
+##### Input
 
 ```json
 {
-  "the-man-who-forgot-password":15110506001
+  "id":15110506001
 }
 ```
 
-**Output:**
+##### Output
 
 Modify success:
 
@@ -332,7 +369,7 @@ HTTP/1.1 403 Forbidden
 GET /v1/user/info?mode={m}&condition={c}&value={v} HTTP/1.1
 ```
 
-**Input:**
+##### Input
 
 by user's id (only for exact query):
 
@@ -351,45 +388,41 @@ by user's department:
 GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 ```
 
-by user's identify:
-
-```http
-GET /v1/user/info?mode=summary&condition=identify&value=0  HTTP/1.1
-```
-
 > The mode field controls which data are returned.
 >
-> | When it is | Returned fields                          |
-> | ---------- | ---------------------------------------- |
-> | summary    | id, name, gender, identify, department   |
-> | all        | id, name, gender, identify, department, enroll-time, exit-time, birthday, email, phone, achievement |
-> |            |                                          |
+> | When it is | Returned fields                                              |
+> | ---------- | ------------------------------------------------------------ |
+> | summary    | id, name, gender, department                                 |
+> | all        | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
+> |            |                                                              |
 
-**Output:**
+##### Output
 
-Query success & there is return data:
+Query success response header & return data:
 
 ```http
 HTTP/1.1 200 OK
 ```
 ```json
 {
-  "users":[
-    {
-      "id":15110506001,
-      "name":"Jack Ma",
-      "gender":0,
-      "identify":0,
-      "department":101
-    },
-    {
-      "id":15110506002,
-      "name":"Pony Ma",
-      "gender":0,
-      "identify":0,
-      "department":201
-    }
-  ]
+  "code":0,
+  "message":"",
+  "data":{
+    "users":[
+      {
+        "id":15110506001,
+        "name":"Jack Ma",
+        "gender":0,
+        "department":101
+      },
+      {
+        "id":15110506002,
+        "name":"Pony Ma",
+        "gender":0,
+        "department":201
+      }
+    ]
+  }
 }
 ```
 
@@ -399,16 +432,315 @@ Query success but no matched person:
 HTTP/1.1 404 NOT FOUND
 ```
 
+#### 0x08 Enable/Disable an account
 
-### 0x02 Project & Team Management
+```http
+PATCH /v1/user/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":15110506001,
+  "enabled":false
+}
+```
+
+> The default admin user with id 10001 can not be disable!
+
+##### Output
+
+```http
+HTTP/1.1 201 CREATED
+```
+
+```json
+{
+    "code": 0,
+    "message": "Account has been disabled!",
+    "data": {}
+}
+```
+
+### 0x02 Authorization Management
+
+#### 0x00 Grant some permissions to a role
+
+```http
+PUT /v1/auth/role/permission/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1,
+  "permission":1
+}
+```
+
+> The role `administer` or `admin` have the superior permission, anyone can't grant or revoke permissions to or form him.
+
+##### Output
+
+Grant permission success
+
+```http
+HTTP/1.1 201 CREATED
+```
+
+```json
+{
+    "code": 0,
+    "message": "granted success",
+    "data": {}
+}
+```
+
+#### 0x01 Revoke permissions from role
+
+```http
+DELETE /v1/auth/role/permission/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1,
+  "permission":1
+}
+```
+
+> The role `administer` have the superior permission, anyone can't grant or revoke permissions to or form him.
+
+##### Output
+
+Revoke permission success
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x02 Assign role to somebody
+
+```http
+POST /v1/auth/user/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":15110506001,
+  "role":1
+}
+```
+
+> If the assignee's current role is `admin` or the new role is `admin`, then the assign operation will first take back his current role and reassign the new role.
+>
+> Otherwise, the new role will be added to the user.
+
+##### Output
+
+```http
+HTTP/1.1 201 CREATED
+```
+
+```json
+{
+    "code": 0,
+    "message": "role assign successfully",
+    "data": {}
+}
+```
+
+#### 0x03 Take back a role from someone
+
+```http
+DELETE /v1/auth/user/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":15110506001,
+  "role":1
+}
+```
+
+> Allow someone has no role, then, the account is equals to an anonymous user or a guest account.
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x04 Add a new role
+
+```http
+POST /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role_name":"some role"
+}
+```
+
+> The server will refuse the request of add a role that named `admin`.
+
+##### Output
+
+Role add successfully
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "role add successfully",
+    "data": {}
+}
+```
+
+#### 0x05 Delete a role
+
+```http
+DELETE /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":1
+}
+```
+
+> The server will refuse the request of delete the `admin` role.
+
+##### Output
+
+Role delete successfully
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x06 Rename a role
+
+```http
+PUT /v1/auth/role/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "role":4,
+  "role_name":"other name"
+}
+```
+
+> The server will refuse the request of rename the `admin` role.
+
+##### Output
+
+Rename successfully
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "role rename successfully",
+    "data": {}
+}
+```
+
+#### 0x07 Query roles
+
+```http
+GET /v1/auth/role?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by role id:
+
+```http
+GET /v1/auth/role?condition=id&value=1 HTTP/1.1
+```
+
+by role name:
+
+```http
+GET /v1/auth/role?condition=name&value=admin HTTP/1.1
+```
+
+by user id:
+
+```http
+GET /v1/auth/role?condition=user_id&value=15110506001 HTTP/1.1
+```
+
+by permission id:
+
+```http
+GET /v1/auth/role?condition=permission&value=1 HTTP/1.1
+```
+
+##### Output
+
+Query success response header & return data:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "roles": [
+            {
+                "id": 1,
+                "name": "admin"
+            },
+            {
+                "id": 2,
+                "name": "teacher"
+            }
+        ]
+    }
+}
+```
+
+### 0x03 Project & Team Management
 
 
 
-
-
-### 0x03 Resource & Usage Management
-
+### 0x04 Resource & Usage Management
 
 
 
+### 0x05 Error code
 
+The error code for Json-API `code` field.
+
+| Code | Description                 |
+| :--: | :-------------------------- |
+|  0   | success                     |
+|  1   | universal server error code |
+|  2   | universal client error code |

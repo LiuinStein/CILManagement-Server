@@ -1,21 +1,45 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.NotNullUserIdValidation;
+import cn.opencil.validation.group.RegisterValidation;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * for t_rbac_user table
  */
 public class RBACUser implements UserDetails {
+    @Positive
+    @NotNull(groups = {
+            RegisterValidation.class,
+            NotNullUserIdValidation.class
+    })
     private Long id;
+
+    @NotNull(groups = {
+            RegisterValidation.class
+    })
+    @Size(min = 6, max = 20, groups = {
+            RegisterValidation.class
+    })
     private String password;
+
+    @NotNull(groups = {
+            RegisterValidation.class,
+            NotNullUserIdValidation.class
+    })
     private Boolean enabled;
+
     private List<GrantedAuthority> authorities = new ArrayList<>();
 
     public void setRole(String role) {
@@ -76,6 +100,6 @@ public class RBACUser implements UserDetails {
 //    }
 
     public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+        this.enabled = enabled == null ? false : enabled;
     }
 }

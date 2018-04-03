@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.opencil.mapper.RBACPermissionRoleMapper">
-    
+
     <resultMap id="permissionRoleList" type="cn.opencil.po.RBACPermissionRole">
         <result column="uri" property="url"/>
         <result column="method" property="method"/>
         <result column="name" property="name"/>
     </resultMap>
-    
+
     <select id="getPermissionRoleMapper" resultMap="permissionRoleList">
         SELECT
             A.uri,
@@ -21,4 +21,53 @@
             LEFT JOIN t_rbac_role AS C
                 ON B.role_id = C.id
     </select>
+
+    <resultMap id="roleMap" type="cn.opencil.po.RBACRole"/>
+
+    <select id="getRoleByPermission" parameterType="java.lang.Integer" resultMap="roleMap">
+        SELECT
+            A.id,
+            A.name
+        FROM
+            t_rbac_role AS A
+            LEFT JOIN t_rbac_role_permission AS B
+                ON A.id = B.role_id
+        WHERE
+            B.permission_id = #{id}
+    </select>
+
+    <insert id="grantPermissionToRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        INSERT t_rbac_role_permission (role_id, permission_id)
+            VALUE (#{roleId}, #{permissionId})
+    </insert>
+
+    <insert id="addRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        INSERT INTO t_rbac_role (name) VALUE (#{name})
+    </insert>
+
+    <delete id="deleteRole" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_rbac_role,
+            t_rbac_user_role,
+            t_rbac_role_permission USING t_rbac_role
+            INNER JOIN t_rbac_user_role
+            INNER JOIN t_rbac_role_permission
+        WHERE
+            t_rbac_user_role.id = t_rbac_role.id AND
+            t_rbac_role_permission.role_id = t_rbac_role.id AND
+            t_rbac_role.id = #{id}
+    </delete>
+
+    <update id="renameRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        UPDATE t_rbac_role
+        SET name = #{name}
+        WHERE id = #{roleId}
+    </update>
+
+    <delete id="revokePermissionFromRole" parameterType="cn.opencil.po.RBACPermissionRole">
+        DELETE FROM t_rbac_role_permission
+        WHERE role_id = #{roleId} AND
+              permission_id = #{permissionId}
+    </delete>
 </mapper>
