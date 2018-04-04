@@ -8,15 +8,19 @@ import javax.validation.Validator;
 import java.util.Set;
 
 public class ValidationUtils {
+
     /**
-     * The validation service provider
-     *
      * When fail fast is enabled the validation will stop on the first constraint violation detected.
      * If you change the fail fast option, it will be take effect after you restart the tomcat container.
      */
+    private static final boolean failFast = true;
+
+    /**
+     * The validation service provider
+     */
     private static Validator validator =
             Validation.byProvider(HibernateValidator.class)
-                    .configure().failFast(false)
+                    .configure().failFast(failFast)
                     .buildValidatorFactory().getValidator();
 
     /**
@@ -29,7 +33,7 @@ public class ValidationUtils {
      */
     public static <T> T validate(T object, Class... groups) throws ValidationException {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(object, groups);
-        if (groups.length > 0) {
+        if (!(failFast && constraintViolations.size() > 0 ) && groups.length > 0) {
             constraintViolations.addAll(validator.validate(object));
         }
         if (constraintViolations.size() > 0) {
