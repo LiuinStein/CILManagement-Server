@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DBColumnReference {
+public @interface DatabaseColumnReference {
 
     /**
      * Table name
@@ -18,5 +18,11 @@ public @interface DBColumnReference {
      * Column name
      */
     String column() default "";
+
+    /**
+     * Equivalence class
+     * The default value {} means not to check anything on the database
+     */
+    Class<?>[] groups() default {};
 
 }

@@ -1,7 +1,7 @@
 package com.shaoqunliu.validation.DBValidation;
 
 import com.shaoqunliu.validation.ValidationException;
-import com.shaoqunliu.validation.annotation.DBColumnReference;
+import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
@@ -50,11 +50,36 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
      */
     @Override
     public <T> T validate(T object, Class... groups) throws ValidationException {
+        if (object == null) {
+            throw new ValidationException("Null object was given");
+        }
         Field[] fields = object.getClass().getFields();
         StringBuilder result = new StringBuilder();
         for (Field field : fields) {
-            DBColumnReference columnReference = field.getAnnotation(DBColumnReference.class);
-            if (columnReference != null) {
+            DatabaseColumnReference columnReference = field.getAnnotation(DatabaseColumnReference.class);
+            if (columnReference == null) {
+                continue;
+            }
+            boolean needToCheck = false;
+            if (groups.length == 0 && columnReference.groups().length == 0) {
+                needToCheck = true;
+            } else {
+                for (Class clazz : groups) {
+                    if (!clazz.isInterface()) {
+                        throw new ValidationException("the class " + clazz.getName() + " is not an interface!");
+                    }
+                    for (Class test : columnReference.groups()) {
+                        if (clazz.getName().equals(test.getName())) {
+                            needToCheck = true;
+                            break;
+                        }
+                    }
+                    if (needToCheck) {
+                        break;
+                    }
+                }
+            }
+            if (needToCheck) {
                 try {
                     String value = field.get(object).toString();
                     String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
