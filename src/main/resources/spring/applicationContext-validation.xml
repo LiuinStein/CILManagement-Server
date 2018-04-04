@@ -25,7 +25,7 @@
     <import resource="applicationContext-dao.xml"/>
 
     <bean id="foreignKeyValidation" class="com.shaoqunliu.validation.DBValidation.ForeignKeyValidation">
-        <constructor-arg name="dataSource" value="dataSource"/>
+        <constructor-arg name="dataSource" ref="dataSource"/>
         <property name="failFast" value="true"/>
     </bean>
 

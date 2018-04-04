@@ -6,6 +6,7 @@ import cn.opencil.po.RBACRole;
 import cn.opencil.service.RBACPermissionRoleService;
 import cn.opencil.service.RBACRoleService;
 import cn.opencil.service.RBACUserRoleService;
+import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
 import cn.opencil.validation.group.RoleOperationValidation;
@@ -27,12 +28,14 @@ public class AuthRoleController {
     private final RBACPermissionRoleService permissionRoleService;
     private final RBACUserRoleService userRoleService;
     private final RBACRoleService roleService;
+    private final ValidationService validationService;
 
     @Autowired
-    public AuthRoleController(RBACPermissionRoleService permissionRoleService, RBACUserRoleService userRoleService, RBACRoleService roleService) {
+    public AuthRoleController(RBACPermissionRoleService permissionRoleService, RBACUserRoleService userRoleService, RBACRoleService roleService, ValidationService validationService) {
         this.permissionRoleService = permissionRoleService;
         this.userRoleService = userRoleService;
         this.roleService = roleService;
+        this.validationService = validationService;
     }
 
     /**
@@ -41,7 +44,7 @@ public class AuthRoleController {
     @RequestMapping(value = "/permission/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult grantPermissionToRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
         if (permissionRole.getRoleId().equals(1)) {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
@@ -57,7 +60,7 @@ public class AuthRoleController {
     @RequestMapping(value = "/permission/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void revokePermissionFromRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
         if (permissionRole.getRoleId().equals(1)) {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
@@ -72,7 +75,7 @@ public class AuthRoleController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult addRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), RoleOperationValidation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), RoleOperationValidation.class);
         if (!permissionRoleService.addRole(permissionRole)) {
             throw new SimpleHttpException(400, "role naming conflict", HttpStatus.BAD_REQUEST);
         }
@@ -85,7 +88,7 @@ public class AuthRoleController {
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), NotNullRoleIdValidation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), NotNullRoleIdValidation.class);
         if (permissionRole.getRoleId().equals(1)) {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
@@ -98,7 +101,7 @@ public class AuthRoleController {
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult renameRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = ValidationUtils.validate(input.toJavaObject(RBACPermissionRole.class), NotNullRoleIdValidation.class, RoleOperationValidation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), NotNullRoleIdValidation.class, RoleOperationValidation.class);
         if (permissionRole.getRoleId().equals(1)) {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
@@ -137,7 +140,7 @@ public class AuthRoleController {
                         default:
                             throw new SimpleHttpException(400, "invalid query value", HttpStatus.BAD_REQUEST);
                     }
-                    roles = roleService.getRole(ValidationUtils.validate(role));
+                    roles = roleService.getRole(validationService.validate(role));
                     break;
             }
         } catch (NumberFormatException e) {

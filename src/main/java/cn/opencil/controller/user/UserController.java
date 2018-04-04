@@ -6,6 +6,7 @@ import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.service.UserInfoService;
+import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullUserIdValidation;
 import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
@@ -30,12 +31,15 @@ public class UserController {
     private final RBACUserService userService;
     private final UserInfoService infoService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ValidationService validationService;
+
 
     @Autowired
-    public UserController(RBACUserService userService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(RBACUserService userService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder, ValidationService validationService) {
         this.userService = userService;
         this.infoService = infoService;
         this.passwordEncoder = passwordEncoder;
+        this.validationService = validationService;
     }
 
     /**
@@ -44,9 +48,9 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
-        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class);
-        RBACUserRole role = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
+        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class);
+        RBACUserRole role = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
         if (!userService.addMember(user, info, role)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,7 +64,7 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMember(@RequestBody JSONObject input) throws ValidationException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class));
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class));
         userService.deleteMember(user.getId());
     }
 
@@ -70,7 +74,7 @@ public class UserController {
     @RequestMapping(value = "/info/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult modifyInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class));
+        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class));
         RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ((info.getEnrollTime() != null || info.getExitTime() != null) && !userDetails.getAuthorities().toString().equals("[admin]")) {
             // Only administers can modify the value of enroll_time&exit_time fields. If others submit that, it would be ignored.
@@ -106,7 +110,7 @@ public class UserController {
             default:
                 throw new SimpleHttpException(2, "condition is not supported", HttpStatus.BAD_REQUEST);
         }
-        info = ValidationUtils.validate(info);
+        info = validationService.validate(info);
         List<UserInfo> result;
         switch (mode.toLowerCase()) {
             case "summary":
@@ -138,7 +142,7 @@ public class UserController {
             throw new SimpleHttpException(403, "Old password error", HttpStatus.FORBIDDEN);
         }
         userDetails.setPassword(input.getString("new_password"));
-        if (!userService.changeUserPassword(ValidationUtils.validate(userDetails))) {
+        if (!userService.changeUserPassword(validationService.validate(userDetails))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         // must re-login after password changing, otherwise, replay attacks maybe occurred
@@ -155,7 +159,7 @@ public class UserController {
     public RestfulResult initPassword(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
         RBACUser user = input.toJavaObject(RBACUser.class);
         user.setPassword("666666");
-        if (!userService.changeUserPassword(ValidationUtils.validate(user))) {
+        if (!userService.changeUserPassword(validationService.validate(user))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new RestfulResult(0, "Password has been initialized!", new HashMap<>());
@@ -168,7 +172,7 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult enableOrDisableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
         if (user.getId().equals(10001L)) {
             throw new SimpleHttpException(400, "the default admin user can not be disabled", HttpStatus.BAD_REQUEST);
         }

@@ -3,6 +3,7 @@ package cn.opencil.controller.authorization;
 import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.service.RBACUserRoleService;
+import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
@@ -19,10 +20,12 @@ import java.util.HashMap;
 public class AuthUserController {
 
     private final RBACUserRoleService userRoleService;
+    private final ValidationService validationService;
 
     @Autowired
-    public AuthUserController(RBACUserRoleService userRoleService) {
+    public AuthUserController(RBACUserRoleService userRoleService, ValidationService validationService) {
         this.userRoleService = userRoleService;
+        this.validationService = validationService;
     }
 
     /**
@@ -31,7 +34,7 @@ public class AuthUserController {
     @RequestMapping(value = "/role/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult assignRoleToUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACUserRole userRole = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        RBACUserRole userRole = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
         if (!userRoleService.assignRoleToUser(userRole)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -44,7 +47,7 @@ public class AuthUserController {
     @RequestMapping(value = "/role/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void revokeRoleFormUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACUserRole userRole = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        RBACUserRole userRole = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
         if (userRole.getUserId().equals(10001L)) {
             throw new SimpleHttpException(400, "10001 is the default admin, we can not revoke permission from him", HttpStatus.BAD_REQUEST);
         }
