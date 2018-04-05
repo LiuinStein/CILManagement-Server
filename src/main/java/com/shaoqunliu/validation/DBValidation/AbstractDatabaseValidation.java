@@ -56,7 +56,7 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
         }
     }
 
-    public void setBasicSql(String basicSql) throws ValidationInternalException {
+    public void setBasicSql(String basicSql) {
         /*
          * Do not try to do it AGAIN!
          *
@@ -70,7 +70,7 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
          *
          * Time wasted here = 1.5 hours
          */
-//        Contracts.assertMatchPattern(basicSql.toLowerCase(), "(SELECT)((?<=^SELECT)).*", "Invalid SQL statement");
+//        Contracts.assertMatchPattern(basicSql.toUpperCase(), "(SELECT)((?<=^SELECT)).*", "Invalid SQL statement");
         this.basicSql = basicSql;
     }
 

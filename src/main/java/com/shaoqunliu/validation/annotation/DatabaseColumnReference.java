@@ -1,12 +1,17 @@
 package com.shaoqunliu.validation.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
+/**
+ * The annotated element will be checked with the database as a like-foreign-key function
+ *
+ * @author Shaoqun Liu
+ * @since 1.8
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(DatabaseColumnReference.List.class)
+@Documented
 public @interface DatabaseColumnReference {
 
     /**
@@ -17,16 +22,28 @@ public @interface DatabaseColumnReference {
     /**
      * Table name
      */
-    String table() default "";
+    String table();
 
     /**
      * Column name
      */
-    String column() default "";
+    String column();
 
     /**
      * Equivalence class
      */
     Class<?>[] groups() default {};
+
+    /**
+     * Defines several {@link DatabaseColumnReference} constraints on the same element.
+     *
+     * @see DatabaseColumnReference
+     */
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @interface List {
+        DatabaseColumnReference[] value();
+    }
 
 }

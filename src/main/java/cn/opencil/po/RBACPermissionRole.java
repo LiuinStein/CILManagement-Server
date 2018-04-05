@@ -17,6 +17,7 @@ public class RBACPermissionRole {
      * for url and method field
      */
     private BasicHttpRequest request = new BasicHttpRequest();
+
     /**
      * role name
      */
@@ -41,6 +42,7 @@ public class RBACPermissionRole {
             PermissionRoleIdVaildation.class,
             NotNullRoleIdValidation.class
     })
+    @DatabaseColumnReference(table = "t_rbac_role", column = "id")
     @JSONField(name = "role")
     private Integer roleId;
 

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 /**
  * @author Shaoqun Liu
+ * @since 1.8
  */
 public class ForeignKeyValidation extends AbstractDatabaseValidation {
 
@@ -55,42 +56,40 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     @Override
     public <T> T validate(T object, Class... groups) throws ValidationException {
         Contracts.assertNotNull(object, "Null object was given");
-        Field[] fields = object.getClass().getFields();
         StringBuilder result = new StringBuilder();
-        for (Field field : fields) {
-            DatabaseColumnReference columnReference = field.getAnnotation(DatabaseColumnReference.class);
-            if (columnReference == null) {
-                continue;
-            }
-            boolean needToCheck = false;
-            if (groups.length == 0 && columnReference.groups().length == 0) {
-                needToCheck = true;
-            } else {
-                for (Class clazz : groups) {
-                    if (!clazz.isInterface()) {
-                        throw new ValidationException("the class " + clazz.getName() + " is not an interface!");
-                    }
-                    for (Class test : columnReference.groups()) {
-                        if (clazz.getName().equals(test.getName())) {
-                            needToCheck = true;
+        for (Field field : object.getClass().getFields()) {
+            for (DatabaseColumnReference columnReference :
+                    field.getAnnotationsByType(DatabaseColumnReference.class)) {
+                boolean needToCheck = false;
+                if (groups.length == 0 && columnReference.groups().length == 0) {
+                    needToCheck = true;
+                } else {
+                    for (Class clazz : groups) {
+                        if (!clazz.isInterface()) {
+                            throw new ValidationException("the class " + clazz.getName() + " is not an interface!");
+                        }
+                        for (Class test : columnReference.groups()) {
+                            if (clazz.getName().equals(test.getName())) {
+                                needToCheck = true;
+                                break;
+                            }
+                        }
+                        if (needToCheck) {
                             break;
                         }
                     }
-                    if (needToCheck) {
-                        break;
-                    }
                 }
-            }
-            if (needToCheck) {
-                try {
-                    String value = field.get(object).toString();
-                    String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
-                    if (isFailFast() && !resultFromDB.equals("")) {
-                        throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
+                if (needToCheck) {
+                    try {
+                        String value = field.get(object).toString();
+                        String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
+                        if (isFailFast() && !resultFromDB.equals("")) {
+                            throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
+                        }
+                        result.append(columnReference.message().length() == 0 ? resultFromDB : columnReference.message()).append("; ");
+                    } catch (IllegalAccessException e) {
+                        throw new ValidationException(e.getMessage());
                     }
-                    result.append(columnReference.message().length() == 0 ? resultFromDB : columnReference.message()).append("; ");
-                } catch (IllegalAccessException e) {
-                    throw new ValidationException(e.getMessage());
                 }
             }
         }
