@@ -1,7 +1,9 @@
 package com.shaoqunliu.validation.DBValidation;
 
-import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.Contracts;
+import com.shaoqunliu.validation.exception.ValidationException;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
+import com.shaoqunliu.validation.exception.ValidationInternalException;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
  */
 public class ForeignKeyValidation extends AbstractDatabaseValidation {
 
-    public ForeignKeyValidation(DataSource dataSource) {
+    public ForeignKeyValidation(DataSource dataSource) throws ValidationInternalException {
         super(dataSource);
     }
 
@@ -25,10 +27,12 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     protected String validateWithDatabase(String table, String column, String value) throws ValidationException {
         if (value == null || value.equals("")) {
             /*
-             * Null or empty string consider to be valid.
+             * Null or empty string considered to be valid.
              */
             return "";
         }
+        Contracts.assertNotEmpty(table, "invalid table name");
+        Contracts.assertNotEmpty(column, "invalid column name");
         StringBuilder sql = new StringBuilder(getBasicSql());
         sql.append(" FROM ").append(table)
                 .append(" WHERE ").append(column).append("=?");
@@ -50,9 +54,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
      */
     @Override
     public <T> T validate(T object, Class... groups) throws ValidationException {
-        if (object == null) {
-            throw new ValidationException("Null object was given");
-        }
+        Contracts.assertNotNull(object, "Null object was given");
         Field[] fields = object.getClass().getFields();
         StringBuilder result = new StringBuilder();
         for (Field field : fields) {
@@ -84,9 +86,9 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                     String value = field.get(object).toString();
                     String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
                     if (isFailFast() && !resultFromDB.equals("")) {
-                        throw new ValidationException(resultFromDB);
+                        throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
                     }
-                    result.append(resultFromDB);
+                    result.append(columnReference.message().length() == 0 ? resultFromDB : columnReference.message()).append("; ");
                 } catch (IllegalAccessException e) {
                     throw new ValidationException(e.getMessage());
                 }

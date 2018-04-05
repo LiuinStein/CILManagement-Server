@@ -1,5 +1,7 @@
 package com.shaoqunliu.validation;
 
+import com.shaoqunliu.validation.exception.ValidationException;
+
 /**
  * Validation adapter interface
  * <p>

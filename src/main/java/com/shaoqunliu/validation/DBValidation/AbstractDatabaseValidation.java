@@ -1,7 +1,9 @@
 package com.shaoqunliu.validation.DBValidation;
 
 import com.shaoqunliu.validation.AbstractValidation;
-import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.Contracts;
+import com.shaoqunliu.validation.exception.ValidationException;
+import com.shaoqunliu.validation.exception.ValidationInternalException;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
 import javax.sql.DataSource;
@@ -21,7 +23,7 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
      */
     private String basicSql = "SELECT COUNT(*)";
 
-    public AbstractDatabaseValidation(DataSource dataSource) {
+    public AbstractDatabaseValidation(DataSource dataSource) throws ValidationInternalException {
         setDataSource(dataSource);
     }
 
@@ -45,7 +47,8 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
     /**
      * Do not make it private or package-private due to it may be used at applicationContext.xml for the xml tag <property>
      */
-    public void setDataSource(DataSource dataSource) {
+    public void setDataSource(DataSource dataSource) throws ValidationInternalException {
+        Contracts.assertNotNull(dataSource, "Null data source");
         if (dataSource instanceof TransactionAwareDataSourceProxy) {
             this.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
         } else {
@@ -53,7 +56,21 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
         }
     }
 
-    public void setBasicSql(String basicSql) {
+    public void setBasicSql(String basicSql) throws ValidationInternalException {
+        /*
+         * Do not try to do it AGAIN!
+         *
+         * Regular expressions can match languages only a finite state automaton can parse,
+         * which is very limited, whereas SQL is a syntax.
+         * It can be demonstrated you can't validate SQL with a regex.
+         * So, you can stop trying.
+         *
+         * If you think you CAN do it, NO you can't, believe me.
+         * If you have tried to do it and then failed, add this counter to WARN the next
+         *
+         * Time wasted here = 1.5 hours
+         */
+//        Contracts.assertMatchPattern(basicSql.toLowerCase(), "(SELECT)((?<=^SELECT)).*", "Invalid SQL statement");
         this.basicSql = basicSql;
     }
 

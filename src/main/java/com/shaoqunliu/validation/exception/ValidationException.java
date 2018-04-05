@@ -1,4 +1,4 @@
-package com.shaoqunliu.validation;
+package com.shaoqunliu.validation.exception;
 
 /**
  * @author Shaoqun Liu

@@ -1,6 +1,6 @@
 package cn.opencil.service;
 
-import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.exception.ValidationException;
 
 public interface ValidationService {
     <T> T validate(T object, Class... groups) throws ValidationException;

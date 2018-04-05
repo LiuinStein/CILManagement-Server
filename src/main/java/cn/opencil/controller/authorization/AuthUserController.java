@@ -7,7 +7,7 @@ import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.RegisterValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
-import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

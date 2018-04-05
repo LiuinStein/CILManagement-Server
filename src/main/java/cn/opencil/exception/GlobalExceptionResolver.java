@@ -1,7 +1,8 @@
 package cn.opencil.exception;
 
 import cn.opencil.vo.RestfulResult;
-import com.shaoqunliu.validation.ValidationException;
+import com.shaoqunliu.validation.exception.ValidationException;
+import com.shaoqunliu.validation.exception.ValidationInternalException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DataAccessException;
@@ -46,6 +47,9 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                 exception instanceof ServletRequestBindingException ||
                 exception instanceof IllegalArgumentException) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        if (exception instanceof ValidationInternalException) {
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         if (exception instanceof DataAccessException) {
             result.setMessage("database access error");

@@ -1,5 +1,6 @@
 package com.shaoqunliu.validation;
 
+import com.shaoqunliu.validation.exception.ValidationException;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;

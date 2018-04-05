@@ -10,6 +10,11 @@ import java.lang.annotation.Target;
 public @interface DatabaseColumnReference {
 
     /**
+     * Message will be returned when an invalid value was given
+     */
+    String message() default "";
+
+    /**
      * Table name
      */
     String table() default "";
@@ -21,7 +26,6 @@ public @interface DatabaseColumnReference {
 
     /**
      * Equivalence class
-     * The default value {} means not to check anything on the database
      */
     Class<?>[] groups() default {};
 
