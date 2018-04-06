@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
  */
 public class POJOReflection {
 
-    private Class clazz;
+    private Class<?> clazz;
     private Object object = null;
 
     /**
@@ -21,7 +21,7 @@ public class POJOReflection {
      *
      * @param clazz Classname.class
      */
-    public POJOReflection(Class clazz) {
+    public POJOReflection(Class<?> clazz) {
         this.clazz = clazz;
     }
 

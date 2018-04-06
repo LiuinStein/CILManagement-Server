@@ -29,7 +29,7 @@ public class SimpleValidation extends AbstractValidation {
      * @see com.shaoqunliu.validation.ValidationAdapter
      */
     @Override
-    public <T> T validate(T object, Class... groups) throws ValidationException {
+    public <T> T validate(T object, Class<?>... groups) throws ValidationException {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(object, groups);
         if (isPassDefault() && !(isFailFast() && constraintViolations.size() > 0) && groups.length > 0) {
             constraintViolations.addAll(validator.validate(object));

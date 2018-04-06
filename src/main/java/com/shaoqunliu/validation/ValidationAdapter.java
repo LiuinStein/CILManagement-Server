@@ -18,5 +18,5 @@ public interface ValidationAdapter {
      * @return the input object if nothing was invalidated
      * @throws ValidationException when constraint validated
      */
-    <T> T validate(T object, Class... groups) throws ValidationException;
+    <T> T validate(T object, Class<?>... groups) throws ValidationException;
 }

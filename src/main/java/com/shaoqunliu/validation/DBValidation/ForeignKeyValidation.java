@@ -58,7 +58,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
      * @see com.shaoqunliu.validation.ValidationAdapter
      */
     @Override
-    public <T> T validate(T object, Class... groups) throws ValidationException {
+    public <T> T validate(T object, Class<?>... groups) throws ValidationException {
         Contracts.assertNotNull(object, "Null object was given");
         sanityCheckGroups(groups);
         StringBuilder result = new StringBuilder(128);

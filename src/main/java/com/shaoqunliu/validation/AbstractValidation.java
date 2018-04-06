@@ -25,7 +25,7 @@ public abstract class AbstractValidation implements ValidationAdapter {
      * @see com.shaoqunliu.validation.ValidationAdapter
      */
     @Override
-    public abstract <T> T validate(T object, Class... groups) throws ValidationException;
+    public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;
 
     /**
      * Check if the equivalence class is valid

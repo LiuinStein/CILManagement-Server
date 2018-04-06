@@ -42,7 +42,7 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
      * @see com.shaoqunliu.validation.ValidationAdapter
      */
     @Override
-    public abstract <T> T validate(T object, Class... groups) throws ValidationException;
+    public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;
 
     /**
      * Do not make it private or package-private due to it may be used at applicationContext.xml for the xml tag <property>
