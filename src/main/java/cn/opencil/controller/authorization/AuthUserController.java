@@ -5,6 +5,8 @@ import cn.opencil.po.RBACUserRole;
 import cn.opencil.service.RBACUserRoleService;
 import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.RegisterValidation;
+import cn.opencil.validation.group.database.DatabaseRoleValidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -34,7 +36,8 @@ public class AuthUserController {
     @RequestMapping(value = "/role/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult assignRoleToUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACUserRole userRole = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        RBACUserRole userRole = validationService.validate(input.toJavaObject(RBACUserRole.class),
+                RegisterValidation.class, DatabaseRoleValidation.class, DatabaseUserValidation.class);
         if (!userRoleService.assignRoleToUser(userRole)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

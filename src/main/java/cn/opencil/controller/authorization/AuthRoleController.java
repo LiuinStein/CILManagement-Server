@@ -67,9 +67,7 @@ public class AuthRoleController {
         if (permissionRole.getRoleId().equals(1)) {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
-        if (!permissionRoleService.revokePermissionFromRole(permissionRole)) {
-            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        permissionRoleService.revokePermissionFromRole(permissionRole);
     }
 
     /**
