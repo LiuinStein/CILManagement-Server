@@ -1,17 +1,21 @@
 package cn.opencil.controller.user;
 
 import cn.opencil.exception.SimpleHttpException;
+import cn.opencil.po.RBACRole;
 import cn.opencil.po.RBACUser;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
+import cn.opencil.service.RBACUserRoleService;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.service.UserInfoService;
+import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullUserIdValidation;
 import cn.opencil.validation.group.RegisterValidation;
+import cn.opencil.validation.group.database.DatabaseClassValidation;
+import cn.opencil.validation.group.database.DatabaseCollegeValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
-import com.shaoqunliu.validation.ValidationException;
-import com.shaoqunliu.validation.ValidationUtils;
+import com.shaoqunliu.validation.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,14 +33,19 @@ import java.util.List;
 public class UserController {
 
     private final RBACUserService userService;
+    private final RBACUserRoleService userRoleService;
     private final UserInfoService infoService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ValidationService validationService;
+
 
     @Autowired
-    public UserController(RBACUserService userService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(RBACUserService userService, RBACUserRoleService userRoleService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder, ValidationService validationService) {
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.infoService = infoService;
         this.passwordEncoder = passwordEncoder;
+        this.validationService = validationService;
     }
 
     /**
@@ -45,9 +54,9 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
-        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class);
-        RBACUserRole role = ValidationUtils.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
+        RBACUserRole role = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class, role.getRoleId() > (byte) 2 ? DatabaseClassValidation.class : DatabaseCollegeValidation.class);
         if (!userService.addMember(user, info, role)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -61,7 +70,7 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMember(@RequestBody JSONObject input) throws ValidationException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class));
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class));
         userService.deleteMember(user.getId());
     }
 
@@ -71,10 +80,19 @@ public class UserController {
     @RequestMapping(value = "/info/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult modifyInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        UserInfo info = ValidationUtils.validate(input.toJavaObject(UserInfo.class));
+        UserInfo info = input.toJavaObject(UserInfo.class);
+        List<RBACRole> roles = userRoleService.getRoleByUser(info.getId());
+        if (roles.size() == 0) {
+            throw new SimpleHttpException(404, "user not found", HttpStatus.NOT_FOUND);
+        }
+        /*
+         * only check the first role due to everyone has its base role
+         * there are only 4 base roles supported, admin, teacher, team leader and student
+         */
+        info = validationService.validate(info, roles.get(0).getId() > (byte) 2 ? DatabaseClassValidation.class : DatabaseCollegeValidation.class);
         RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ((info.getEnrollTime() != null || info.getExitTime() != null) && !userDetails.getAuthorities().toString().equals("[admin]")) {
-            // Only administers can modify the value of enroll_time&exit_time fields. If others submit that, it would be ignored.
+            // Only administers can modify the value of enroll_time & exit_time fields. If others submit that, it would be ignored.
             info.setEnrollTime(null);
             info.setExitTime(null);
         }
@@ -107,7 +125,7 @@ public class UserController {
             default:
                 throw new SimpleHttpException(2, "condition is not supported", HttpStatus.BAD_REQUEST);
         }
-        info = ValidationUtils.validate(info);
+        info = validationService.validate(info);
         List<UserInfo> result;
         switch (mode.toLowerCase()) {
             case "summary":
@@ -139,7 +157,7 @@ public class UserController {
             throw new SimpleHttpException(403, "Old password error", HttpStatus.FORBIDDEN);
         }
         userDetails.setPassword(input.getString("new_password"));
-        if (!userService.changeUserPassword(ValidationUtils.validate(userDetails))) {
+        if (!userService.changeUserPassword(validationService.validate(userDetails))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         // must re-login after password changing, otherwise, replay attacks maybe occurred
@@ -156,7 +174,7 @@ public class UserController {
     public RestfulResult initPassword(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
         RBACUser user = input.toJavaObject(RBACUser.class);
         user.setPassword("666666");
-        if (!userService.changeUserPassword(ValidationUtils.validate(user))) {
+        if (!userService.changeUserPassword(validationService.validate(user))) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new RestfulResult(0, "Password has been initialized!", new HashMap<>());
@@ -169,12 +187,12 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.PATCH, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult enableOrDisableUser(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACUser user = ValidationUtils.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
+        RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class), NotNullUserIdValidation.class);
         if (user.getId().equals(10001L)) {
             throw new SimpleHttpException(400, "the default admin user can not be disabled", HttpStatus.BAD_REQUEST);
         }
         if (!userService.enableOrDisableUser(user)) {
-            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SimpleHttpException(404, "user not found", HttpStatus.NOT_FOUND);
         }
         return new RestfulResult(0, "Account has been " + (user.isEnabled() ? "enabled" : "disabled") + "!", new HashMap<>());
     }

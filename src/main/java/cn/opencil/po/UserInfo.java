@@ -1,7 +1,11 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.database.DatabaseClassValidation;
+import cn.opencil.validation.group.database.DatabaseCollegeValidation;
 import cn.opencil.validation.group.ModifyUserInfoValidation;
 import cn.opencil.validation.group.RegisterValidation;
+import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
+import org.aspectj.lang.annotation.Before;
 
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -12,6 +16,7 @@ public class UserInfo {
             RegisterValidation.class,
             ModifyUserInfoValidation.class
     })
+    @DatabaseColumnReference(table = "t_rbac_user", column = "id")
     private Long id;
 
     @Size(max = 30)
@@ -30,6 +35,12 @@ public class UserInfo {
     @Positive
     @NotNull(groups = {
             RegisterValidation.class
+    })
+    @DatabaseColumnReference(table = "t_class", column = "id", groups = {
+            DatabaseClassValidation.class
+    })
+    @DatabaseColumnReference(table = "t_college", column = "id", groups = {
+            DatabaseCollegeValidation.class
     })
     private Integer department;
 
