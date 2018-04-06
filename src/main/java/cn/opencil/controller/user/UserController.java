@@ -1,9 +1,11 @@
 package cn.opencil.controller.user;
 
 import cn.opencil.exception.SimpleHttpException;
+import cn.opencil.po.RBACRole;
 import cn.opencil.po.RBACUser;
 import cn.opencil.po.RBACUserRole;
 import cn.opencil.po.UserInfo;
+import cn.opencil.service.RBACUserRoleService;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.service.UserInfoService;
 import cn.opencil.service.ValidationService;
@@ -31,14 +33,16 @@ import java.util.List;
 public class UserController {
 
     private final RBACUserService userService;
+    private final RBACUserRoleService userRoleService;
     private final UserInfoService infoService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ValidationService validationService;
 
 
     @Autowired
-    public UserController(RBACUserService userService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder, ValidationService validationService) {
+    public UserController(RBACUserService userService, RBACUserRoleService userRoleService, UserInfoService infoService, BCryptPasswordEncoder passwordEncoder, ValidationService validationService) {
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.infoService = infoService;
         this.passwordEncoder = passwordEncoder;
         this.validationService = validationService;
@@ -76,10 +80,19 @@ public class UserController {
     @RequestMapping(value = "/info/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult modifyInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class));
+        UserInfo info = input.toJavaObject(UserInfo.class);
+        List<RBACRole> roles = userRoleService.getRoleByUser(info.getId());
+        if (roles.size() == 0) {
+            throw new SimpleHttpException(404, "user not found", HttpStatus.NOT_FOUND);
+        }
+        /*
+         * only check the first role due to everyone has its base role
+         * there are only 4 base roles supported, admin, teacher, team leader and student
+         */
+        info = validationService.validate(info, roles.get(0).getId() > (byte) 2 ? DatabaseClassValidation.class : DatabaseCollegeValidation.class);
         RBACUser userDetails = (RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ((info.getEnrollTime() != null || info.getExitTime() != null) && !userDetails.getAuthorities().toString().equals("[admin]")) {
-            // Only administers can modify the value of enroll_time&exit_time fields. If others submit that, it would be ignored.
+            // Only administers can modify the value of enroll_time & exit_time fields. If others submit that, it would be ignored.
             info.setEnrollTime(null);
             info.setExitTime(null);
         }
@@ -179,7 +192,7 @@ public class UserController {
             throw new SimpleHttpException(400, "the default admin user can not be disabled", HttpStatus.BAD_REQUEST);
         }
         if (!userService.enableOrDisableUser(user)) {
-            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SimpleHttpException(404, "user not found", HttpStatus.NOT_FOUND);
         }
         return new RestfulResult(0, "Account has been " + (user.isEnabled() ? "enabled" : "disabled") + "!", new HashMap<>());
     }

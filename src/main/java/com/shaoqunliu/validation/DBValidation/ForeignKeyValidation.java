@@ -93,6 +93,13 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                         if (message.length() > 0) {
                             result.append(message).append("; ");
                         }
+                    } catch (NullPointerException e) {
+                        /*
+                         *  reflection.getValue() may return a null object
+                         *  then, the following toString() will produce a NullPointerException
+                         *  but, the null value was considered to be valid
+                         */
+                        return object;
                     } catch (Exception e) {
                         throw new ValidationException(e.getMessage());
                     }
