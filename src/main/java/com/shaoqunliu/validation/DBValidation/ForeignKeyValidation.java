@@ -27,7 +27,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
      */
     @Override
     protected String validateWithDatabase(String table, String column, String value) throws ValidationException {
-        if (value == null || value.equals("")) {
+        if (value == null || value.length() == 0) {
             /*
              * Null or empty string considered to be valid.
              */
@@ -42,7 +42,10 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
             PreparedStatement statement = getDataSource().getConnection().prepareStatement(sql.toString());
             statement.setString(1, value);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next() && resultSet.getInt(1) == 0) {
+            /*
+             * empty result set considered to be invalid
+             */
+            if (!resultSet.next() || resultSet.getInt(1) == 0) {
                 return "Value '" + value + "' for column " + column + " is invalid!";
             }
         } catch (SQLException e) {
@@ -58,7 +61,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     public <T> T validate(T object, Class... groups) throws ValidationException {
         Contracts.assertNotNull(object, "Null object was given");
         sanityCheckGroups(groups);
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(128);
         for (Field field : object.getClass().getDeclaredFields()) {
             for (DatabaseColumnReference columnReference :
                     field.getAnnotationsByType(DatabaseColumnReference.class)) {
@@ -68,7 +71,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                 } else {
                     for (Class clazz : groups) {
                         for (Class test : columnReference.groups()) {
-                            if (clazz.getName().equals(test.getName())) {
+                            if (clazz.equals(test)) {
                                 needToCheck = true;
                                 break;
                             }
@@ -83,7 +86,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                         POJOReflection reflection = new POJOReflection(object);
                         String value = reflection.getValue(field.getName()).toString();
                         String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
-                        if (isFailFast() && !resultFromDB.equals("")) {
+                        if (isFailFast() && resultFromDB.length() != 0) {
                             throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
                         }
                         String message = columnReference.message().length() == 0 ? resultFromDB : columnReference.message();

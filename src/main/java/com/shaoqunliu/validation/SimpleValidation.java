@@ -35,7 +35,7 @@ public class SimpleValidation extends AbstractValidation {
             constraintViolations.addAll(validator.validate(object));
         }
         if (constraintViolations.size() > 0) {
-            StringBuilder message = new StringBuilder();
+            StringBuilder message = new StringBuilder(64);
             for (ConstraintViolation violation : constraintViolations) {
                 message.append(violation.getPropertyPath().toString()).append(" ")
                         .append(violation.getMessage()).append("; ");

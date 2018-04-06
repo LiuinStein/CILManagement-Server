@@ -50,6 +50,10 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
     public void setDataSource(DataSource dataSource) throws ValidationInternalException {
         Contracts.assertNotNull(dataSource, "Null data source");
         if (dataSource instanceof TransactionAwareDataSourceProxy) {
+            /*
+             * for Spring Jdbc transaction aware data source
+             * @see https://docs.spring.io/autorepo/docs/spring-framework/5.0.5.RELEASE/javadoc-api/org/springframework/jdbc/datasource/TransactionAwareDataSourceProxy.html
+             */
             this.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
         } else {
             this.dataSource = dataSource;
