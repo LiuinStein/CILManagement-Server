@@ -57,6 +57,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     @Override
     public <T> T validate(T object, Class... groups) throws ValidationException {
         Contracts.assertNotNull(object, "Null object was given");
+        sanityCheckGroups(groups);
         StringBuilder result = new StringBuilder();
         for (Field field : object.getClass().getDeclaredFields()) {
             for (DatabaseColumnReference columnReference :
@@ -66,9 +67,6 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                     needToCheck = true;
                 } else {
                     for (Class clazz : groups) {
-                        if (!clazz.isInterface()) {
-                            throw new ValidationException("the class " + clazz.getName() + " is not an interface!");
-                        }
                         for (Class test : columnReference.groups()) {
                             if (clazz.getName().equals(test.getName())) {
                                 needToCheck = true;
