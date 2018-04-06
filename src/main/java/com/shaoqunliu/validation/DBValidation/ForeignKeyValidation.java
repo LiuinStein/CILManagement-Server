@@ -1,5 +1,6 @@
 package com.shaoqunliu.validation.DBValidation;
 
+import com.shaoqunliu.reflection.POJOReflection;
 import com.shaoqunliu.validation.Contracts;
 import com.shaoqunliu.validation.exception.ValidationException;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
@@ -41,7 +42,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
             PreparedStatement statement = getDataSource().getConnection().prepareStatement(sql.toString());
             statement.setString(1, value);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.getInt(1) == 0) {
+            if (resultSet.next() && resultSet.getInt(1) == 0) {
                 return "Value '" + value + "' for column " + column + " is invalid!";
             }
         } catch (SQLException e) {
@@ -57,7 +58,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     public <T> T validate(T object, Class... groups) throws ValidationException {
         Contracts.assertNotNull(object, "Null object was given");
         StringBuilder result = new StringBuilder();
-        for (Field field : object.getClass().getFields()) {
+        for (Field field : object.getClass().getDeclaredFields()) {
             for (DatabaseColumnReference columnReference :
                     field.getAnnotationsByType(DatabaseColumnReference.class)) {
                 boolean needToCheck = false;
@@ -81,13 +82,17 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                 }
                 if (needToCheck) {
                     try {
-                        String value = field.get(object).toString();
+                        POJOReflection reflection = new POJOReflection(object);
+                        String value = reflection.getValue(field.getName()).toString();
                         String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
                         if (isFailFast() && !resultFromDB.equals("")) {
                             throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
                         }
-                        result.append(columnReference.message().length() == 0 ? resultFromDB : columnReference.message()).append("; ");
-                    } catch (IllegalAccessException e) {
+                        String message = columnReference.message().length() == 0 ? resultFromDB : columnReference.message();
+                        if (message.length() > 0) {
+                            result.append(message).append("; ");
+                        }
+                    } catch (Exception e) {
                         throw new ValidationException(e.getMessage());
                     }
                 }

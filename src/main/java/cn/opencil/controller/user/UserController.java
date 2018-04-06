@@ -9,6 +9,8 @@ import cn.opencil.service.UserInfoService;
 import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullUserIdValidation;
 import cn.opencil.validation.group.RegisterValidation;
+import cn.opencil.validation.group.database.DatabaseClassValidation;
+import cn.opencil.validation.group.database.DatabaseCollegeValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -49,8 +51,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult register(@RequestBody JSONObject input) throws SimpleHttpException, ValidationException {
         RBACUser user = validationService.validate(input.toJavaObject(RBACUser.class), RegisterValidation.class);
-        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class);
         RBACUserRole role = validationService.validate(input.toJavaObject(RBACUserRole.class), RegisterValidation.class);
+        UserInfo info = validationService.validate(input.toJavaObject(UserInfo.class), RegisterValidation.class, role.getRoleId() > (byte) 2 ? DatabaseClassValidation.class : DatabaseCollegeValidation.class);
         if (!userService.addMember(user, info, role)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

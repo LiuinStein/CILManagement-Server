@@ -1,8 +1,11 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.database.DatabaseClassValidation;
+import cn.opencil.validation.group.database.DatabaseCollegeValidation;
 import cn.opencil.validation.group.ModifyUserInfoValidation;
 import cn.opencil.validation.group.RegisterValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
+import org.aspectj.lang.annotation.Before;
 
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -33,8 +36,12 @@ public class UserInfo {
     @NotNull(groups = {
             RegisterValidation.class
     })
-    @DatabaseColumnReference(table = "t_class", column = "id")
-    @DatabaseColumnReference(table = "t_college", column = "id")
+    @DatabaseColumnReference(table = "t_class", column = "id", groups = {
+            DatabaseClassValidation.class
+    })
+    @DatabaseColumnReference(table = "t_college", column = "id", groups = {
+            DatabaseCollegeValidation.class
+    })
     private Integer department;
 
     @Past

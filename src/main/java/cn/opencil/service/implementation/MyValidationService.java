@@ -22,12 +22,7 @@ public class MyValidationService implements ValidationService {
 
     @Override
     public <T> T validate(T object, Class... groups) throws ValidationException {
-        return normalValidationAdapter.validate(object, groups);
-    }
-
-    @Override
-    public <T> T validateWithDatabase(T object, Class... groups) throws ValidationException {
-        return databaseValidationAdapter.validate(validate(object, groups), groups);
+        return databaseValidationAdapter.validate(normalValidationAdapter.validate(object, groups), groups);
     }
 
 }
