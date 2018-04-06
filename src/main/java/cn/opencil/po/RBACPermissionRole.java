@@ -3,6 +3,8 @@ package cn.opencil.po;
 import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
 import cn.opencil.validation.group.RoleOperationValidation;
+import cn.opencil.validation.group.database.DatabasePermissionValidation;
+import cn.opencil.validation.group.database.DatabaseRoleValidation;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.shaoqunliu.security.SecurityComponentException;
 import com.shaoqunliu.security.util.BasicHttpRequest;
@@ -33,7 +35,9 @@ public class RBACPermissionRole {
     @NotNull(groups = {
             PermissionRoleIdVaildation.class
     })
-    @DatabaseColumnReference(table = "t_rbac_permission", column = "id")
+    @DatabaseColumnReference(table = "t_rbac_permission", column = "id", groups = {
+            DatabasePermissionValidation.class
+    })
     @JSONField(name = "permission")
     private Integer permissionId;
 
@@ -42,7 +46,9 @@ public class RBACPermissionRole {
             PermissionRoleIdVaildation.class,
             NotNullRoleIdValidation.class
     })
-    @DatabaseColumnReference(table = "t_rbac_role", column = "id")
+    @DatabaseColumnReference(table = "t_rbac_role", column = "id", groups = {
+            DatabaseRoleValidation.class
+    })
     @JSONField(name = "role")
     private Integer roleId;
 

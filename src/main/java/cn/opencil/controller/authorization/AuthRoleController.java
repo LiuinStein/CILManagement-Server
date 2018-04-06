@@ -10,6 +10,8 @@ import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullRoleIdValidation;
 import cn.opencil.validation.group.PermissionRoleIdVaildation;
 import cn.opencil.validation.group.RoleOperationValidation;
+import cn.opencil.validation.group.database.DatabasePermissionValidation;
+import cn.opencil.validation.group.database.DatabaseRoleValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -44,9 +46,10 @@ public class AuthRoleController {
     @RequestMapping(value = "/permission/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult grantPermissionToRole(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class), PermissionRoleIdVaildation.class);
+        RBACPermissionRole permissionRole = validationService.validate(input.toJavaObject(RBACPermissionRole.class),
+                PermissionRoleIdVaildation.class, DatabaseRoleValidation.class, DatabasePermissionValidation.class);
         if (permissionRole.getRoleId().equals(1)) {
-            throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
+            throw new SimpleHttpException(400, "the default admin user can not be grant or revoke any permission", HttpStatus.BAD_REQUEST);
         }
         if (!permissionRoleService.grantPermissionToRole(permissionRole)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,7 +109,7 @@ public class AuthRoleController {
             throw new SimpleHttpException(400, "the default admin user can not be deleted", HttpStatus.BAD_REQUEST);
         }
         if (!permissionRoleService.renameRole(permissionRole)) {
-            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SimpleHttpException(404, "role not found", HttpStatus.NOT_FOUND);
         }
         return new RestfulResult(0, "role rename successfully", new HashMap<>());
     }
