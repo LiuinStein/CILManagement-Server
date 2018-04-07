@@ -81,6 +81,11 @@ public class POJOReflection {
     }
 
 
+    /**
+     * Performs the given action for each field of the class
+     *
+     * @param action the action to be performed for each field
+     */
     public void forEachField(Consumer<? super Field> action) {
         Objects.requireNonNull(action);
         for (Field field : clazz.getDeclaredFields()) {
@@ -88,6 +93,12 @@ public class POJOReflection {
         }
     }
 
+    /**
+     * Performs the given action for each specific annotation of each field
+     *
+     * @param action the action to be performed for each specific annotation of each field
+     * @param type   the specific annotation type
+     */
     public <T extends Annotation> void forEachAnnotationByFieldByType(
             BiConsumer<? super Field, T> action, Class<T> type) {
         Objects.requireNonNull(type);
@@ -99,8 +110,14 @@ public class POJOReflection {
         });
     }
 
+    /**
+     * Performs the given action for each specific annotation of the class
+     *
+     * @param action the action to be performed for each specific annotation of the class
+     * @param type   the specific annotation type
+     */
     public <T extends Annotation> void forEachAnnotationByType(
-            Class<T> type, Consumer<T> action) {
+            Consumer<T> action, Class<T> type) {
         Objects.requireNonNull(action);
         Objects.requireNonNull(type);
         for (T annotation : clazz.getAnnotationsByType(type)) {
