@@ -1,6 +1,5 @@
 package com.shaoqunliu.validation.DBValidation;
 
-import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.reflection.POJOReflection;
 import com.shaoqunliu.validation.Contracts;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -8,10 +7,11 @@ import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 import com.shaoqunliu.validation.exception.ValidationInternalException;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Shaoqun Liu
@@ -67,21 +67,18 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
             if (isFailFast() && result.length() != 0) {
                 return;
             }
-            boolean needToCheck = false;
+            boolean needToCheck;
             if (groups.length == 0 && databaseColumnReference.groups().length == 0) {
                 needToCheck = true;
             } else {
-                for (Class clazz : groups) {
-                    for (Class test : databaseColumnReference.groups()) {
-                        if (clazz.equals(test)) {
-                            needToCheck = true;
-                            break;
-                        }
-                    }
-                    if (needToCheck) {
-                        break;
-                    }
-                }
+                /*
+                 * the Arrays.asList create a fake ArrayList (java.util.Arrays.ArrayList),
+                 * the real ArrayList is in the package java.util not java.util.Arrays.ArrayList
+                 * the fake ArrayList can NOT add or remove elements, its Read-Only, only used for traverse
+                 */
+                List<Class<?>> inputGroups = Arrays.asList(groups);
+                List<Class<?>> annotatedGroups = Arrays.asList(databaseColumnReference.groups());
+                needToCheck = annotatedGroups.stream().anyMatch(inputGroups::contains);
             }
             if (needToCheck) {
                 try {

@@ -15,6 +15,7 @@ Related technologies:
 * **MyBatis**+**MySQL** for database persistence
 * **MyBatis Generator** for creating entities code
 * **Hibernate Validator** for data validation checking
+* **Lambda** of Java8 for [functional programming](https://flyingbytes.github.io/programming/java8/functional/part0/2017/01/16/Java8-Part0.html)
 * **Tomcat JDBC Pool** for database connection pooling
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel
