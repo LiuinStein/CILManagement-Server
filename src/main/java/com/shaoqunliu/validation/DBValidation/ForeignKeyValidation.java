@@ -1,5 +1,6 @@
 package com.shaoqunliu.validation.DBValidation;
 
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.reflection.POJOReflection;
 import com.shaoqunliu.validation.Contracts;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -26,12 +27,12 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
      * @see com.shaoqunliu.validation.DBValidation.AbstractDatabaseValidation
      */
     @Override
-    protected String validateWithDatabase(String table, String column, String value) throws ValidationException {
+    protected void validateWithDatabase(String table, String column, String value) throws ValidationException {
         if (value == null || value.length() == 0) {
             /*
              * Null or empty string considered to be valid.
              */
-            return "";
+            return;
         }
         Contracts.assertNotEmpty(table, "invalid table name");
         Contracts.assertNotEmpty(column, "invalid column name");
@@ -46,12 +47,11 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
              * empty result set considered to be invalid
              */
             if (!resultSet.next() || resultSet.getInt(1) == 0) {
-                return "Value '" + value + "' for column " + column + " is invalid!";
+                throw new ValidationException("Value '" + value + "' for column " + column + " is invalid!");
             }
         } catch (SQLException e) {
-            throw new ValidationException(e.getMessage());
+            throw new ValidationInternalException(e.getMessage());
         }
-        return "";
     }
 
     /**
@@ -62,50 +62,44 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
         Contracts.assertNotNull(object, "Null object was given");
         sanityCheckGroups(groups);
         StringBuilder result = new StringBuilder(128);
-        for (Field field : object.getClass().getDeclaredFields()) {
-            for (DatabaseColumnReference columnReference :
-                    field.getAnnotationsByType(DatabaseColumnReference.class)) {
-                boolean needToCheck = false;
-                if (groups.length == 0 && columnReference.groups().length == 0) {
-                    needToCheck = true;
-                } else {
-                    for (Class clazz : groups) {
-                        for (Class test : columnReference.groups()) {
-                            if (clazz.equals(test)) {
-                                needToCheck = true;
-                                break;
-                            }
-                        }
-                        if (needToCheck) {
+        POJOReflection reflection = new POJOReflection(object);
+        reflection.forEachAnnotationByFieldByType((field, databaseColumnReference) -> {
+            if (isFailFast() && result.length() != 0) {
+                return;
+            }
+            boolean needToCheck = false;
+            if (groups.length == 0 && databaseColumnReference.groups().length == 0) {
+                needToCheck = true;
+            } else {
+                for (Class clazz : groups) {
+                    for (Class test : databaseColumnReference.groups()) {
+                        if (clazz.equals(test)) {
+                            needToCheck = true;
                             break;
                         }
                     }
-                }
-                if (needToCheck) {
-                    try {
-                        POJOReflection reflection = new POJOReflection(object);
-                        String value = reflection.getValue(field.getName()).toString();
-                        String resultFromDB = validateWithDatabase(columnReference.table(), columnReference.column(), value);
-                        if (isFailFast() && resultFromDB.length() != 0) {
-                            throw new ValidationException(columnReference.message().length() == 0 ? resultFromDB : columnReference.message());
-                        }
-                        String message = columnReference.message().length() == 0 ? resultFromDB : columnReference.message();
-                        if (message.length() > 0) {
-                            result.append(message).append("; ");
-                        }
-                    } catch (NullPointerException e) {
-                        /*
-                         *  reflection.getValue() may return a null object
-                         *  then, the following toString() will produce a NullPointerException
-                         *  but, the null value was considered to be valid
-                         */
-                        return object;
-                    } catch (Exception e) {
-                        throw new ValidationException(e.getMessage());
+                    if (needToCheck) {
+                        break;
                     }
                 }
             }
-        }
+            if (needToCheck) {
+                try {
+                    String value = reflection.getValue(field.getName()).toString();
+                    validateWithDatabase(databaseColumnReference.table(), databaseColumnReference.column(), value);
+                } catch (NullPointerException ignored) {
+                    /*
+                     *  reflection.getValue() may return a null object
+                     *  then, the following .toString() will produce a NullPointerException
+                     *  but, the null value was considered to be valid
+                     */
+                } catch (ValidationException e) {
+                    result.append(databaseColumnReference.message().length() == 0 ? e.getMessage() : databaseColumnReference.message()).append("; ");
+                } catch (Exception e) {
+                    result.append(e.getMessage()).append("; ");
+                }
+            }
+        }, DatabaseColumnReference.class);
         if (result.length() != 0) {
             throw new ValidationException(result.toString());
         }

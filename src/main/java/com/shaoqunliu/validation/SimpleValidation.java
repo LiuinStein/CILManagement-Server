@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * @author Shaoqun Liu
+ * @since 1.8
  */
 public class SimpleValidation extends AbstractValidation {
 
@@ -36,10 +37,10 @@ public class SimpleValidation extends AbstractValidation {
         }
         if (constraintViolations.size() > 0) {
             StringBuilder message = new StringBuilder(64);
-            for (ConstraintViolation violation : constraintViolations) {
-                message.append(violation.getPropertyPath().toString()).append(" ")
-                        .append(violation.getMessage()).append("; ");
-            }
+            constraintViolations.forEach(violation ->
+                    message.append(violation.getPropertyPath().toString()).append(" ")
+                            .append(violation.getMessage()).append("; ")
+            );
             throw new ValidationException(message.toString());
         }
         return object;

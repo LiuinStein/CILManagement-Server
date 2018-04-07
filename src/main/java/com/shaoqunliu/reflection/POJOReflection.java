@@ -2,8 +2,13 @@ package com.shaoqunliu.reflection;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Plain Ordinary Java Object (POJO) Reflection
@@ -73,6 +78,34 @@ public class POJOReflection {
         PropertyDescriptor descriptor = new PropertyDescriptor(fieldName, clazz);
         Method method = descriptor.getWriteMethod();
         method.invoke(object, value);
+    }
+
+
+    public void forEachField(Consumer<? super Field> action) {
+        Objects.requireNonNull(action);
+        for (Field field : clazz.getDeclaredFields()) {
+            action.accept(field);
+        }
+    }
+
+    public <T extends Annotation> void forEachAnnotationByFieldByType(
+            BiConsumer<? super Field, T> action, Class<T> type) {
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(action);
+        forEachField(field -> {
+            for (T annotation : field.getAnnotationsByType(type)) {
+                action.accept(field, annotation);
+            }
+        });
+    }
+
+    public <T extends Annotation> void forEachAnnotationByType(
+            Class<T> type, Consumer<T> action) {
+        Objects.requireNonNull(action);
+        Objects.requireNonNull(type);
+        for (T annotation : clazz.getAnnotationsByType(type)) {
+            action.accept(annotation);
+        }
     }
 
 }

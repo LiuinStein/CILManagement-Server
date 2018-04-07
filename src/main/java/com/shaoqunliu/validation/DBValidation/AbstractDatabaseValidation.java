@@ -33,10 +33,9 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
      * @param table  the table name
      * @param column the column name
      * @param value  the value need to be check
-     * @return empty string when the value is valid, otherwise, the digest of invalidation message will be returned
      * @throws ValidationException when SQLException occurred
      */
-    protected abstract String validateWithDatabase(String table, String column, String value) throws ValidationException;
+    protected abstract void validateWithDatabase(String table, String column, String value) throws ValidationException;
 
     /**
      * @see com.shaoqunliu.validation.ValidationAdapter
