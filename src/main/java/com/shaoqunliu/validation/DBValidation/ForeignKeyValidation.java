@@ -11,9 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 
 /**
+ * To validate with database as a like-foreign-key function
+ *
  * @author Shaoqun Liu
  * @since 1.8
  */
@@ -76,9 +77,8 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                  * the real ArrayList is in the package java.util not java.util.Arrays.ArrayList
                  * the fake ArrayList can NOT add or remove elements, its Read-Only, only used for traverse
                  */
-                List<Class<?>> inputGroups = Arrays.asList(groups);
-                List<Class<?>> annotatedGroups = Arrays.asList(databaseColumnReference.groups());
-                needToCheck = annotatedGroups.stream().anyMatch(inputGroups::contains);
+                needToCheck = Arrays.stream(databaseColumnReference.groups())
+                        .anyMatch(Arrays.asList(groups)::contains);
             }
             if (needToCheck) {
                 try {
@@ -86,9 +86,9 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
                     validateWithDatabase(databaseColumnReference.table(), databaseColumnReference.column(), value);
                 } catch (NullPointerException ignored) {
                     /*
-                     *  reflection.getValue() may return a null object
-                     *  then, the following .toString() will produce a NullPointerException
-                     *  but, the null value was considered to be valid
+                     * reflection.getValue() may return a null object
+                     * then, the following .toString() will produce a NullPointerException
+                     * but, the null value was considered to be valid
                      */
                 } catch (ValidationException e) {
                     result.append(databaseColumnReference.message().length() == 0 ? e.getMessage() : databaseColumnReference.message()).append("; ");
