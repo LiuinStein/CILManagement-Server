@@ -6,9 +6,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Plain Ordinary Java Object (POJO) Reflection
@@ -20,6 +22,11 @@ public class POJOReflection {
 
     private Class<?> clazz;
     private Object object = null;
+    private Stream<Field> fieldStream;
+
+    private void init() {
+        fieldStream = Arrays.stream(clazz.getDeclaredFields());
+    }
 
     /**
      * Construct object with Class
@@ -28,6 +35,7 @@ public class POJOReflection {
      */
     public POJOReflection(Class<?> clazz) {
         this.clazz = clazz;
+        init();
     }
 
     /**
@@ -38,6 +46,7 @@ public class POJOReflection {
     public POJOReflection(Object o) {
         object = o;
         clazz = object.getClass();
+        init();
     }
 
     /**
@@ -48,6 +57,7 @@ public class POJOReflection {
      */
     public POJOReflection(String className) throws ClassNotFoundException {
         clazz = Class.forName(className);
+        init();
     }
 
     /**
@@ -103,11 +113,12 @@ public class POJOReflection {
             BiConsumer<? super Field, T> action, Class<T> type) {
         Objects.requireNonNull(type);
         Objects.requireNonNull(action);
-        forEachField(field -> {
-            for (T annotation : field.getAnnotationsByType(type)) {
-                action.accept(field, annotation);
-            }
-        });
+        getFieldStream().filter(x -> x.getAnnotationsByType(type).length != 0)
+                .forEach(field -> {
+                    for (T annotation : field.getAnnotationsByType(type)) {
+                        action.accept(field, annotation);
+                    }
+                });
     }
 
     /**
@@ -123,6 +134,10 @@ public class POJOReflection {
         for (T annotation : clazz.getAnnotationsByType(type)) {
             action.accept(annotation);
         }
+    }
+
+    public Stream<Field> getFieldStream() {
+        return fieldStream;
     }
 
 }

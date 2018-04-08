@@ -12,6 +12,7 @@ import java.util.function.Predicate;
  * </p>
  *
  * @author Shaoqun Liu
+ * @since 1.8
  */
 public interface ValidationAdapter {
     /**
