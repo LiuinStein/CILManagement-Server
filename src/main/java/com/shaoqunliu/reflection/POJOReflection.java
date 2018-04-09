@@ -97,10 +97,7 @@ public class POJOReflection {
      * @param action the action to be performed for each field
      */
     public void forEachField(Consumer<? super Field> action) {
-        Objects.requireNonNull(action);
-        for (Field field : clazz.getDeclaredFields()) {
-            action.accept(field);
-        }
+        getFieldStream().forEach(action);
     }
 
     /**
@@ -113,12 +110,11 @@ public class POJOReflection {
             BiConsumer<? super Field, T> action, Class<T> type) {
         Objects.requireNonNull(type);
         Objects.requireNonNull(action);
-        getFieldStream().filter(x -> x.getAnnotationsByType(type).length != 0)
-                .forEach(field -> {
-                    for (T annotation : field.getAnnotationsByType(type)) {
-                        action.accept(field, annotation);
-                    }
-                });
+        getFieldStream().forEach(field -> {
+            for (T annotation : field.getAnnotationsByType(type)) {
+                action.accept(field, annotation);
+            }
+        });
     }
 
     /**

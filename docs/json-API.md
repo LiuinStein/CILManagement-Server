@@ -729,6 +729,324 @@ HTTP/1.1 200 OK
 
 ### 0x03 Project & Team Management
 
+#### 0x00 Add a project
+
+```http
+POST /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x01 Modify project information
+
+```http
+PUT /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x02 Delete a project
+
+```http
+DELETE /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x03 Query projects
+
+```http
+GET /v1/project? HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x04 Organize a team 
+
+```http
+POST /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x05 Modify team information
+
+```http
+PUT /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x06 Dissolve a team
+
+```http
+DELETE /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x07 Query a team
+
+```http
+GET /v1/team? HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x08 Add a man to a team
+
+```http
+POST /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x09 Kick out a man from a team
+
+```http
+DELETE /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0A Modify someone's job or position
+
+```http
+PUT /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0B Query team members
+
+```http
+GET /v1/team/member? HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0C Assign a project to a team
+
+```http
+POST /v1/team/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0D Take back a project from a team
+
+```http
+DELETE /v1/team/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0E Income/Outcome a sum of money 
+
+```http
+POST /v1/project/funding/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+
+
+#### 0x0F Query expenditures
+
+```http
+GET /v1/project/funding/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
 
 
 ### 0x04 Resource & Usage Management
