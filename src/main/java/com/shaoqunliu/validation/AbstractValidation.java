@@ -3,6 +3,10 @@ package com.shaoqunliu.validation;
 import com.shaoqunliu.validation.exception.ValidationException;
 import com.shaoqunliu.validation.exception.ValidationInternalException;
 
+import java.util.Arrays;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 /**
  * @author Shaoqun Liu
  */
@@ -26,6 +30,20 @@ public abstract class AbstractValidation implements ValidationAdapter {
      */
     @Override
     public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;
+
+    /**
+     * @see com.shaoqunliu.validation.ValidationAdapter
+     */
+    @Override
+    public <T> T[] validate(T[] objects, Predicate<? super T> predicate) throws ValidationException {
+        Stream<T> stream = Arrays.stream(objects);
+        boolean allValid = isFailFast() ? stream.anyMatch(predicate.negate())
+                : stream.allMatch(predicate);
+        if (allValid) {
+            return objects;
+        }
+        throw new ValidationException("invalid array");
+    }
 
     /**
      * Check if the equivalence class is valid

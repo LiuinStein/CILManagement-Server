@@ -15,6 +15,7 @@ Related technologies:
 * **MyBatis**+**MySQL** for database persistence
 * **MyBatis Generator** for creating entities code
 * **Hibernate Validator** for data validation checking
+* **Lambda** for [functional programming](https://flyingbytes.github.io/programming/java8/functional/part0/2017/01/16/Java8-Part0.html)
 * **Tomcat JDBC Pool** for database connection pooling
 * **Activiti** for workflow
 * **Apache POI** for import or export to Excel
@@ -25,6 +26,7 @@ Related technologies:
 * **Maven** for package management
 * **Git** for versioning
 * **Tomcat** as a web container
+* **Java9**: minimal Java platform is Java 8, recommend to Java 9
 
 Some technologies that have been considered, but not used:
 
@@ -91,9 +93,23 @@ Dev branch used to follow up development progress.
 
 When some features development and test finished, merge it into master branch.
 
-## 0x02 Directories structure
+### 0x01 Pull Requests
+
+When a phase finished or reached a milestone, the developer issue a pull request from branch `dev` to `master`. The comment formatting of pull request is here:
 
 ```
+Step N finished: Something has done
+```
+
+### 0x02 Issues
+
+When someone found a problem, open an issue, and then the developer or the maintainer will reply to it within 72 hours.
+
+The communication between internal developers or maintainer, use E-MAIL, not QQ, not WeChat.
+
+## 0x02 Directories structure
+
+```shell
 G:.                                          
 ├─.idea        # IDE's configuration files                              
 │  ├─artifacts                               
@@ -106,7 +122,9 @@ G:.
 │      ├─java    # all of the java codes                            
 │      │  ├─cn                               
 │      │  │  └─opencil          # main package             
-│      │  │      ├─controller   # Spring controller             
+│      │  │      ├─controller   # Spring controller                
+│      │  │      │  ├─authorization # controller for URI /v1/auth/*
+│      │  │      │  ├─error     # error handling controller
 │      │  │      │  └─user      # controller for URI /v1/user/*
 │      │  │      ├─exception    # exceptions form controller             
 │      │  │      ├─mapper       # mybatis mapper interfaces             
@@ -114,18 +132,27 @@ G:.
 │      │  │      ├─security     # for Spring Security             
 │      │  │      ├─service      # service layer             
 │      │  │      │  └─implementation    # service implementations
+│      │  │      ├─validation   # validation tools
+│      │  │      │  └─group     # validation equivalence groups
+│      │  │      │      └─database # database validation equivalence group
 │      │  │      └─vo           # value object             
 │      │  └─com                              
-│      │      └─shaoqunliu     # my common libararies
-│      │          ├─rest                     
-│      │          └─security                 
-│      │              ├─rwx                  
-│      │              └─util                 
+│      │      └─shaoqunliu     # shaoqunliu common libraries
+│      │          ├─reflection # shaoqunliu reflection libraries
+│      │          ├─rest       # shaoqunliu Restful libraries
+│      │          ├─security   # shaoqunliu security libraries
+│      │          │  ├─rwx     # RWX file permission control libraries
+│      │          │  └─util    # shaoqunliu common security utils 
+│      │          └─validation # shaoqunliu validation libraries
+│      │              ├─annotation   # validation annotations
+│      │              ├─DBValidation # database validation libraries
+│      │              └─exception    # validation exceptions      
 │      ├─resources       # the resources & configrations file
+│      │  ├─activiti     # activiti bpmn files
 │      │  ├─mapper       # mybatis mapper                    
 │      │  └─spring       # Spring application context                    
 │      └─webapp                           
-│          └─WEB-INF     # web.xml in here                    
+│          └─WEB-INF     # web.xml is in here                    
 └─target      # server target files                             
     ├─classes                                
     ├─ ..OMITTED..   

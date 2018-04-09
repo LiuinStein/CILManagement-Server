@@ -41,13 +41,13 @@ public abstract class AbstractRestfulResult {
      * @return a XML String converted from this object
      */
     protected String toXmlString(String rootTag) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(256);
         result.append("<").append(rootTag).append(">");
-        for (String key : data.keySet()) {
-            result.append("<").append(key).append(">")
-                    .append(data.get(key))
-                    .append("</").append(key).append(">");
-        }
+        data.forEach((key, value) ->
+                result.append("<").append(key).append(">")
+                        .append(value.toString())
+                        .append("</").append(key).append(">")
+        );
         result.append("</").append(rootTag).append(">");
         return result.toString();
     }
