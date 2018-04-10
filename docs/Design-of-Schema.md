@@ -106,10 +106,10 @@ The Objects we should manager in this program includes **personnel**, **resource
 | id               | INT          | PK   | -                                                            | 1                          |
 | topic            | VARCHAR(100) |      | -                                                            | Some System Development    |
 | description      | VARCHAR(400) |      |                                                              | This system ...            |
-| code_uri         | VARCHAR(400) |      | code's position, if have no codes, empty string will be set. Every URI occupies one single line. | GitHub URL                 |
+| code_uri         | VARCHAR(400) |      | code position, if have no codes, empty string will be set. Every URI occupies one single line. | GitHub URL                 |
 | docs_uri         | VARCHAR(400) |      | documents position, if have no documents, empty string will be set. Every URI occupies one single line. | GitHub wiki                |
 | leader           | BIGINT       |      | leader id                                                    | 151105                     |
-| discipline       | INT          |      | the bottom discipline id                                     | 46                         |
+| subject          | INT          |      | the bottom subject id                                        | 46                         |
 | funding          | BIGINT       |      | measured in cent                                             | 5000000                    |
 | affiliation      | VARCHAR(200) |      | affiliated companies or schools                              | Some company, Some college |
 | application_date | DATE         |      | GMT                                                          | 2018/1/1                   |

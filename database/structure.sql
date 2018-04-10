@@ -103,7 +103,7 @@ CREATE TABLE `cil_management`.`t_project`  (
   `code_uri` varchar(400) NOT NULL DEFAULT '' COMMENT 'code\'s position, if have no codes, empty string will be set. Every URI occupies one single line.',
   `docs_uri` varchar(400) NOT NULL DEFAULT '' COMMENT 'documents position, if have no documents, empty string will be set. Every URI occupies one single line.',
   `leader` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'leader id',
-  `discipline` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'the bottom discipline id',
+  `subject` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'the bottom subject id',
   `funding` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'measured in cent',
   `affiliation` varchar(200) NOT NULL DEFAULT '' COMMENT 'affiliated companies or schools',
   `application_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'format as GMT',

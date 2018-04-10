@@ -1,22 +1,45 @@
 package cn.opencil.controller.project;
 
+import cn.opencil.exception.SimpleHttpException;
+import cn.opencil.po.Project;
+import cn.opencil.service.ProjectService;
+import cn.opencil.service.ValidationService;
+import cn.opencil.validation.group.database.DatabaseSubjectValidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
+import com.shaoqunliu.validation.exception.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/v1/project")
 public class ProjectController {
+
+    private final ProjectService projectService;
+    private final ValidationService validationService;
+
+    @Autowired
+    public ProjectController(ProjectService projectService, ValidationService validationService) {
+        this.projectService = projectService;
+        this.validationService = validationService;
+    }
 
     /**
      * Add a project
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult addProject(@RequestBody JSONObject input) {
-        return null;
+    public RestfulResult addProject(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        Project project = validationService.validate(input.toJavaObject(Project.class), DatabaseUserValidation.class, DatabaseSubjectValidation.class);
+        if (!projectService.addProject(project)) {
+            throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new RestfulResult(0, "new project created", new HashMap<>());
     }
 
     /**

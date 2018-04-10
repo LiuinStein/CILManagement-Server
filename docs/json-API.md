@@ -738,8 +738,18 @@ POST /v1/project/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "topic":"the name of a big project worthed 2 billion dollars",
+  "leader":15110506001,
+  "subject":1,
+  "funding":50000,
+  "application_date":"2018-01-06",
+  "start_date":"2018-02-05",
+  "deadline":"2018-09-01"
+}
 ```
+
+> The monetary unit of funding is cent!
 
 ##### Output
 

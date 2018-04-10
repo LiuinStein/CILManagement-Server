@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.opencil.mapper.ProjectMapper">
+
+    <insert id="addProject" parameterType="cn.opencil.po.Project">
+        INSERT INTO t_project (topic, leader, subject, funding, application_date, start_date, deadline)
+            VALUE (#{topic}, #{leader}, #{subject}, #{funding}, #{applicationDate}, #{startDate}, #{deadline})
+    </insert>
+
+</mapper>
