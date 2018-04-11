@@ -46,8 +46,12 @@ public class TeamMemberController {
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyMemberPosition(@RequestBody JSONObject input) {
-        return null;
+    public RestfulResult modifyMemberPosition(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        TeamMember teamMember = validationService.validate(input.toJavaObject(TeamMember.class), DatabaseUserValidation.class, DatabaseTeamIdValidation.class);
+        if (!teamMemberService.modifyMemberJobs(teamMember)) {
+            throw new SimpleHttpException(400, "error parameters", HttpStatus.BAD_REQUEST);
+        }
+        return new RestfulResult(0, "member position & job info has been changed", new HashMap<>());
     }
 
     /**

@@ -12,4 +12,17 @@
         WHERE team_id = #{teamId} AND person_id = #{personId}
     </delete>
 
+    <update id="modifyMemberJobs" parameterType="cn.opencil.po.TeamMember">
+        UPDATE t_team_personnel
+        <set>
+            <if test="position != null">
+                position = #{position},
+            </if>
+            <if test="jobs != null">
+                jobs = #{jobs}
+            </if>
+        </set>
+        WHERE team_id = #{teamId} AND person_id = #{personId}
+    </update>
+
 </mapper>

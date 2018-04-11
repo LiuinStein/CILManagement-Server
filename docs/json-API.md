@@ -1011,16 +1011,27 @@ PUT /v1/team/member/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "team_id":2,
+  "person_id":15110506001,
+  "position":5,
+  "jobs":"do a lot of things"
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "member position & job info has been changed",
+    "data": {}
+}
+```
 
 #### 0x0B Query team members
 
