@@ -887,16 +887,28 @@ PUT /v1/team/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":1,
+  "leader":15110506001,
+  "title":"a wonderful team",
+  "description":"we can do a big project that worthed 2 billion dollars",
+  "slogan":"do a project"
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "team information has been changed",
+    "data": {}
+}
+```
 
 #### 0x06 Dissolve a team
 

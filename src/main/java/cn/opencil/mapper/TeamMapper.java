@@ -8,4 +8,6 @@ public interface TeamMapper {
 
     Integer deleteTeam(Integer id);
 
+    Integer modifyTeamInfo(Team team);
+
 }

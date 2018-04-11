@@ -7,4 +7,6 @@ public interface TeamService {
     boolean addTeam(Team team);
 
     boolean deleteTeam(Team team);
+
+    boolean modifyTeamInfo(Team team);
 }

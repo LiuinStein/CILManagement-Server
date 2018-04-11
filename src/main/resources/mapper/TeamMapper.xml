@@ -19,4 +19,23 @@
             t_team.id = #{id}
     </delete>
 
+    <update id="modifyTeamInfo" parameterType="cn.opencil.po.Team">
+        UPDATE t_team
+        <set>
+            <if test="leader != null">
+                leader = #{leader},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="slogan != null">
+                slogan = #{slogan}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

@@ -6,6 +6,7 @@ import cn.opencil.service.TeamService;
 import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.NotNullTeamIdValidation;
 import cn.opencil.validation.group.OrganizeTeamVlidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -47,8 +48,12 @@ public class TeamController {
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyTeamInfo(@RequestBody JSONObject input) {
-        return null;
+    public RestfulResult modifyTeamInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        Team team = validationService.validate(input.toJavaObject(Team.class), NotNullTeamIdValidation.class, DatabaseUserValidation.class);
+        if (!teamService.modifyTeamInfo(team)) {
+            throw new SimpleHttpException(404, "team not found", HttpStatus.NOT_FOUND);
+        }
+        return new RestfulResult(0, "team information has been changed", new HashMap<>());
     }
 
     /**

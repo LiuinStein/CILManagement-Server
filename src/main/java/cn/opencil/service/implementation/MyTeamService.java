@@ -25,4 +25,9 @@ public class MyTeamService implements TeamService {
     public boolean deleteTeam(Team team) {
         return teamMapper.deleteTeam(team.getId()) != 0;
     }
+
+    @Override
+    public boolean modifyTeamInfo(Team team) {
+        return teamMapper.modifyTeamInfo(team) == 1;
+    }
 }
