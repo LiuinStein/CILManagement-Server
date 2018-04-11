@@ -1,6 +1,8 @@
 package cn.opencil.po;
 
 import cn.opencil.validation.group.AddTeamMemberValidation;
+import cn.opencil.validation.group.database.DatabaseTeamIdValidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 
 import javax.validation.constraints.*;
@@ -11,19 +13,23 @@ public class TeamMember {
 
     @Positive
     @NotNull(groups = {
-            AddTeamMemberValidation.class
+            AddTeamMemberValidation.class,
+            DatabaseTeamIdValidation.class
     })
     @DatabaseColumnReference(table = "t_team", column = "id", groups = {
-            AddTeamMemberValidation.class
+            AddTeamMemberValidation.class,
+            DatabaseTeamIdValidation.class
     })
     private Integer teamId;
 
     @Positive
     @NotNull(groups = {
-            AddTeamMemberValidation.class
+            AddTeamMemberValidation.class,
+            DatabaseUserValidation.class
     })
     @DatabaseColumnReference(table = "t_rbac_user", column = "id", groups = {
-            AddTeamMemberValidation.class
+            AddTeamMemberValidation.class,
+            DatabaseUserValidation.class
     })
     private Long personId;
 

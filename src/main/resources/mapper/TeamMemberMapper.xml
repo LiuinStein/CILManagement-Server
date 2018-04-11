@@ -7,4 +7,9 @@
             VALUE (#{teamId}, #{personId}, #{position}, #{jobs})
     </insert>
 
+    <delete id="deleteMemberFromTeam" parameterType="cn.opencil.po.TeamMember">
+        DELETE FROM t_team_personnel
+        WHERE team_id = #{teamId} AND person_id = #{personId}
+    </delete>
+
 </mapper>

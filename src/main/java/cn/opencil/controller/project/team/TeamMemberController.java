@@ -5,6 +5,8 @@ import cn.opencil.po.TeamMember;
 import cn.opencil.service.TeamMemberService;
 import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.AddTeamMemberValidation;
+import cn.opencil.validation.group.database.DatabaseTeamIdValidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -53,8 +55,9 @@ public class TeamMemberController {
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMember(@RequestBody JSONObject input) {
-
+    public void deleteMember(@RequestBody JSONObject input) throws ValidationException {
+        TeamMember teamMember = validationService.validate(input.toJavaObject(TeamMember.class), DatabaseUserValidation.class, DatabaseTeamIdValidation.class);
+        teamMemberService.deleteMemberFromTeam(teamMember);
     }
 
     /**

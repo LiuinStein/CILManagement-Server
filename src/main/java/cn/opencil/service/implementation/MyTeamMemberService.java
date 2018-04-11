@@ -20,4 +20,9 @@ public class MyTeamMemberService implements TeamMemberService {
     public boolean addMemberToTeam(TeamMember teamMember) {
         return teamMemberMapper.addMemberToTeam(teamMember) == 1;
     }
+
+    @Override
+    public boolean deleteMemberFromTeam(TeamMember teamMember) {
+        return teamMemberMapper.deleteMemberFromTeam(teamMember) != 0;
+    }
 }

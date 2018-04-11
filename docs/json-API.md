@@ -990,16 +990,17 @@ DELETE /v1/team/member/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "team_id":2,
+  "person_id":15110506001
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 204 NO CONTENT
 ```
-
-
 
 #### 0x0A Modify someone's job or position
 
