@@ -8,4 +8,6 @@ public interface ProjectMapper {
 
     Integer deleteProject(Integer id);
 
+    Integer modifyProject(Project project);
+
 }

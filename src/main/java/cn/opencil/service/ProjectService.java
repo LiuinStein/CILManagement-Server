@@ -7,4 +7,6 @@ public interface ProjectService {
     boolean addProject(Project project);
 
     boolean deleteProject(Project project);
+
+    boolean modifyProject(Project project);
 }

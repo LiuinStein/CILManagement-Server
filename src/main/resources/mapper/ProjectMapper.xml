@@ -20,4 +20,44 @@
             t_project.id = #{id}
     </delete>
 
+    <update id="modifyProject" parameterType="cn.opencil.po.Project">
+        UPDATE t_project
+        <set>
+            <if test="topic != null">
+                topic = #{topic},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="codeUri != null">
+                code_uri = #{codeUri},
+            </if>
+            <if test="docsUri != null">
+                docs_uri = #{docsUri},
+            </if>
+            <if test="leader != null">
+                leader = #{leader},
+            </if>
+            <if test="subject != null">
+                subject = #{subject},
+            </if>
+            <if test="funding != null">
+                funding = #{funding},
+            </if>
+            <if test="affiliation != null">
+                affiliation = #{affiliation},
+            </if>
+            <if test="applicationDate != null">
+                application_date = #{applicationDate},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

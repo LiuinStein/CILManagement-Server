@@ -47,8 +47,12 @@ public class ProjectController {
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyProjectInfo(@RequestBody JSONObject input) {
-        return null;
+    public RestfulResult modifyProjectInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
+        Project project = validationService.validate(input.toJavaObject(Project.class), DatabaseUserValidation.class, DatabaseSubjectValidation.class);
+        if (!projectService.modifyProject(project)) {
+            throw new SimpleHttpException(404, "project was not found", HttpStatus.NOT_FOUND);
+        }
+        return new RestfulResult(0, "project information has been changed", new HashMap<>());
     }
 
     /**

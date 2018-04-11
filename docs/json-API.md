@@ -289,7 +289,7 @@ PUT /v1/user/info/ HTTP/1.1
 
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields. If **others** submit that, it would be **ignored**.
 
-> The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
+> The `id` field indicates whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
 ##### Output
 
@@ -776,16 +776,36 @@ PUT /v1/project/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":3,
+  "topic":"a name",
+  "leader":15110506001,
+  "subject":1,
+  "funding":50000,
+  "code_uri":"https://github.com/LiuinStein",
+  "application_date":"2018-01-06",
+  "start_date":"2018-02-05",
+  "deadline":"2018-09-01"
+}
 ```
+
+> **Only send those fields that need to be modified!**
+
+> All available fields name look at the design of schema, table `t_project`
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "project information has been changed",
+    "data": {}
+}
+```
 
 #### 0x02 Delete a project
 
