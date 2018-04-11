@@ -753,11 +753,19 @@ POST /v1/project/ HTTP/1.1
 
 ##### Output
 
-```http
+Project creation success
 
+```http
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "new project created",
+    "data": {}
+}
+```
 
 #### 0x01 Modify project information
 
@@ -788,7 +796,9 @@ DELETE /v1/project/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":1
+}
 ```
 
 ##### Output

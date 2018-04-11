@@ -21,4 +21,9 @@ public class MyProjectService implements ProjectService {
         return projectMapper.addProject(project) == 1;
     }
 
+    @Override
+    public boolean deleteProject(Project project) {
+        return projectMapper.deleteProject(project.getId()) != 0;
+    }
+
 }

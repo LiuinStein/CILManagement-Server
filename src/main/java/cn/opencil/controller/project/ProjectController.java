@@ -56,8 +56,9 @@ public class ProjectController {
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProject(@RequestBody JSONObject input) {
-
+    public void deleteProject(@RequestBody JSONObject input) throws ValidationException {
+        Project project = validationService.validate(input.toJavaObject(Project.class));
+        projectService.deleteProject(project);
     }
 
     /**

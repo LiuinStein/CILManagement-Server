@@ -8,4 +8,16 @@
             VALUE (#{topic}, #{leader}, #{subject}, #{funding}, #{applicationDate}, #{startDate}, #{deadline})
     </insert>
 
+    <delete id="deleteProject" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_project,
+            t_team_project,
+            t_expenditure USING t_project
+            LEFT JOIN t_team_project ON t_team_project.project_id = t_project.id
+            LEFT JOIN t_expenditure ON t_expenditure.project_id = t_project.id
+        WHERE
+            t_project.id = #{id}
+    </delete>
+
 </mapper>
