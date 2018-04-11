@@ -824,10 +824,8 @@ DELETE /v1/project/ HTTP/1.1
 ##### Output
 
 ```http
-
+HTTP/1.1 204 NO CONTENT
 ```
-
-
 
 #### 0x03 Query projects
 
@@ -858,16 +856,27 @@ POST /v1/team/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "leader":15110506001,
+  "title":"a wonderful team",
+  "description":"we can do a big project that worthed 2 billion dollars",
+  "slogan":"do a project"
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "new team created",
+    "data": {}
+}
+```
 
 #### 0x05 Modify team information
 

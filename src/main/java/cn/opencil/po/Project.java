@@ -1,5 +1,7 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.AddProjectValidation;
+import cn.opencil.validation.group.NotNullProjectIdValidation;
 import cn.opencil.validation.group.database.DatabaseSubjectValidation;
 import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
@@ -9,9 +11,16 @@ import java.util.Date;
 
 public class Project {
     @Positive
+    @NotNull(groups = {
+            NotNullProjectIdValidation.class,
+            AddProjectValidation.class
+    })
     private Integer id;
 
     @Size(max = 100)
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     private String topic;
 
     @Size(max = 400)
@@ -24,28 +33,46 @@ public class Project {
     private String docsUri;
 
     @Positive
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     @DatabaseColumnReference(table = "t_rbac_user", column = "id", groups = {
             DatabaseUserValidation.class
     })
     private Long leader;
 
     @Positive
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     @DatabaseColumnReference(table = "t_academic_subject", column = "id", groups = {
             DatabaseSubjectValidation.class
     })
     private Integer subject;
 
     @Positive
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     private Long funding;
 
     @Size(max = 200)
     private String affiliation;
 
     @PastOrPresent
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     private Date applicationDate;
 
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     private Date startDate;
 
+    @NotNull(groups = {
+            AddProjectValidation.class
+    })
     private Date deadline;
 
     public Integer getId() {

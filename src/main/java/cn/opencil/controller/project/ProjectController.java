@@ -4,6 +4,8 @@ import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.Project;
 import cn.opencil.service.ProjectService;
 import cn.opencil.service.ValidationService;
+import cn.opencil.validation.group.AddProjectValidation;
+import cn.opencil.validation.group.NotNullProjectIdValidation;
 import cn.opencil.validation.group.database.DatabaseSubjectValidation;
 import cn.opencil.validation.group.database.DatabaseUserValidation;
 import cn.opencil.vo.RestfulResult;
@@ -35,7 +37,7 @@ public class ProjectController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult addProject(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        Project project = validationService.validate(input.toJavaObject(Project.class), DatabaseUserValidation.class, DatabaseSubjectValidation.class);
+        Project project = validationService.validate(input.toJavaObject(Project.class), AddProjectValidation.class, DatabaseUserValidation.class, DatabaseSubjectValidation.class);
         if (!projectService.addProject(project)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -48,7 +50,7 @@ public class ProjectController {
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult modifyProjectInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        Project project = validationService.validate(input.toJavaObject(Project.class), DatabaseUserValidation.class, DatabaseSubjectValidation.class);
+        Project project = validationService.validate(input.toJavaObject(Project.class), NotNullProjectIdValidation.class, DatabaseUserValidation.class, DatabaseSubjectValidation.class);
         if (!projectService.modifyProject(project)) {
             throw new SimpleHttpException(404, "project was not found", HttpStatus.NOT_FOUND);
         }
@@ -61,7 +63,7 @@ public class ProjectController {
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProject(@RequestBody JSONObject input) throws ValidationException {
-        Project project = validationService.validate(input.toJavaObject(Project.class));
+        Project project = validationService.validate(input.toJavaObject(Project.class), NotNullProjectIdValidation.class);
         projectService.deleteProject(project);
     }
 
