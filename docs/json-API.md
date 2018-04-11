@@ -950,7 +950,7 @@ GET /v1/team? HTTP/1.1
 
 
 
-#### 0x08 Add a man to a team
+#### 0x08 Add a member to a team
 
 ```http
 POST /v1/team/member/ HTTP/1.1
@@ -959,16 +959,27 @@ POST /v1/team/member/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "team_id":2,
+  "person_id":15110506001,
+  "position":9,
+  "jobs":"do something"
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "new member added",
+    "data": {}
+}
+```
 
 #### 0x09 Kick out a man from a team
 

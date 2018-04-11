@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.TeamMemberMapper">
+
+    <insert id="addMemberToTeam" parameterType="cn.opencil.po.TeamMember">
+        INSERT INTO t_team_personnel (team_id, person_id, position, jobs)
+            VALUE (#{teamId}, #{personId}, #{position}, #{jobs})
+    </insert>
+
+</mapper>

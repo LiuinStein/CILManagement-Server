@@ -129,7 +129,8 @@ CREATE TABLE `cil_management`.`t_team_personnel`  (
   `person_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'person id',
   `position` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others',
   `jobs` varchar(300) NOT NULL DEFAULT '' COMMENT 'work content',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`team_id`, `person_id`)
 ) ENGINE = InnoDB;
 -- ------------------------------- team-project table (t_team_project) --------------------
 DROP TABLE IF EXISTS `cil_management`.`t_team_project`;
