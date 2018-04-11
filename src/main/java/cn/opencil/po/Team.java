@@ -1,5 +1,6 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.NotNullTeamIdValidation;
 import cn.opencil.validation.group.OrganizeTeamVlidation;
 import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
@@ -10,6 +11,9 @@ import javax.validation.constraints.Size;
 
 public class Team {
     @Positive
+    @NotNull(groups = {
+            NotNullTeamIdValidation.class
+    })
     private Integer id;
 
     @Positive

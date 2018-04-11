@@ -907,16 +907,16 @@ DELETE /v1/team/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":1
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 204 NO CONTENT
 ```
-
-
 
 #### 0x07 Query a team
 

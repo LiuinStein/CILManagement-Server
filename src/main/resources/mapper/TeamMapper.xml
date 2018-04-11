@@ -7,4 +7,16 @@
             VALUE (#{leader}, #{title}, #{description}, #{slogan})
     </insert>
 
+    <delete id="deleteTeam" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_team,
+            t_team_personnel,
+            t_team_project USING t_team
+            LEFT JOIN t_team_personnel ON t_team_personnel.team_id = t_team.id
+            LEFT JOIN t_team_project ON t_team_project.team_id = t_team.id
+        WHERE
+            t_team.id = #{id}
+    </delete>
+
 </mapper>

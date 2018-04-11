@@ -6,4 +6,6 @@ public interface TeamMapper {
 
     Integer addTeam(Team team);
 
+    Integer deleteTeam(Integer id);
+
 }

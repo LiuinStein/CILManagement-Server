@@ -4,6 +4,7 @@ import cn.opencil.exception.SimpleHttpException;
 import cn.opencil.po.Team;
 import cn.opencil.service.TeamService;
 import cn.opencil.service.ValidationService;
+import cn.opencil.validation.group.NotNullTeamIdValidation;
 import cn.opencil.validation.group.OrganizeTeamVlidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
@@ -55,8 +56,9 @@ public class TeamController {
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void dissolveTeam(@RequestBody JSONObject input) {
-
+    public void dissolveTeam(@RequestBody JSONObject input) throws ValidationException {
+        Team team = validationService.validate(input.toJavaObject(Team.class), NotNullTeamIdValidation.class);
+        teamService.deleteTeam(team);
     }
 
     /**
