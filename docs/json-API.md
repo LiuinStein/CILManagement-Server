@@ -1062,16 +1062,25 @@ POST /v1/team/project/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "team_id":2,
+  "project_id":3
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "project has been assigned successfully",
+    "data": {}
+}
+```
 
 #### 0x0D Take back a project from a team
 

@@ -12,8 +12,7 @@ import java.util.Date;
 public class Project {
     @Positive
     @NotNull(groups = {
-            NotNullProjectIdValidation.class,
-            AddProjectValidation.class
+            NotNullProjectIdValidation.class
     })
     private Integer id;
 
