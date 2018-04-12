@@ -1091,16 +1091,17 @@ DELETE /v1/team/project/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "team_id":2,
+  "project_id":3
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 204 NO CONTENT
 ```
-
-
 
 #### 0x0E Income/Outcome a sum of money 
 

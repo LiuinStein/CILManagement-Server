@@ -7,4 +7,9 @@
             VALUE (#{teamId}, #{projectId})
     </insert>
 
+    <delete id="takeBackProjectFromTeam" parameterType="cn.opencil.po.TeamProject">
+        DELETE FROM t_team_project
+        WHERE team_id = #{teamId} AND project_id = #{projectId}
+    </delete>
+
 </mapper>

@@ -47,7 +47,8 @@ public class TeamProjectController {
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void takeBackProjectFromTeam(@RequestBody JSONObject input) {
-
+    public void takeBackProjectFromTeam(@RequestBody JSONObject input) throws ValidationException {
+        TeamProject teamProject = validationService.validate(input.toJavaObject(TeamProject.class));
+        teamProjectService.takeBackProjectFromTeam(teamProject);
     }
 }

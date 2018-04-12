@@ -20,4 +20,9 @@ public class MyTeamProjectService implements TeamProjectService {
     public boolean assignProjectToTeam(TeamProject teamProject) {
         return teamProjectMapper.assignProjectToTeam(teamProject) == 1;
     }
+
+    @Override
+    public boolean takeBackProjectFromTeam(TeamProject teamProject) {
+        return teamProjectMapper.takeBackProjectFromTeam(teamProject) != 0;
+    }
 }

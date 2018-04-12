@@ -5,4 +5,6 @@ import cn.opencil.po.TeamProject;
 public interface TeamProjectMapper {
 
     Integer assignProjectToTeam(TeamProject teamProject);
+
+    Integer takeBackProjectFromTeam(TeamProject teamProject);
 }
