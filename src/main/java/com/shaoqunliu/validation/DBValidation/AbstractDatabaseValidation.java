@@ -38,7 +38,7 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
     protected abstract void validateWithDatabase(String table, String column, String value) throws ValidationException;
 
     /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
+     * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
      */
     @Override
     public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;

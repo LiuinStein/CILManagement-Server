@@ -25,7 +25,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     }
 
     /**
-     * @see com.shaoqunliu.validation.DBValidation.AbstractDatabaseValidation
+     * @see com.shaoqunliu.validation.DBValidation.AbstractDatabaseValidation#validateWithDatabase(String, String, String)
      */
     @Override
     protected void validateWithDatabase(String table, String column, String value) throws ValidationException {
@@ -56,7 +56,7 @@ public class ForeignKeyValidation extends AbstractDatabaseValidation {
     }
 
     /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
+     * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
      */
     @Override
     public <T> T validate(T object, Class<?>... groups) throws ValidationException {

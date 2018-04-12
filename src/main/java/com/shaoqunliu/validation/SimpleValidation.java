@@ -1,6 +1,7 @@
 package com.shaoqunliu.validation;
 
 import com.shaoqunliu.validation.exception.ValidationException;
+import com.shaoqunliu.validation.validator.DigitsValidator;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -22,12 +23,17 @@ public class SimpleValidation extends AbstractValidation {
             .buildValidatorFactory().getValidator();
 
     /**
+     * For digits validation
+     */
+    private ValidationAdapter digitsAdapter = new DigitsValidator();
+
+    /**
      * Whether the validator validate the default @annotation
      */
     private boolean passDefault = false;
 
     /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
+     * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
      */
     @Override
     public <T> T validate(T object, Class<?>... groups) throws ValidationException {
@@ -43,7 +49,7 @@ public class SimpleValidation extends AbstractValidation {
             );
             throw new ValidationException(message.toString());
         }
-        return object;
+        return digitsAdapter.validate(object, groups);
     }
 
     public boolean isPassDefault() {
