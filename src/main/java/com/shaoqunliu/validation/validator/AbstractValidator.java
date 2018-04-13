@@ -29,7 +29,7 @@ public abstract class AbstractValidator extends AbstractValidation {
      * return true if value is valid, otherwise false
      * </p>
      */
-    protected static final HashMap<Class<? extends Annotation>, BiFunction<Object, Function<String, Object>, Boolean>> classFunctionMap = new HashMap<>();
+    protected final HashMap<Class<? extends Annotation>, BiFunction<Object, Function<String, Object>, Boolean>> classFunctionMap = new HashMap<>();
 
     /**
      * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
