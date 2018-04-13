@@ -1,31 +1,20 @@
-package com.shaoqunliu.validation;
+package com.shaoqunliu.validation.validator;
 
 import com.shaoqunliu.validation.exception.ValidationException;
-import com.shaoqunliu.validation.validator.DigitsValidator;
-import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.Set;
 
-/**
- * @author Shaoqun Liu
- * @since 1.8
- */
-public class SimpleValidation extends AbstractValidation {
+public class HibernateValidator extends AbstractValidator {
 
     /**
      * The Hibernate validator
      */
-    private Validator validator = Validation.byProvider(HibernateValidator.class)
+    private Validator validator = Validation.byProvider(org.hibernate.validator.HibernateValidator.class)
             .configure().failFast(isFailFast())
             .buildValidatorFactory().getValidator();
-
-    /**
-     * For digits validation
-     */
-    private ValidationAdapter digitsAdapter = new DigitsValidator();
 
     /**
      * Whether the validator validate the default @annotation
@@ -38,7 +27,7 @@ public class SimpleValidation extends AbstractValidation {
     @Override
     public <T> T validate(T object, Class<?>... groups) throws ValidationException {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(object, groups);
-        if (isPassDefault() && !(isFailFast() && constraintViolations.size() > 0) && groups.length > 0) {
+        if (isPassDefault() && !(isFailFast() && constraintViolations.size() > 0)) {
             constraintViolations.addAll(validator.validate(object));
         }
         if (constraintViolations.size() > 0) {
@@ -49,7 +38,7 @@ public class SimpleValidation extends AbstractValidation {
             );
             throw new ValidationException(message.toString());
         }
-        return digitsAdapter.validate(object, groups);
+        return object;
     }
 
     public boolean isPassDefault() {

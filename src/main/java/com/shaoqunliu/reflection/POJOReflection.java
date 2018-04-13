@@ -22,11 +22,6 @@ public class POJOReflection {
 
     private Class<?> clazz;
     private Object object = null;
-    private Stream<Field> fieldStream;
-
-    private void init() {
-        fieldStream = Arrays.stream(clazz.getDeclaredFields());
-    }
 
     /**
      * Construct object with Class
@@ -35,7 +30,6 @@ public class POJOReflection {
      */
     public POJOReflection(Class<?> clazz) {
         this.clazz = clazz;
-        init();
     }
 
     /**
@@ -46,7 +40,6 @@ public class POJOReflection {
     public POJOReflection(Object o) {
         object = o;
         clazz = object.getClass();
-        init();
     }
 
     /**
@@ -57,7 +50,6 @@ public class POJOReflection {
      */
     public POJOReflection(String className) throws ClassNotFoundException {
         clazz = Class.forName(className);
-        init();
     }
 
     /**
@@ -132,8 +124,13 @@ public class POJOReflection {
         }
     }
 
+    /**
+     * Create a stream of field
+     *
+     * @return the field stream
+     */
     public Stream<Field> getFieldStream() {
-        return fieldStream;
+        return Arrays.stream(clazz.getDeclaredFields());
     }
 
 }

@@ -11,18 +11,15 @@ import org.springframework.stereotype.Service;
 public class MyValidationService implements ValidationService {
 
     private final ValidationAdapter normalValidationAdapter;
-    private final ValidationAdapter databaseValidationAdapter;
 
     @Autowired
-    public MyValidationService(@Qualifier("simpleValidation") ValidationAdapter validationAdapter,
-                               @Qualifier("foreignKeyValidation") ValidationAdapter databaseValidationAdapter) {
+    public MyValidationService(@Qualifier("adaptersValidation") ValidationAdapter validationAdapter) {
         this.normalValidationAdapter = validationAdapter;
-        this.databaseValidationAdapter = databaseValidationAdapter;
     }
 
     @Override
     public <T> T validate(T object, Class<?>... groups) throws ValidationException {
-        return databaseValidationAdapter.validate(normalValidationAdapter.validate(object, groups), groups);
+        return normalValidationAdapter.validate(object, groups);
     }
 
 }

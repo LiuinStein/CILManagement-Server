@@ -27,6 +27,12 @@ public class AnnotationReflection {
         }
     }
 
+    /**
+     * Get annotation members & its value
+     *
+     * @param name member name
+     * @return the value of this member
+     */
     public Object getMember(String name) {
         return members.get(name);
     }

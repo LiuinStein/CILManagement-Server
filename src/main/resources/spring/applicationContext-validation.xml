@@ -11,14 +11,21 @@
 
     <import resource="applicationContext-dao.xml"/>
 
-    <bean id="foreignKeyValidation" class="com.shaoqunliu.validation.DBValidation.ForeignKeyValidation">
-        <constructor-arg name="dataSource" ref="dataSource"/>
+    <bean id="adaptersValidation" class="com.shaoqunliu.validation.AdaptersValidation">
         <property name="failFast" value="true"/>
-    </bean>
-
-    <bean id="simpleValidation" class="com.shaoqunliu.validation.SimpleValidation">
-        <property name="failFast" value="true"/>
-        <property name="passDefault" value="true"/>
+        <property name="adapters">
+            <list>
+                <bean class="com.shaoqunliu.validation.validator.HibernateValidator">
+                    <property name="passDefault" value="true"/>
+                    <property name="failFast" value="true"/>
+                </bean>
+                <bean class="com.shaoqunliu.validation.validator.DigitsValidator"/>
+                <bean class="com.shaoqunliu.validation.validator.database.ForeignKeyValidator">
+                    <constructor-arg name="dataSource" ref="dataSource"/>
+                    <property name="failFast" value="true"/>
+                </bean>
+            </list>
+        </property>
     </bean>
 
 </beans>
