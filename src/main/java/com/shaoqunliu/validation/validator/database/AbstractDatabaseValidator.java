@@ -16,12 +16,12 @@ public abstract class AbstractDatabaseValidator extends AbstractValidator {
     /**
      * A connection pool or other data source
      */
-    private static DataSource dataSource;
+    private DataSource dataSource;
 
     /**
      * The basic sql statement used to query if the row exists
      */
-    private static String basicSql = "SELECT COUNT(*)";
+    private String basicSql = "SELECT COUNT(*)";
 
     /**
      * Construct an object with a specific data source
@@ -42,9 +42,9 @@ public abstract class AbstractDatabaseValidator extends AbstractValidator {
              * for Spring Jdbc transaction aware data source
              * @see https://docs.spring.io/autorepo/docs/spring-framework/5.0.5.RELEASE/javadoc-api/org/springframework/jdbc/datasource/TransactionAwareDataSourceProxy.html
              */
-            AbstractDatabaseValidator.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
+            this.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
         } else {
-            AbstractDatabaseValidator.dataSource = dataSource;
+            this.dataSource = dataSource;
         }
     }
 
@@ -63,14 +63,14 @@ public abstract class AbstractDatabaseValidator extends AbstractValidator {
          * Time wasted here = 1.5 hours
          */
 //        Contracts.assertMatchPattern(basicSql.toUpperCase(), "(SELECT)((?<=^SELECT)).*", "Invalid SQL statement");
-        AbstractDatabaseValidator.basicSql = basicSql;
+        this.basicSql = basicSql;
     }
 
-    static DataSource getDataSource() {
+    DataSource getDataSource() {
         return dataSource;
     }
 
-    static String getBasicSql() {
+    String getBasicSql() {
         return basicSql;
     }
 }
