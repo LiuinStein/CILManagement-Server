@@ -145,8 +145,7 @@ CREATE TABLE `cil_management`.`t_team_project`  (
 DROP TABLE IF EXISTS `cil_management`.`t_expenditure`;
 CREATE TABLE `cil_management`.`t_expenditure`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
-  `flow` tinyint NOT NULL DEFAULT 1 COMMENT '1: income; -1: outcome',
-  `amount` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'measure in cent',
+  `amount` bigint NOT NULL DEFAULT 0 COMMENT 'measure in cent',
   `balance` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'funding balance',
   `project_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'affiliated project id',
   `note` varchar(100) NOT NULL DEFAULT '' COMMENT 'description',

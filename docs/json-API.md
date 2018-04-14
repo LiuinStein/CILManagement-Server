@@ -1112,16 +1112,43 @@ POST /v1/project/funding/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "amount":-3000,
+  "project_id":3,
+  "note":"buy a new computer",
+  "date":"2018-04-02"
+}
 ```
 
 ##### Output
 
-```http
+**Expenditure record successfully:**
 
+```http
+HTTP/1.1 201 Created
 ```
 
+```json
+{
+    "code": 0,
+    "message": "expenditures has been recorded",
+    "data": {}
+}
+```
 
+**There's no more money for you: **
+
+```http
+HTTP/1.1 400 BAD REQUEST
+```
+
+```json
+{
+    "code": 400,
+    "message": "there is not enough money you can spend on your project!",
+    "data": {}
+}
+```
 
 #### 0x0F Query expenditures
 

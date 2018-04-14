@@ -151,12 +151,13 @@ The Objects we should manager in this program includes **personnel**, **resource
 | Name         | Type         | key  | Comment                               | Example       |
 | ------------ | ------------ | ---- | ------------------------------------- | ------------- |
 | id           | INT          | PK   | -                                     | 1             |
-| flow         | TINYINT      |      | 1: income; -1: outcome                | 1             |
 | amount       | BIGINT       |      | measure in cent                       | 5000          |
 | balance      | BIGINT       |      | funding balance                       | 50000         |
 | project_id   | INT          |      | affiliated project id                 | 1             |
 | note         | VARCHAR(100) |      | description                           | buy something |
 | revenue_date | DATE         |      | when did you spend or earn this money | 2018-2-1      |
+
+> No need for this program to store expenditure time as a `datetime`, because according to project requirements, we only need to roughly compile expenditure and its usage statistics here.
 
 #### 0x05 Academic subjects' table (t_academic_subject):
 

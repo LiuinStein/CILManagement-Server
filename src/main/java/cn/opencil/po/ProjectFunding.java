@@ -1,33 +1,42 @@
 package cn.opencil.po;
 
+import cn.opencil.validation.group.AddFundingExpenditureValidation;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
-import com.shaoqunliu.validation.annotation.DigitsPattern;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 public class ProjectFunding {
     @Positive
     private Integer id;
 
-    @DigitsPattern(regexp = "-?1")
-    private Byte flow;
-
-    @Positive
+    @NotNull(groups = {
+            AddFundingExpenditureValidation.class
+    })
     private Long amount;
 
     @PositiveOrZero
     private Long balance;
 
     @Positive
+    @NotNull(groups = {
+            AddFundingExpenditureValidation.class
+    })
     @DatabaseColumnReference(table = "t_project", column = "id")
     private Integer projectId;
 
     @Size(max = 100)
+    @NotNull(groups = {
+            AddFundingExpenditureValidation.class
+    })
     private String note;
 
+    @PastOrPresent
+    @NotNull(groups = {
+            AddFundingExpenditureValidation.class
+    })
+    @JSONField(name = "date")
     private Date revenueDate;
 
     public Integer getId() {
@@ -36,14 +45,6 @@ public class ProjectFunding {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Byte getFlow() {
-        return flow;
-    }
-
-    public void setFlow(Byte flow) {
-        this.flow = flow;
     }
 
     public Long getAmount() {

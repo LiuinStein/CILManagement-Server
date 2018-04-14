@@ -1081,59 +1081,51 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="236" name="flow">
+    <column id="266" parent="236" name="amount">
       <Position>2</Position>
-      <Comment>1: income; -1: outcome</Comment>
-      <DataType>tinyint(4)|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;1&apos;</DefaultExpression>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="267" parent="236" name="amount">
-      <Position>3</Position>
       <Comment>measure in cent</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="268" parent="236" name="balance">
-      <Position>4</Position>
+    <column id="267" parent="236" name="balance">
+      <Position>3</Position>
       <Comment>funding balance</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="236" name="project_id">
-      <Position>5</Position>
+    <column id="268" parent="236" name="project_id">
+      <Position>4</Position>
       <Comment>affiliated project id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="236" name="note">
-      <Position>6</Position>
+    <column id="269" parent="236" name="note">
+      <Position>5</Position>
       <Comment>description</Comment>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="236" name="revenue_date">
-      <Position>7</Position>
+    <column id="270" parent="236" name="revenue_date">
+      <Position>6</Position>
       <Comment>when did you spend or earn this money</Comment>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="272" parent="236" name="PRIMARY">
+    <key id="271" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="273" parent="237" name="id">
+    <column id="272" parent="237" name="id">
       <Position>1</Position>
       <Comment>member&apos;s id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1141,7 +1133,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="237" name="name">
+    <column id="273" parent="237" name="name">
       <Position>2</Position>
       <Comment>member&apos;s name</Comment>
       <DataType>varchar(30)|0s</DataType>
@@ -1149,7 +1141,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="237" name="gender">
+    <column id="274" parent="237" name="gender">
       <Position>3</Position>
       <Comment>0 is male, 1 is female</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1157,7 +1149,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="237" name="department">
+    <column id="275" parent="237" name="department">
       <Position>4</Position>
       <Comment>for student that is class id, for teacher that is college id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1165,7 +1157,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="237" name="enroll_time">
+    <column id="276" parent="237" name="enroll_time">
       <Position>5</Position>
       <Comment>GMT, when did he join the lab</Comment>
       <DataType>date|0s</DataType>
@@ -1173,7 +1165,7 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="237" name="exit_time">
+    <column id="277" parent="237" name="exit_time">
       <Position>6</Position>
       <Comment>GMT, when did he exit the lab, 1970-1-1 will be set if he didn&apos;t retire</Comment>
       <DataType>date|0s</DataType>
@@ -1181,7 +1173,7 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="237" name="birthday">
+    <column id="278" parent="237" name="birthday">
       <Position>7</Position>
       <Comment>when did he born</Comment>
       <DataType>date|0s</DataType>
@@ -1189,7 +1181,7 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="237" name="email">
+    <column id="279" parent="237" name="email">
       <Position>8</Position>
       <Comment>E-mail address</Comment>
       <DataType>varchar(30)|0s</DataType>
@@ -1197,7 +1189,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="237" name="phone">
+    <column id="280" parent="237" name="phone">
       <Position>9</Position>
       <Comment>phone number</Comment>
       <DataType>varchar(20)|0s</DataType>
@@ -1205,7 +1197,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="237" name="achievement">
+    <column id="281" parent="237" name="achievement">
       <Position>10</Position>
       <Comment>personal achievement</Comment>
       <DataType>varchar(400)|0s</DataType>
@@ -1213,15 +1205,15 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="283" parent="237" name="idx_user_name">
+    <index id="282" parent="237" name="idx_user_name">
       <ColNames>name</ColNames>
     </index>
-    <key id="284" parent="237" name="PRIMARY">
+    <key id="283" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="285" parent="238" name="id">
+    <column id="284" parent="238" name="id">
       <Position>1</Position>
       <Comment>project id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1229,7 +1221,7 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="238" name="topic">
+    <column id="285" parent="238" name="topic">
       <Position>2</Position>
       <Comment>project topic</Comment>
       <DataType>varchar(100)|0s</DataType>
@@ -1237,7 +1229,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="238" name="description">
+    <column id="286" parent="238" name="description">
       <Position>3</Position>
       <Comment>project abstract</Comment>
       <DataType>varchar(400)|0s</DataType>
@@ -1245,7 +1237,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="238" name="code_uri">
+    <column id="287" parent="238" name="code_uri">
       <Position>4</Position>
       <Comment>code&apos;s position, if have no codes, empty string will be set. Every URI occupies one single line.</Comment>
       <DataType>varchar(400)|0s</DataType>
@@ -1253,7 +1245,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="238" name="docs_uri">
+    <column id="288" parent="238" name="docs_uri">
       <Position>5</Position>
       <Comment>documents position, if have no documents, empty string will be set. Every URI occupies one single line.</Comment>
       <DataType>varchar(400)|0s</DataType>
@@ -1261,7 +1253,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="238" name="leader">
+    <column id="289" parent="238" name="leader">
       <Position>6</Position>
       <Comment>leader id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1269,7 +1261,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="238" name="subject">
+    <column id="290" parent="238" name="subject">
       <Position>7</Position>
       <Comment>the bottom subject id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1277,7 +1269,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="238" name="funding">
+    <column id="291" parent="238" name="funding">
       <Position>8</Position>
       <Comment>measured in cent</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1285,7 +1277,7 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="238" name="affiliation">
+    <column id="292" parent="238" name="affiliation">
       <Position>9</Position>
       <Comment>affiliated companies or schools</Comment>
       <DataType>varchar(200)|0s</DataType>
@@ -1293,7 +1285,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="238" name="application_date">
+    <column id="293" parent="238" name="application_date">
       <Position>10</Position>
       <Comment>format as GMT</Comment>
       <DataType>date|0s</DataType>
@@ -1301,7 +1293,7 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="238" name="start_date">
+    <column id="294" parent="238" name="start_date">
       <Position>11</Position>
       <Comment>format as GMT</Comment>
       <DataType>date|0s</DataType>
@@ -1309,7 +1301,7 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="238" name="deadline">
+    <column id="295" parent="238" name="deadline">
       <Position>12</Position>
       <Comment>format as GMT</Comment>
       <DataType>date|0s</DataType>
@@ -1317,12 +1309,12 @@
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="297" parent="238" name="PRIMARY">
+    <key id="296" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="298" parent="239" name="id">
+    <column id="297" parent="239" name="id">
       <Position>1</Position>
       <Comment>permission id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1330,7 +1322,7 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="239" name="name">
+    <column id="298" parent="239" name="name">
       <Position>2</Position>
       <Comment>name</Comment>
       <DataType>varchar(50)|0s</DataType>
@@ -1338,7 +1330,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="239" name="uri">
+    <column id="299" parent="239" name="uri">
       <Position>3</Position>
       <Comment>the uri</Comment>
       <DataType>varchar(75)|0s</DataType>
@@ -1346,7 +1338,7 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="239" name="method">
+    <column id="300" parent="239" name="method">
       <Position>4</Position>
       <Comment>http request method, 0 is GET, 1 is HEAD, 2 is POST, 3 is PUT, 4 is PATCH, 5 is DELETE, 6 is OPTIONS, 7 is TRACE</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1354,26 +1346,26 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="302" parent="239" name="uri">
+    <index id="301" parent="239" name="uri">
       <ColNames>uri
 method</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="303" parent="239" name="idx_permission_uri_method">
+    <index id="302" parent="239" name="idx_permission_uri_method">
       <ColNames>uri
 method</ColNames>
     </index>
-    <key id="304" parent="239" name="PRIMARY">
+    <key id="303" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="305" parent="239" name="uri">
+    <key id="304" parent="239" name="uri">
       <ColNames>uri
 method</ColNames>
       <UnderlyingIndexName>uri</UnderlyingIndexName>
     </key>
-    <column id="306" parent="240" name="id">
+    <column id="305" parent="240" name="id">
       <Position>1</Position>
       <Comment>role id</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1381,7 +1373,7 @@ method</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="240" name="name">
+    <column id="306" parent="240" name="name">
       <Position>2</Position>
       <Comment>role name</Comment>
       <DataType>varchar(20)|0s</DataType>
@@ -1389,20 +1381,20 @@ method</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="308" parent="240" name="name">
+    <index id="307" parent="240" name="name">
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="309" parent="240" name="PRIMARY">
+    <key id="308" parent="240" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="310" parent="240" name="name">
+    <key id="309" parent="240" name="name">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>name</UnderlyingIndexName>
     </key>
-    <column id="311" parent="241" name="id">
+    <column id="310" parent="241" name="id">
       <Position>1</Position>
       <Comment>independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1410,7 +1402,7 @@ method</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="241" name="role_id">
+    <column id="311" parent="241" name="role_id">
       <Position>2</Position>
       <Comment>role id</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1418,7 +1410,7 @@ method</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="313" parent="241" name="permission_id">
+    <column id="312" parent="241" name="permission_id">
       <Position>3</Position>
       <Comment>permission id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1426,12 +1418,12 @@ method</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="314" parent="241" name="PRIMARY">
+    <key id="313" parent="241" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="315" parent="242" name="id">
+    <column id="314" parent="242" name="id">
       <Position>1</Position>
       <Comment>member&apos;s id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1439,7 +1431,7 @@ method</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="316" parent="242" name="password">
+    <column id="315" parent="242" name="password">
       <Position>2</Position>
       <Comment>BCrypt hash value, default password is 666666</Comment>
       <DataType>char(60)|0s</DataType>
@@ -1447,7 +1439,7 @@ method</ColNames>
       <DefaultExpression>&apos;$2a$11$RVC4jlZALvwA8Q2RsXeKyeKs8TAeOMlOvxdrEZbqVRs2/IugdOU3K&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="242" name="enabled">
+    <column id="316" parent="242" name="enabled">
       <Position>3</Position>
       <Comment>0 is disabled, 1 otherwise</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1455,12 +1447,12 @@ method</ColNames>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="318" parent="242" name="PRIMARY">
+    <key id="317" parent="242" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="319" parent="243" name="id">
+    <column id="318" parent="243" name="id">
       <Position>1</Position>
       <Comment>independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1468,7 +1460,7 @@ method</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="320" parent="243" name="user_id">
+    <column id="319" parent="243" name="user_id">
       <Position>2</Position>
       <Comment>role name</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1476,7 +1468,7 @@ method</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="243" name="role_id">
+    <column id="320" parent="243" name="role_id">
       <Position>3</Position>
       <Comment>role id</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1484,22 +1476,22 @@ method</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="322" parent="243" name="user_id">
+    <index id="321" parent="243" name="user_id">
       <ColNames>user_id
 role_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="323" parent="243" name="PRIMARY">
+    <key id="322" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="324" parent="243" name="user_id">
+    <key id="323" parent="243" name="user_id">
       <ColNames>user_id
 role_id</ColNames>
       <UnderlyingIndexName>user_id</UnderlyingIndexName>
     </key>
-    <column id="325" parent="244" name="id">
+    <column id="324" parent="244" name="id">
       <Position>1</Position>
       <Comment>resource id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1507,7 +1499,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="244" name="type_id">
+    <column id="325" parent="244" name="type_id">
       <Position>2</Position>
       <Comment>type</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1515,7 +1507,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="327" parent="244" name="purchaser_id">
+    <column id="326" parent="244" name="purchaser_id">
       <Position>3</Position>
       <Comment>who bought it</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1523,7 +1515,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="244" name="unit_price">
+    <column id="327" parent="244" name="unit_price">
       <Position>4</Position>
       <Comment>unit price at purchase</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1531,7 +1523,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="244" name="remaining">
+    <column id="328" parent="244" name="remaining">
       <Position>5</Position>
       <Comment>remaining amount</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1539,7 +1531,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="244" name="quantity">
+    <column id="329" parent="244" name="quantity">
       <Position>6</Position>
       <Comment>all quantity, If this resource is disposable, quantity equals to remaining, if not remaining equals to quantity subtract lending quantity</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1547,12 +1539,12 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="331" parent="244" name="PRIMARY">
+    <key id="330" parent="244" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="332" parent="245" name="id">
+    <column id="331" parent="245" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1560,7 +1552,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="245" name="name">
+    <column id="332" parent="245" name="name">
       <Position>2</Position>
       <Comment>resource name</Comment>
       <DataType>varchar(100)|0s</DataType>
@@ -1568,7 +1560,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="245" name="description">
+    <column id="333" parent="245" name="description">
       <Position>3</Position>
       <Comment>resource detail and configuration</Comment>
       <DataType>varchar(300)|0s</DataType>
@@ -1576,7 +1568,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="245" name="disposable">
+    <column id="334" parent="245" name="disposable">
       <Position>4</Position>
       <Comment>0: no, 1: yes</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1584,12 +1576,12 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="336" parent="245" name="PRIMARY">
+    <key id="335" parent="245" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="337" parent="246" name="id">
+    <column id="336" parent="246" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1597,7 +1589,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="246" name="resource_id">
+    <column id="337" parent="246" name="resource_id">
       <Position>2</Position>
       <Comment>resource id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1605,7 +1597,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="246" name="user_id">
+    <column id="338" parent="246" name="user_id">
       <Position>3</Position>
       <Comment>who use it</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1613,7 +1605,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="246" name="usage_amount">
+    <column id="339" parent="246" name="usage_amount">
       <Position>4</Position>
       <Comment>how many of they use</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1621,7 +1613,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="246" name="start_date">
+    <column id="340" parent="246" name="start_date">
       <Position>5</Position>
       <Comment>GMT, when did he use it</Comment>
       <DataType>date|0s</DataType>
@@ -1629,7 +1621,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="246" name="end_date">
+    <column id="341" parent="246" name="end_date">
       <Position>6</Position>
       <Comment>GMT, when did he return it, 1970-1-1 will be set when it still lending or it&apos;s disposable</Comment>
       <DataType>date|0s</DataType>
@@ -1637,7 +1629,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="246" name="purpose">
+    <column id="342" parent="246" name="purpose">
       <Position>7</Position>
       <Comment>why did he use it</Comment>
       <DataType>varchar(200)|0s</DataType>
@@ -1645,12 +1637,12 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="344" parent="246" name="PRIMARY">
+    <key id="343" parent="246" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="345" parent="247" name="id">
+    <column id="344" parent="247" name="id">
       <Position>1</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1658,7 +1650,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="247" name="leader">
+    <column id="345" parent="247" name="leader">
       <Position>2</Position>
       <Comment>leader id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1666,7 +1658,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="247" name="title">
+    <column id="346" parent="247" name="title">
       <Position>3</Position>
       <Comment>team name, all of the lab persons contributes a big team called &quot;CIL home&quot;</Comment>
       <DataType>varchar(30)|0s</DataType>
@@ -1674,7 +1666,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="247" name="description">
+    <column id="347" parent="247" name="description">
       <Position>4</Position>
       <Comment>about project team </Comment>
       <DataType>varchar(300)|0s</DataType>
@@ -1682,7 +1674,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="349" parent="247" name="slogan">
+    <column id="348" parent="247" name="slogan">
       <Position>5</Position>
       <Comment>team slogan</Comment>
       <DataType>varchar(50)|0s</DataType>
@@ -1690,12 +1682,12 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="350" parent="247" name="PRIMARY">
+    <key id="349" parent="247" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="351" parent="248" name="id">
+    <column id="350" parent="248" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1703,7 +1695,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="248" name="team_id">
+    <column id="351" parent="248" name="team_id">
       <Position>2</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1711,7 +1703,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="353" parent="248" name="person_id">
+    <column id="352" parent="248" name="person_id">
       <Position>3</Position>
       <Comment>person id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1719,7 +1711,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="248" name="position">
+    <column id="353" parent="248" name="position">
       <Position>4</Position>
       <Comment>0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1727,7 +1719,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="355" parent="248" name="jobs">
+    <column id="354" parent="248" name="jobs">
       <Position>5</Position>
       <Comment>work content</Comment>
       <DataType>varchar(300)|0s</DataType>
@@ -1735,12 +1727,22 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
+    <index id="355" parent="248" name="team_id">
+      <ColNames>team_id
+person_id</ColNames>
+      <Unique>1</Unique>
+    </index>
     <key id="356" parent="248" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="357" parent="249" name="id">
+    <key id="357" parent="248" name="team_id">
+      <ColNames>team_id
+person_id</ColNames>
+      <UnderlyingIndexName>team_id</UnderlyingIndexName>
+    </key>
+    <column id="358" parent="249" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1748,7 +1750,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="358" parent="249" name="team_id">
+    <column id="359" parent="249" name="team_id">
       <Position>2</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1756,7 +1758,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="249" name="project_id">
+    <column id="360" parent="249" name="project_id">
       <Position>3</Position>
       <Comment>project id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1764,10 +1766,20 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="360" parent="249" name="PRIMARY">
+    <index id="361" parent="249" name="team_id">
+      <ColNames>team_id
+project_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="362" parent="249" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="363" parent="249" name="team_id">
+      <ColNames>team_id
+project_id</ColNames>
+      <UnderlyingIndexName>team_id</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
