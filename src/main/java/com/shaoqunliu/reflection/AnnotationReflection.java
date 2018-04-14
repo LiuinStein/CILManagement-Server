@@ -22,7 +22,7 @@ public class AnnotationReflection {
             try {
                 members.put(method.getName(), method.invoke(annotation));
             } catch (IllegalAccessException ignored) {
-                // will never happened at an annotation interface
+                // will never happen at an annotation interface
             }
         }
     }

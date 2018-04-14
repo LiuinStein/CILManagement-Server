@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 @Service("myValidationService")
 public class MyValidationService implements ValidationService {
 
-    private final ValidationAdapter normalValidationAdapter;
+    private final ValidationAdapter validationAdapter;
 
     @Autowired
     public MyValidationService(@Qualifier("adaptersValidation") ValidationAdapter validationAdapter) {
-        this.normalValidationAdapter = validationAdapter;
+        this.validationAdapter = validationAdapter;
     }
 
     @Override
     public <T> T validate(T object, Class<?>... groups) throws ValidationException {
-        return normalValidationAdapter.validate(object, groups);
+        return validationAdapter.validate(object, groups);
     }
 
 }

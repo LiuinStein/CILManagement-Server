@@ -2,6 +2,8 @@ package com.shaoqunliu.validation;
 
 import com.shaoqunliu.validation.exception.ValidationException;
 
+import java.util.List;
+
 /**
  * Validate with specific adapters
  *
@@ -13,7 +15,11 @@ public class AdaptersValidation extends AbstractValidation {
     /**
      * the validation adapters
      */
-    private ValidationAdapter[] adapters = {};
+    private final List<ValidationAdapter> adapters;
+
+    public AdaptersValidation(List<ValidationAdapter> adapters) {
+        this.adapters = adapters;
+    }
 
     /**
      * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
@@ -37,11 +43,32 @@ public class AdaptersValidation extends AbstractValidation {
         return object;
     }
 
-    public ValidationAdapter[] getAdapters() {
+    /**
+     * Make all of the adapters has similar fail fast property
+     *
+     * @param failFast when fail fast is enabled the validation will stop on the first constraint violation detected.
+     */
+    @Override
+    public void setFailFast(boolean failFast) {
+        super.setFailFast(failFast);
+        for (ValidationAdapter adapter : adapters) {
+            if (adapter instanceof AbstractValidation) {
+                ((AbstractValidation) adapter).setFailFast(failFast);
+            }
+        }
+    }
+
+    public List<ValidationAdapter> getAdapters() {
         return adapters;
     }
 
-    public void setAdapters(ValidationAdapter[] adapters) {
-        this.adapters = adapters;
+    /**
+     * Add an adapter dynamically
+     *
+     * @param adapter the adapter need to add
+     * @return true if add successfully, otherwise false
+     */
+    public boolean addAdapter(ValidationAdapter adapter) {
+        return adapters.add(adapter);
     }
 }
