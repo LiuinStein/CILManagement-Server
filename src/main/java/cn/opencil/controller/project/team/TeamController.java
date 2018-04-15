@@ -67,11 +67,11 @@ public class TeamController {
     }
 
     /**
-     * Query projects
+     * Query team info
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryProject() {
+    public RestfulResult queryTeam() {
         return null;
     }
 }

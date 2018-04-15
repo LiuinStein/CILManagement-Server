@@ -996,14 +996,26 @@ HTTP/1.1 204 NO CONTENT
 #### 0x07 Query a team
 
 ```http
-GET /v1/team? HTTP/1.1
+GET /v1/team?mode={m}&condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by team id
 
+```http
+GET /v1/team?mode=summary&condition=id&value=1 HTTP/1.1
 ```
+
+by leader id
+
+```http
+GET /v1/team?mode=summary&condition=leader&value=15110506001 HTTP/1.1
+```
+
+
+
+
 
 ##### Output
 
