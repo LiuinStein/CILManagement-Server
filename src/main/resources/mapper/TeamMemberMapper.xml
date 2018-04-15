@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.TeamMemberMapper">
+
+    <insert id="addMemberToTeam" parameterType="cn.opencil.po.TeamMember">
+        INSERT INTO t_team_personnel (team_id, person_id, position, jobs)
+            VALUE (#{teamId}, #{personId}, #{position}, #{jobs})
+    </insert>
+
+    <delete id="deleteMemberFromTeam" parameterType="cn.opencil.po.TeamMember">
+        DELETE FROM t_team_personnel
+        WHERE team_id = #{teamId} AND person_id = #{personId}
+    </delete>
+
+    <update id="modifyMemberJobs" parameterType="cn.opencil.po.TeamMember">
+        UPDATE t_team_personnel
+        <set>
+            <if test="position != null">
+                position = #{position},
+            </if>
+            <if test="jobs != null">
+                jobs = #{jobs}
+            </if>
+        </set>
+        WHERE team_id = #{teamId} AND person_id = #{personId}
+    </update>
+
+    <resultMap id="teamMemberMap" type="cn.opencil.po.TeamMember"/>
+
+    <select id="queryTeamMembers" parameterType="cn.opencil.po.TeamMember" resultMap="teamMemberMap">
+        SELECT
+            team_id,
+            person_id,
+            position,
+            jobs
+        FROM t_team_personnel
+        WHERE
+            <choose>
+                <when test="teamId != null">
+                    team_id = #{teamId}
+                </when>
+                <when test="position != null">
+                    position = #{position}
+                </when>
+            </choose>
+    </select>
+
+</mapper>

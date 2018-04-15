@@ -1,17 +1,17 @@
-package com.shaoqunliu.validation.DBValidation;
+package com.shaoqunliu.validation.validator.database;
 
-import com.shaoqunliu.validation.AbstractValidation;
-import com.shaoqunliu.validation.Contracts;
-import com.shaoqunliu.validation.exception.ValidationException;
 import com.shaoqunliu.validation.exception.ValidationInternalException;
+import com.shaoqunliu.validation.validator.AbstractValidator;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 /**
  * @author Shaoqun Liu
+ * @since 1.8
  */
-public abstract class AbstractDatabaseValidation extends AbstractValidation {
+public abstract class AbstractDatabaseValidator extends AbstractValidator {
 
     /**
      * A connection pool or other data source
@@ -23,31 +23,20 @@ public abstract class AbstractDatabaseValidation extends AbstractValidation {
      */
     private String basicSql = "SELECT COUNT(*)";
 
-    public AbstractDatabaseValidation(DataSource dataSource) throws ValidationInternalException {
+    /**
+     * Construct an object with a specific data source
+     *
+     * @param dataSource the data source
+     */
+    public AbstractDatabaseValidator(DataSource dataSource) throws ValidationInternalException {
         setDataSource(dataSource);
     }
 
     /**
-     * Validate the value with database
-     *
-     * @param table  the table name
-     * @param column the column name
-     * @param value  the value need to be check
-     * @throws ValidationException when SQLException occurred
-     */
-    protected abstract void validateWithDatabase(String table, String column, String value) throws ValidationException;
-
-    /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
-     */
-    @Override
-    public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;
-
-    /**
      * Do not make it private or package-private due to it may be used at applicationContext.xml for the xml tag <property>
      */
-    public void setDataSource(DataSource dataSource) throws ValidationInternalException {
-        Contracts.assertNotNull(dataSource, "Null data source");
+    public void setDataSource(DataSource dataSource) {
+        Objects.requireNonNull(dataSource);
         if (dataSource instanceof TransactionAwareDataSourceProxy) {
             /*
              * for Spring Jdbc transaction aware data source

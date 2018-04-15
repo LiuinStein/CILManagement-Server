@@ -289,7 +289,7 @@ PUT /v1/user/info/ HTTP/1.1
 
 > Only **administers** can modify the value of `enroll_time`&`exit_time` fields. If **others** submit that, it would be **ignored**.
 
-> The user_id in URL indicate whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
+> The `id` field indicates whose information will be change, if it not equals to the logged-in user_id, the administer's privilege will be required.
 
 ##### Output
 
@@ -388,13 +388,13 @@ by user's department:
 GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 ```
 
-> The mode field controls which data are returned.
+> The mode field controls which data will be returned.
 >
-> | When it is | Returned fields                                              |
-> | ---------- | ------------------------------------------------------------ |
-> | summary    | id, name, gender, department                                 |
-> | all        | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
-> |            |                                                              |
+> | Mode    | Returned fields                                              |
+> | ------- | ------------------------------------------------------------ |
+> | summary | id, name, gender, department                                 |
+> | all     | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
+> |         |                                                              |
 
 ##### Output
 
@@ -729,7 +729,609 @@ HTTP/1.1 200 OK
 
 ### 0x03 Project & Team Management
 
+#### 0x00 Add a project
 
+```http
+POST /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "topic":"the name of a big project worthed 2 billion dollars",
+  "leader":15110506001,
+  "subject":1,
+  "funding":50000,
+  "application_date":"2018-01-06",
+  "start_date":"2018-02-05",
+  "deadline":"2018-09-01"
+}
+```
+
+> The monetary unit of funding is cent!
+
+##### Output
+
+Project creation success
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "new project created",
+    "data": {}
+}
+```
+
+#### 0x01 Modify project information
+
+```http
+PUT /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":3,
+  "topic":"a name",
+  "leader":15110506001,
+  "subject":1,
+  "funding":50000,
+  "code_uri":"https://github.com/LiuinStein",
+  "application_date":"2018-01-06",
+  "start_date":"2018-02-05",
+  "deadline":"2018-09-01"
+}
+```
+
+> **Only send those fields that need to be modified!**
+
+> All available fields name look at the design of schema, table `t_project`
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "project information has been changed",
+    "data": {}
+}
+```
+
+#### 0x02 Delete a project
+
+```http
+DELETE /v1/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":1
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x03 Query projects
+
+```http
+GET /v1/project?mode={m}&condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by project id:
+
+```http
+GET /v1/project?mode=summary&condition=project_id&value=1 HTTP/1.1
+```
+
+by leader id:
+
+```http
+GET /v1/project?mode=summary&condition=leader_id&value=15110506001 HTTP/1.1
+```
+
+by subject id:
+
+```http
+GET /v1/project?mode=summary&condition=subject_id&value=19 HTTP/1.1
+```
+
+> The mode field controls which data will be returned.
+>
+> | Mode    | Returned fields                                              |
+> | ------- | ------------------------------------------------------------ |
+> | summary | id, topic, leader id, funding, start_date, subject id, deadline |
+> | all     | id, topic, description, code_uri, docs_uri, leader id, subject id, funding, affiliation, application_date, start_date, deadline |
+> |         |                                                              |
+
+##### Output
+
+Query success & has results:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "projects": [
+            {
+                "id": 3,
+                "topic": "a name",
+                "leader": 15110506001,
+                "subject": 1,
+                "funding": 50000,
+                "deadline": 1535673600000
+            },
+            {
+                "id": 4,
+                "topic": "name of a big project worthed 200M dollars",
+                "leader": 15110506001,
+                "subject": 1,
+                "funding": 50000,
+                "deadline": 1535673600000
+            }
+        ]
+    }
+}
+```
+
+Project was not found:
+
+```http
+HTTP/1.1 404 NOT FOUND
+```
+
+```json
+{
+    "code": 404,
+    "message": "project not found",
+    "data": {}
+}
+```
+
+#### 0x04 Organize a team 
+
+```http
+POST /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "leader":15110506001,
+  "title":"a wonderful team",
+  "description":"we can do a big project that worthed 2 billion dollars",
+  "slogan":"do a project"
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "new team created",
+    "data": {}
+}
+```
+
+#### 0x05 Modify team information
+
+```http
+PUT /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":1,
+  "leader":15110506001,
+  "title":"a wonderful team",
+  "description":"we can do a big project that worthed 2 billion dollars",
+  "slogan":"do a project"
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "team information has been changed",
+    "data": {}
+}
+```
+
+#### 0x06 Dissolve a team
+
+```http
+DELETE /v1/team/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":1
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x07 Query a team
+
+```http
+GET /v1/team?mode={m}&condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by team id:
+
+```http
+GET /v1/team?mode=summary&condition=id&value=1 HTTP/1.1
+```
+
+by member id:
+
+```http
+GET /v1/team?mode=summary&condition=member&value=15110506001 HTTP/1.1
+```
+
+by project id:
+
+```http
+GET /v1/team?mode=summary&condition=project&value=2 HTTP/1.1
+```
+
+> The mode field controls which data will be returned.
+>
+> | Mode    | Returned fields                        |
+> | ------- | -------------------------------------- |
+> | summary | id, leader, title                      |
+> | all     | id, leader, title, description, slogan |
+> |         |                                        |
+
+##### Output
+
+Query successfully with its result data:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "teams": [
+            {
+                "id": 5,
+                "leader": 15110506001,
+                "title": "a wonderful team",
+                "description": "we can do a big project",
+                "slogan": "do a project"
+            }
+        ]
+    }
+}
+```
+
+#### 0x08 Add a member to a team
+
+```http
+POST /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "team_id":2,
+  "person_id":15110506001,
+  "position":9,
+  "jobs":"do something"
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "new member added",
+    "data": {}
+}
+```
+
+#### 0x09 Kick out a man from a team
+
+```http
+DELETE /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "team_id":2,
+  "person_id":15110506001
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x0A Modify someone's job or position
+
+```http
+PUT /v1/team/member/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "team_id":2,
+  "person_id":15110506001,
+  "position":5,
+  "jobs":"do a lot of things"
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "member position & job info has been changed",
+    "data": {}
+}
+```
+
+#### 0x0B Query team members
+
+```http
+GET /v1/team/member?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by team id:
+
+```http
+GET /v1/team/member?condition=team&value=1 HTTP/1.1
+```
+
+by position:
+
+```http
+GET /v1/team/member?condition=position&value=1 HTTP/1.1
+```
+
+##### Output
+
+Query success & its result:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "members": [
+            {
+                "position": 0,
+                "jobs": "to be a leader"
+            }
+        ]
+    }
+}
+```
+
+#### 0x0C Assign a project to a team
+
+```http
+POST /v1/team/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "team_id":2,
+  "project_id":3
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "project has been assigned successfully",
+    "data": {}
+}
+```
+
+#### 0x0D Take back a project from a team
+
+```http
+DELETE /v1/team/project/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "team_id":2,
+  "project_id":3
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x0E Income/Outcome a sum of money 
+
+```http
+POST /v1/project/funding/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "amount":-3000,
+  "project_id":3,
+  "note":"buy a new computer",
+  "date":"2018-04-02"
+}
+```
+
+##### Output
+
+**Expenditure record successfully:**
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "expenditures has been recorded",
+    "data": {}
+}
+```
+
+**There's no more money for you: **
+
+```http
+HTTP/1.1 400 BAD REQUEST
+```
+
+```json
+{
+    "code": 400,
+    "message": "there is not enough money you can spend on your project!",
+    "data": {}
+}
+```
+
+#### 0x0F Query expenditures
+
+```http
+GET /v1/project/funding?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by project id:
+
+```http
+GET /v1/project/funding?condition=project&value=2 HTTP/1.1
+```
+
+##### Output
+
+Query successfully with its result data:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "amount": 8000,
+                "balance": 8000,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 2,
+                "amount": 6000,
+                "balance": 14000,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 3,
+                "amount": -14000,
+                "balance": 0,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 4,
+                "amount": 14000,
+                "balance": 14000,
+                "note": "buy a new computer"
+            }
+        ]
+    }
+}
+```
 
 ### 0x04 Resource & Usage Management
 

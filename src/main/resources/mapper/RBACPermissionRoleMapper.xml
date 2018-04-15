@@ -37,7 +37,7 @@
     </select>
 
     <insert id="grantPermissionToRole" parameterType="cn.opencil.po.RBACPermissionRole">
-        INSERT t_rbac_role_permission (role_id, permission_id)
+        INSERT INTO t_rbac_role_permission (role_id, permission_id)
             VALUE (#{roleId}, #{permissionId})
     </insert>
 

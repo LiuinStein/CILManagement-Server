@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.TeamMapper">
+
+    <insert id="addTeam" parameterType="cn.opencil.po.Team" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_team (leader, title, description, slogan)
+            VALUE (#{leader}, #{title}, #{description}, #{slogan})
+    </insert>
+
+    <delete id="deleteTeam" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_team,
+            t_team_personnel,
+            t_team_project USING t_team
+            LEFT JOIN t_team_personnel ON t_team_personnel.team_id = t_team.id
+            LEFT JOIN t_team_project ON t_team_project.team_id = t_team.id
+        WHERE
+            t_team.id = #{id}
+    </delete>
+
+    <update id="modifyTeamInfo" parameterType="cn.opencil.po.Team">
+        UPDATE t_team
+        <set>
+            <if test="leader != null">
+                leader = #{leader},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="slogan != null">
+                slogan = #{slogan}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <sql id="teamColumns">
+        t_team.id, t_team.leader, t_team.title
+        <if test="isAll == true">
+            , t_team.description, t_team.slogan
+        </if>
+    </sql>
+
+    <resultMap id="teamInfo" type="cn.opencil.po.Team"/>
+
+    <select id="queryInfoByTeamId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM t_team
+        WHERE id = #{id}
+    </select>
+
+    <select id="queryInfoByMemberId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM
+            t_team
+            LEFT JOIN t_team_personnel
+                ON t_team.id = t_team_personnel.team_id
+        WHERE
+            t_team_personnel.person_id = #{id}
+    </select>
+
+    <select id="queryInfoByProjectId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM
+            t_team
+            LEFT JOIN t_team_project
+                ON t_team.id = t_team_project.team_id
+        WHERE
+            t_team_project.project_id = #{id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.ProjectFundingMapper">
+
+    <insert id="addFundingRow" parameterType="cn.opencil.po.ProjectFunding">
+        INSERT INTO t_expenditure (amount, balance, project_id, note, revenue_date)
+            VALUE (#{amount}, #{balance}, #{projectId}, #{note}, #{revenueDate})
+    </insert>
+
+    <select id="checkProjectBalance" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        SELECT balance
+        FROM t_expenditure
+        WHERE project_id = #{projectId}
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <resultMap id="expenditures" type="cn.opencil.po.ProjectFunding"/>
+
+    <select id="queryExpenditures" parameterType="java.lang.Integer" resultMap="expenditures">
+        SELECT
+            id,
+            amount,
+            balance,
+            project_id,
+            note,
+            revenue_date
+        FROM t_expenditure
+        WHERE project_id = #{projectId}
+    </select>
+
+</mapper>

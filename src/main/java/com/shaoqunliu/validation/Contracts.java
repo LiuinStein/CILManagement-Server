@@ -2,6 +2,11 @@ package com.shaoqunliu.validation;
 
 import com.shaoqunliu.validation.exception.ValidationInternalException;
 
+/**
+ * assert
+ *
+ * @author Shaoqun Liu
+ */
 public class Contracts {
 
     public static void assertNotEmpty(String test, String message) throws ValidationInternalException {

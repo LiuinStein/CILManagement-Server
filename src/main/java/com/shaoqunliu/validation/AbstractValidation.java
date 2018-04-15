@@ -26,13 +26,13 @@ public abstract class AbstractValidation implements ValidationAdapter {
     }
 
     /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
+     * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object, Class[])
      */
     @Override
     public abstract <T> T validate(T object, Class<?>... groups) throws ValidationException;
 
     /**
-     * @see com.shaoqunliu.validation.ValidationAdapter
+     * @see com.shaoqunliu.validation.ValidationAdapter#validate(Object[], Predicate)
      */
     @Override
     public <T> T[] validate(T[] objects, Predicate<? super T> predicate) throws ValidationException {

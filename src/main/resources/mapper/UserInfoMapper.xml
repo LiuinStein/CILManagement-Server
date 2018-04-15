@@ -88,7 +88,7 @@
     <select id="queryAllInfo" parameterType="cn.opencil.po.UserInfo" resultMap="userInfo">
         SELECT
           <include refid="queryBasicOption"/>
-          <include refid="queryAddtionalOption"/>
+          <include refid="queryAdditionalOption"/>
         FROM t_personnel
         WHERE
           <include refid="queryWhereOption"/>
@@ -100,7 +100,7 @@
         id, name, gender, department
     </sql>
 
-    <sql id="queryAddtionalOption">
+    <sql id="queryAdditionalOption">
         , enroll_time, exit_time, birthday, email, phone, achievement
     </sql>
 

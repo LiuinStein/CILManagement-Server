@@ -22,11 +22,6 @@ public class POJOReflection {
 
     private Class<?> clazz;
     private Object object = null;
-    private Stream<Field> fieldStream;
-
-    private void init() {
-        fieldStream = Arrays.stream(clazz.getDeclaredFields());
-    }
 
     /**
      * Construct object with Class
@@ -35,7 +30,6 @@ public class POJOReflection {
      */
     public POJOReflection(Class<?> clazz) {
         this.clazz = clazz;
-        init();
     }
 
     /**
@@ -46,7 +40,6 @@ public class POJOReflection {
     public POJOReflection(Object o) {
         object = o;
         clazz = object.getClass();
-        init();
     }
 
     /**
@@ -57,7 +50,6 @@ public class POJOReflection {
      */
     public POJOReflection(String className) throws ClassNotFoundException {
         clazz = Class.forName(className);
-        init();
     }
 
     /**
@@ -97,10 +89,7 @@ public class POJOReflection {
      * @param action the action to be performed for each field
      */
     public void forEachField(Consumer<? super Field> action) {
-        Objects.requireNonNull(action);
-        for (Field field : clazz.getDeclaredFields()) {
-            action.accept(field);
-        }
+        getFieldStream().forEach(action);
     }
 
     /**
@@ -113,12 +102,11 @@ public class POJOReflection {
             BiConsumer<? super Field, T> action, Class<T> type) {
         Objects.requireNonNull(type);
         Objects.requireNonNull(action);
-        getFieldStream().filter(x -> x.getAnnotationsByType(type).length != 0)
-                .forEach(field -> {
-                    for (T annotation : field.getAnnotationsByType(type)) {
-                        action.accept(field, annotation);
-                    }
-                });
+        getFieldStream().forEach(field -> {
+            for (T annotation : field.getAnnotationsByType(type)) {
+                action.accept(field, annotation);
+            }
+        });
     }
 
     /**
@@ -136,8 +124,13 @@ public class POJOReflection {
         }
     }
 
+    /**
+     * Create a stream of field
+     *
+     * @return the field stream
+     */
     public Stream<Field> getFieldStream() {
-        return fieldStream;
+        return Arrays.stream(clazz.getDeclaredFields());
     }
 
 }
