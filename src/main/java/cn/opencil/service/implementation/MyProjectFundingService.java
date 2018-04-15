@@ -16,7 +16,6 @@ public class MyProjectFundingService implements ProjectFundingService {
         this.fundingMapper = fundingMapper;
     }
 
-
     @Override
     public boolean addFundingExpenditure(ProjectFunding funding) {
         Long balance = fundingMapper.checkProjectBalance(funding.getProjectId());

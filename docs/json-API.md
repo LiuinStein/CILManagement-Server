@@ -388,13 +388,13 @@ by user's department:
 GET /v1/user/info?mode=summary&condition=department&value=101  HTTP/1.1
 ```
 
-> The mode field controls which data are returned.
+> The mode field controls which data will be returned.
 >
-> | When it is | Returned fields                                              |
-> | ---------- | ------------------------------------------------------------ |
-> | summary    | id, name, gender, department                                 |
-> | all        | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
-> |            |                                                              |
+> | Mode    | Returned fields                                              |
+> | ------- | ------------------------------------------------------------ |
+> | summary | id, name, gender, department                                 |
+> | all     | id, name, gender, department, enroll-time, exit-time, birthday, email, phone, achievement |
+> |         |                                                              |
 
 ##### Output
 
@@ -830,22 +830,85 @@ HTTP/1.1 204 NO CONTENT
 #### 0x03 Query projects
 
 ```http
-GET /v1/project? HTTP/1.1
+GET /v1/project?mode={m}&condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by project id:
 
+```http
+GET /v1/project?mode=summary&condition=project_id&value=1 HTTP/1.1
 ```
+
+by leader id:
+
+```http
+GET /v1/project?mode=summary&condition=leader_id&value=15110506001 HTTP/1.1
+```
+
+by subject id:
+
+```http
+GET /v1/project?mode=summary&condition=subject_id&value=19 HTTP/1.1
+```
+
+> The mode field controls which data will be returned.
+>
+> | Mode    | Returned fields                                              |
+> | ------- | ------------------------------------------------------------ |
+> | summary | id, topic, leader id, funding, start_date, subject id, deadline |
+> | all     | id, topic, description, code_uri, docs_uri, leader id, subject id, funding, affiliation, application_date, start_date, deadline |
+> |         |                                                              |
 
 ##### Output
 
-```http
+Query success & has results:
 
+```http
+HTTP/1.1 200 OK
 ```
 
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "projects": [
+            {
+                "id": 3,
+                "topic": "a name",
+                "leader": 15110506001,
+                "subject": 1,
+                "funding": 50000,
+                "deadline": 1535673600000
+            },
+            {
+                "id": 4,
+                "topic": "name of a big project worthed 200M dollars",
+                "leader": 15110506001,
+                "subject": 1,
+                "funding": 50000,
+                "deadline": 1535673600000
+            }
+        ]
+    }
+}
+```
 
+Project was not found:
+
+```http
+HTTP/1.1 404 NOT FOUND
+```
+
+```json
+{
+    "code": 404,
+    "message": "project not found",
+    "data": {}
+}
+```
 
 #### 0x04 Organize a team 
 

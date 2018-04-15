@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/project")
@@ -72,8 +73,39 @@ public class ProjectController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryProject() {
-        return null;
+    public RestfulResult queryProject(@RequestParam("mode") String mode, @RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+        Project project = new Project();
+        switch (condition.toLowerCase()) {
+            case "project_id":
+                project.setId(Integer.parseInt(value));
+                break;
+            case "leader_id":
+                project.setLeader(Long.parseLong(value));
+                break;
+            case "subject_id":
+                project.setSubject(Integer.parseInt(value));
+                break;
+            default:
+                throw new SimpleHttpException(400, "condition is not supported", HttpStatus.BAD_REQUEST);
+        }
+        project = validationService.validate(project);
+        List<Project> result;
+        switch (mode.toLowerCase()) {
+            case "summary":
+                result = projectService.querySummaryProjectInfo(project);
+                break;
+            case "all":
+                result = projectService.queryAllProjectInfo(project);
+                break;
+            default:
+                result = null;
+        }
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "project not found", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("projects", result);
+        return new RestfulResult(0, "", data);
     }
 
 }

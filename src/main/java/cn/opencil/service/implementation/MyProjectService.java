@@ -6,6 +6,8 @@ import cn.opencil.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myProjectService")
 public class MyProjectService implements ProjectService {
 
@@ -29,6 +31,16 @@ public class MyProjectService implements ProjectService {
     @Override
     public boolean modifyProject(Project project) {
         return projectMapper.modifyProject(project) == 1;
+    }
+
+    @Override
+    public List<Project> querySummaryProjectInfo(Project project) {
+        return projectMapper.querySummaryProjectInfo(project);
+    }
+
+    @Override
+    public List<Project> queryAllProjectInfo(Project project) {
+        return projectMapper.queryAllProjectInfo(project);
     }
 
 }

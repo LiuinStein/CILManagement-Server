@@ -60,4 +60,45 @@
         WHERE id = #{id}
     </update>
 
+    <resultMap id="projectInfo" type="cn.opencil.po.Project"/>
+
+    <sql id="basicProjectInfo">
+        id, topic, leader, funding, start_date, subject, deadline
+    </sql>
+
+    <sql id="additionalProjectInfo">
+        , description, code_uri, docs_uri, affiliation, application_date, start_date
+    </sql>
+
+    <sql id="projectInfoWhereOption">
+        <choose>
+            <when test="id != null">
+                id = #{id}
+            </when>
+            <when test="leader != null">
+                leader = #{leader}
+            </when>
+            <when test="subject != null">
+                subject = #{subject}
+            </when>
+        </choose>
+    </sql>
+
+    <select id="querySummaryProjectInfo" parameterType="cn.opencil.po.Project" resultMap="projectInfo">
+        SELECT
+            <include refid="basicProjectInfo"/>
+        FROM t_project
+        WHERE
+            <include refid="projectInfoWhereOption"/>
+    </select>
+
+    <select id="queryAllProjectInfo" parameterType="cn.opencil.po.Project" resultMap="projectInfo">
+        SELECT
+            <include refid="basicProjectInfo"/>
+            <include refid="additionalProjectInfo"/>
+        FROM t_project
+        WHERE
+            <include refid="projectInfoWhereOption"/>
+    </select>
+
 </mapper>
