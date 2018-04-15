@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/team/member")
@@ -34,7 +35,7 @@ public class TeamMemberController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult addMember(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        TeamMember teamMember = validationService.validate(input.toJavaObject(TeamMember.class),AddTeamMemberValidation.class);
+        TeamMember teamMember = validationService.validate(input.toJavaObject(TeamMember.class), AddTeamMemberValidation.class);
         if (!teamMemberService.addMemberToTeam(teamMember)) {
             throw new SimpleHttpException(400, "member already exists", HttpStatus.BAD_REQUEST);
         }
@@ -69,7 +70,24 @@ public class TeamMemberController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryMember() {
-        return null;
+    public RestfulResult queryMember(@RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+        TeamMember member = new TeamMember();
+        switch (condition.toLowerCase()) {
+            case "team":
+                member.setTeamId(Integer.parseInt(value));
+                break;
+            case "position":
+                member.setPosition(Byte.parseByte(value));
+                break;
+            default:
+                throw new SimpleHttpException(400, "invalid condition was given", HttpStatus.BAD_REQUEST);
+        }
+        List<TeamMember> result = teamMemberService.queryTeamMembers(validationService.validate(member));
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "member was not found in given team", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("members", result);
+        return new RestfulResult(0, "", data);
     }
 }

@@ -1139,22 +1139,45 @@ HTTP/1.1 201 Created
 #### 0x0B Query team members
 
 ```http
-GET /v1/team/member? HTTP/1.1
+GET /v1/team/member?condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by team id:
 
+```http
+GET /v1/team/member?condition=team&value=1 HTTP/1.1
+```
+
+by position:
+
+```http
+GET /v1/team/member?condition=position&value=1 HTTP/1.1
 ```
 
 ##### Output
 
-```http
+Query success & its result:
 
+```http
+HTTP/1.1 200 OK
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "members": [
+            {
+                "position": 0,
+                "jobs": "to be a leader"
+            }
+        ]
+    }
+}
+```
 
 #### 0x0C Assign a project to a team
 

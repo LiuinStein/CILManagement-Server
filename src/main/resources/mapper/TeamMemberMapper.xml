@@ -25,4 +25,24 @@
         WHERE team_id = #{teamId} AND person_id = #{personId}
     </update>
 
+    <resultMap id="teamMemberMap" type="cn.opencil.po.TeamMember"/>
+
+    <select id="queryTeamMembers" parameterType="cn.opencil.po.TeamMember" resultMap="teamMemberMap">
+        SELECT
+            team_id,
+            person_id,
+            position,
+            jobs
+        FROM t_team_personnel
+        WHERE
+            <choose>
+                <when test="teamId != null">
+                    team_id = #{teamId}
+                </when>
+                <when test="position != null">
+                    position = #{position}
+                </when>
+            </choose>
+    </select>
+
 </mapper>

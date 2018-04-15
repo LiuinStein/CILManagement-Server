@@ -6,6 +6,8 @@ import cn.opencil.service.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myTeamMemberService")
 public class MyTeamMemberService implements TeamMemberService {
 
@@ -29,5 +31,10 @@ public class MyTeamMemberService implements TeamMemberService {
     @Override
     public boolean modifyMemberJobs(TeamMember teamMember) {
         return teamMemberMapper.modifyMemberJobs(teamMember) == 1;
+    }
+
+    @Override
+    public List<TeamMember> queryTeamMembers(TeamMember teamMember) {
+        return teamMemberMapper.queryTeamMembers(teamMember);
     }
 }

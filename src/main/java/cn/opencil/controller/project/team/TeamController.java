@@ -72,7 +72,7 @@ public class TeamController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryTeam(@RequestParam("mode") String mode, @RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+    public RestfulResult queryTeam(@RequestParam("mode") String mode, @RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException {
         List<Team> result;
         boolean isAll;
         switch (mode.toLowerCase()) {
