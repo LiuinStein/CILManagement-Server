@@ -6,6 +6,8 @@ import cn.opencil.service.ProjectFundingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myProjectFundingService")
 public class MyProjectFundingService implements ProjectFundingService {
 
@@ -25,5 +27,10 @@ public class MyProjectFundingService implements ProjectFundingService {
         }
         funding.setBalance(balance == null ? funding.getAmount() : Long.valueOf(balance + funding.getAmount()));
         return fundingMapper.addFundingRow(funding) == 1;
+    }
+
+    @Override
+    public List<ProjectFunding> queryExpenditures(ProjectFunding funding) {
+        return fundingMapper.queryExpenditures(funding.getProjectId());
     }
 }

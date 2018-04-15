@@ -15,4 +15,18 @@
         LIMIT 1
     </select>
 
+    <resultMap id="expenditures" type="cn.opencil.po.ProjectFunding"/>
+
+    <select id="queryExpenditures" parameterType="java.lang.Integer" resultMap="expenditures">
+        SELECT
+            id,
+            amount,
+            balance,
+            project_id,
+            note,
+            revenue_date
+        FROM t_expenditure
+        WHERE project_id = #{projectId}
+    </select>
+
 </mapper>

@@ -1279,22 +1279,59 @@ HTTP/1.1 400 BAD REQUEST
 #### 0x0F Query expenditures
 
 ```http
-GET /v1/project/funding/ HTTP/1.1
+GET /v1/project/funding?condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by project id:
 
+```http
+GET /v1/project/funding?condition=project&value=2 HTTP/1.1
 ```
 
 ##### Output
 
-```http
+Query successfully with its result data:
 
+```http
+HTTP/1.1 200 OK
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "amount": 8000,
+                "balance": 8000,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 2,
+                "amount": 6000,
+                "balance": 14000,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 3,
+                "amount": -14000,
+                "balance": 0,
+                "note": "buy a new computer"
+            },
+            {
+                "id": 4,
+                "amount": 14000,
+                "balance": 14000,
+                "note": "buy a new computer"
+            }
+        ]
+    }
+}
+```
 
 ### 0x04 Resource & Usage Management
 
