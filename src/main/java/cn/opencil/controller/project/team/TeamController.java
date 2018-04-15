@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/team")
@@ -71,7 +72,37 @@ public class TeamController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryTeam() {
-        return null;
+    public RestfulResult queryTeam(@RequestParam("mode") String mode, @RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+        List<Team> result;
+        boolean isAll;
+        switch (mode.toLowerCase()) {
+            case "summary":
+                isAll = false;
+                break;
+            case "all":
+                isAll = true;
+                break;
+            default:
+                throw new SimpleHttpException(404, "project not found", HttpStatus.NOT_FOUND);
+        }
+        switch (condition.toLowerCase()) {
+            case "id":
+                result = teamService.queryInfoByTeamId(Integer.parseInt(value), isAll);
+                break;
+            case "member":
+                result = teamService.queryInfoByMemberId(Long.parseLong(value), isAll);
+                break;
+            case "project":
+                result = teamService.queryInfoByProjectId(Integer.parseInt(value), isAll);
+                break;
+            default:
+                throw new SimpleHttpException(400, "condition is not supported", HttpStatus.BAD_REQUEST);
+        }
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "team not found", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("teams", result);
+        return new RestfulResult(0, "", data);
     }
 }

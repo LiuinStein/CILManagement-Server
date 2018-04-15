@@ -38,4 +38,43 @@
         WHERE id = #{id}
     </update>
 
+    <sql id="teamColumns">
+        t_team.id, t_team.leader, t_team.title
+        <if test="isAll == true">
+            , t_team.description, t_team.slogan
+        </if>
+    </sql>
+
+    <resultMap id="teamInfo" type="cn.opencil.po.Team"/>
+
+    <select id="queryInfoByTeamId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM t_team
+        WHERE id = #{id}
+    </select>
+
+    <select id="queryInfoByMemberId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM
+            t_team
+            LEFT JOIN t_team_personnel
+                ON t_team.id = t_team_personnel.team_id
+        WHERE
+            t_team_personnel.person_id = #{id}
+    </select>
+
+    <select id="queryInfoByProjectId" resultMap="teamInfo">
+        SELECT
+            <include refid="teamColumns"/>
+        FROM
+            t_team
+            LEFT JOIN t_team_project
+                ON t_team.id = t_team_project.team_id
+        WHERE
+            t_team_project.project_id = #{id}
+    </select>
+
+
 </mapper>

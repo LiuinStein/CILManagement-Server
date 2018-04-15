@@ -8,6 +8,8 @@ import cn.opencil.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myTeamService")
 public class MyTeamService implements TeamService {
 
@@ -39,5 +41,20 @@ public class MyTeamService implements TeamService {
     @Override
     public boolean modifyTeamInfo(Team team) {
         return teamMapper.modifyTeamInfo(team) == 1;
+    }
+
+    @Override
+    public List<Team> queryInfoByTeamId(Integer id, boolean isAll) {
+        return teamMapper.queryInfoByTeamId(id, isAll);
+    }
+
+    @Override
+    public List<Team> queryInfoByMemberId(Long id, boolean isAll) {
+        return teamMapper.queryInfoByMemberId(id, isAll);
+    }
+
+    @Override
+    public List<Team> queryInfoByProjectId(Integer id, boolean isAll) {
+        return teamMapper.queryInfoByProjectId(id, isAll);
     }
 }

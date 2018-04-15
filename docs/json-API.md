@@ -1001,29 +1001,57 @@ GET /v1/team?mode={m}&condition={c}&value={v} HTTP/1.1
 
 ##### Input
 
-by team id
+by team id:
 
 ```http
 GET /v1/team?mode=summary&condition=id&value=1 HTTP/1.1
 ```
 
-by leader id
+by member id:
 
 ```http
-GET /v1/team?mode=summary&condition=leader&value=15110506001 HTTP/1.1
+GET /v1/team?mode=summary&condition=member&value=15110506001 HTTP/1.1
 ```
 
+by project id:
 
+```http
+GET /v1/team?mode=summary&condition=project&value=2 HTTP/1.1
+```
 
-
+> The mode field controls which data will be returned.
+>
+> | Mode    | Returned fields                        |
+> | ------- | -------------------------------------- |
+> | summary | id, leader, title                      |
+> | all     | id, leader, title, description, slogan |
+> |         |                                        |
 
 ##### Output
 
-```http
+Query successfully with its result data:
 
+```http
+HTTP/1.1 200 OK
 ```
 
-
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "teams": [
+            {
+                "id": 5,
+                "leader": 15110506001,
+                "title": "a wonderful team",
+                "description": "we can do a big project",
+                "slogan": "do a project"
+            }
+        ]
+    }
+}
+```
 
 #### 0x08 Add a member to a team
 
