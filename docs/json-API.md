@@ -1400,17 +1400,28 @@ PUT /v1/resource/type/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":1,
+  "name":"lenovo desktop",
+  "description":"some descriptions",
+  "disposable":false
+}
 ```
 
 ##### Output
 
-```http
+Resource info change successfully:
 
+```http
+HTTP/1.1 201 Created
 ```
 
 ```json
-
+{
+    "code": 0,
+    "message": "resource info change successfully",
+    "data": {}
+}
 ```
 
 #### 0x03 Query resource types

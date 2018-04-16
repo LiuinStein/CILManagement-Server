@@ -7,4 +7,6 @@ public interface ResourceTypeMapper {
     Integer addResourceType(ResourceType resourceType);
 
     Integer deleteTypeOfResource(Integer id);
+
+    Integer modifyResourceTypeProperties(ResourceType resourceType);
 }

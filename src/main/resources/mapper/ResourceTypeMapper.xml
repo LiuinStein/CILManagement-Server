@@ -18,4 +18,20 @@
         WHERE t_resource_type.id = #{id}
     </delete>
 
+    <update id="modifyResourceTypeProperties" parameterType="cn.opencil.po.ResourceType">
+        UPDATE t_resource_type
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="disposable != null">
+                disposable = #{disposable}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>
