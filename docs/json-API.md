@@ -1335,6 +1335,110 @@ HTTP/1.1 200 OK
 
 ### 0x04 Resource & Usage Management
 
+#### 0x00 Add a type of resource
+
+```http
+POST /v1/resource/type/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "name":"lenovo desktop",
+  "description":"some descriptions",
+  "disposable":false
+}
+```
+
+##### Output
+
+Resource type add success:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource add success",
+    "data": {}
+}
+```
+
+#### 0x01 Delete a type of resource
+
+```http
+DELETE /v1/resource/type/ HTTP/1.1
+```
+
+> Warning: 
+>
+> This operation will clear all of the resources that belongs to this type
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+```json
+
+```
+
+#### 0x02 Modify resource type properties
+
+```http
+PUT /v1/resource/type/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+```json
+
+```
+
+#### 0x03 Query resource types
+
+```http
+GET /v1/resource/type/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+```json
+
+```
+
+
+
 
 
 ### 0x05 Error code
