@@ -5,6 +5,7 @@ import cn.opencil.po.ResourceType;
 import cn.opencil.service.ResourceTypeService;
 import cn.opencil.service.ValidationService;
 import cn.opencil.validation.group.AddResourceTypeValidation;
+import cn.opencil.validation.group.NotNullResourceTypeIdValidation;
 import cn.opencil.vo.RestfulResult;
 import com.alibaba.fastjson.JSONObject;
 import com.shaoqunliu.validation.exception.ValidationException;
@@ -46,8 +47,9 @@ public class ResourceTypeController {
      */
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTypeOfResource(@RequestBody JSONObject input) {
-
+    public void deleteTypeOfResource(@RequestBody JSONObject input) throws ValidationException {
+        ResourceType resourceType = validationService.validate(input.toJavaObject(ResourceType.class), NotNullResourceTypeIdValidation.class);
+        resourceTypeService.deleteTypeOfResource(resourceType);
     }
 
     /**

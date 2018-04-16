@@ -7,4 +7,15 @@
             VALUE (#{name}, #{description}, #{disposable})
     </insert>
 
+    <delete id="deleteTypeOfResource" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            t_resource_type,
+            t_resource,
+            t_resource_usage USING t_resource_type
+            LEFT JOIN t_resource ON t_resource.type_id = t_resource_type.id
+            LEFT JOIN t_resource_usage ON t_resource_usage.resource_id = t_resource.id
+        WHERE t_resource_type.id = #{id}
+    </delete>
+
 </mapper>

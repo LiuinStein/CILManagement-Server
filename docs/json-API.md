@@ -1375,22 +1375,20 @@ DELETE /v1/resource/type/ HTTP/1.1
 
 > Warning: 
 >
-> This operation will clear all of the resources that belongs to this type
+> This operation will clear all of the resources and its usage that belongs to this type
 
 ##### Input
 
 ```json
-
+{
+  "id":1
+}
 ```
 
 ##### Output
 
 ```http
-
-```
-
-```json
-
+HTTP/1.1 204 NO CONTENT
 ```
 
 #### 0x02 Modify resource type properties

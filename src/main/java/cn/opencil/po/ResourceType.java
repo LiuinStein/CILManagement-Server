@@ -1,6 +1,7 @@
 package cn.opencil.po;
 
 import cn.opencil.validation.group.AddResourceTypeValidation;
+import cn.opencil.validation.group.NotNullResourceTypeIdValidation;
 import com.shaoqunliu.validation.annotation.DigitsPattern;
 
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,9 @@ import javax.validation.constraints.Size;
 
 public class ResourceType {
     @Positive
+    @NotNull(groups = {
+            NotNullResourceTypeIdValidation.class
+    })
     private Integer id;
 
     @Size(max = 100)

@@ -21,4 +21,9 @@ public class MyResourceTypeService implements ResourceTypeService {
     public boolean addResourceType(ResourceType resourceType) {
         return typeMapper.addResourceType(resourceType) == 1;
     }
+
+    @Override
+    public boolean deleteTypeOfResource(ResourceType resourceType) {
+        return typeMapper.deleteTypeOfResource(resourceType.getId()) != 0;
+    }
 }
