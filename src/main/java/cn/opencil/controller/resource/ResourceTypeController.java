@@ -87,7 +87,7 @@ public class ResourceTypeController {
             throw new SimpleHttpException(404, "no resource type found in this server", HttpStatus.NOT_FOUND);
         }
         HashMap<String, Object> data = new HashMap<>();
-        data.put("users", result);
+        data.put("types", result);
         return new RestfulResult(0, "", data);
     }
 }

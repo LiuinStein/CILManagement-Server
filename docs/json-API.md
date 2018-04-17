@@ -1455,7 +1455,7 @@ HTTP/1.1 200 OK
     "code": 0,
     "message": "",
     "data": {
-        "users": [
+        "types": [
             {
                 "id": 1,
                 "name": "lenovo desktop",
@@ -1557,26 +1557,53 @@ HTTP/1.1 204 NO CONTENT
 #### 0x07 Query resource info
 
 ```http
-GET /v1/resource HTTP/1.1
+GET /v1/resource?condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by resource id:
 
+```http
+GET /v1/resource?condition=resource&value=1 HTTP/1.1
+```
+
+by resource type:
+
+```http
+GET /v1/resource?condition=type&value=1 HTTP/1.1
+```
+
+by purchaser id:
+
+```http
+GET /v1/resource?condition=purchaser&value=15110506001 HTTP/1.1
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 200 OK
 ```
 
 ```json
-
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "resources": [
+            {
+                "id": 1,
+                "typeId": 1,
+                "purchaserId": 1,
+                "unitPrice": 2,
+                "remaining": 6,
+                "quantity": 0
+            }
+        ]
+    }
+}
 ```
-
-
 
 
 

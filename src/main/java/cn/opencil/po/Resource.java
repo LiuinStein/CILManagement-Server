@@ -2,6 +2,8 @@ package cn.opencil.po;
 
 import cn.opencil.validation.group.AddResourceTypeValidation;
 import cn.opencil.validation.group.NotNullResourceIdValidation;
+import cn.opencil.validation.group.database.DatabaseTypeIdValidation;
+import cn.opencil.validation.group.database.DatabaseUserValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 
 import javax.validation.constraints.NotNull;
@@ -20,7 +22,8 @@ public class Resource {
             AddResourceTypeValidation.class
     })
     @DatabaseColumnReference(table = "t_resource_type", column = "id", groups = {
-            AddResourceTypeValidation.class
+            AddResourceTypeValidation.class,
+            DatabaseTypeIdValidation.class
     })
     private Integer typeId;
 
@@ -29,7 +32,8 @@ public class Resource {
             AddResourceTypeValidation.class
     })
     @DatabaseColumnReference(table = "t_rbac_user", column = "id", groups = {
-            AddResourceTypeValidation.class
+            AddResourceTypeValidation.class,
+            DatabaseUserValidation.class
     })
     private Long purchaserId;
 
