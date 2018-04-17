@@ -1467,6 +1467,106 @@ HTTP/1.1 200 OK
 }
 ```
 
+#### 0x04 Add a resource
+
+```http
+POST /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "type_id":1,
+  "purchaser_id":15110506001,
+  "unit_price":5000,
+  "remaining":5,
+  "quantity":10
+}
+```
+
+##### Output
+
+Resource add successfully:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource add success",
+    "data": {}
+}
+```
+
+#### 0x05 Modify resource info
+
+```http
+PUT /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+```json
+
+```
+
+#### 0x06 Delete a resource
+
+```http
+DELETE /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+#### 0x07 Query resource info
+
+```http
+GET /v1/resource HTTP/1.1
+```
+
+##### Input
+
+```json
+
+```
+
+##### Output
+
+```http
+
+```
+
+```json
+
+```
+
+
+
+
+
 ### 0x05 Error code
 
 The error code for Json-API `code` field.

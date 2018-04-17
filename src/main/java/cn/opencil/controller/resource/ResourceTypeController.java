@@ -40,7 +40,7 @@ public class ResourceTypeController {
         if (!resourceTypeService.addResourceType(resourceType)) {
             throw new SimpleHttpException(500, "database access error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new RestfulResult(0, "resource add success", new HashMap<>());
+        return new RestfulResult(0, "resource type add success", new HashMap<>());
     }
 
     /**
