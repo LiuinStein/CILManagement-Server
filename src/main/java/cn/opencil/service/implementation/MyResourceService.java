@@ -20,4 +20,9 @@ public class MyResourceService implements ResourceService {
     public boolean addResource(Resource resource) {
         return resourceMapper.addResource(resource) == 1;
     }
+
+    @Override
+    public boolean deleteResource(Resource resource) {
+        return resourceMapper.deleteResource(resource.getId()) != 0;
+    }
 }

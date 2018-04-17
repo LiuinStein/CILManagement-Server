@@ -1,6 +1,7 @@
 package cn.opencil.po;
 
 import cn.opencil.validation.group.AddResourceTypeValidation;
+import cn.opencil.validation.group.NotNullResourceIdValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,9 @@ import javax.validation.constraints.PositiveOrZero;
 
 public class Resource {
     @Positive
+    @NotNull(groups = {
+            NotNullResourceIdValidation.class
+    })
     private Integer id;
 
     @Positive

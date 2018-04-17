@@ -7,4 +7,11 @@
             VALUE (#{typeId}, #{purchaserId}, #{unitPrice}, #{remaining}, #{quantity})
     </insert>
 
+    <delete id="deleteResource" parameterType="java.lang.Integer">
+        DELETE FROM t_resource, t_resource_usage USING t_resource
+            LEFT JOIN t_resource_usage
+                ON t_resource.id = t_resource_usage.resource_id
+        WHERE t_resource.id = #{id}
+    </delete>
+
 </mapper>

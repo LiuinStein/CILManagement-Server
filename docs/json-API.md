@@ -1532,13 +1532,15 @@ DELETE /v1/resource/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":5
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 204 NO CONTENT
 ```
 
 #### 0x07 Query resource info
