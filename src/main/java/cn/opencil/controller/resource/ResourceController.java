@@ -58,7 +58,11 @@ public class ResourceController {
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult modifyResourceProperties(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        return null;
+        Resource resource = validationService.validate(input.toJavaObject(Resource.class), NotNullResourceIdValidation.class);
+        if (!resourceService.modifyResourceInfo(resource)) {
+            throw new SimpleHttpException(404, "resource was not found", HttpStatus.NOT_FOUND);
+        }
+        return new RestfulResult(0, "resource info modified", new HashMap<>());
     }
 
     /**

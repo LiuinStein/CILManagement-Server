@@ -1510,17 +1510,28 @@ PUT /v1/resource/ HTTP/1.1
 ##### Input
 
 ```json
-
+{
+  "id":1,
+  "type_id":1,
+  "purchaser_id":15110506001,
+  "unit_price":5000,
+  "remaining":5,
+  "quantity":10
+}
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 201 Created
 ```
 
 ```json
-
+{
+    "code": 0,
+    "message": "resource info modified",
+    "data": {}
+}
 ```
 
 #### 0x06 Delete a resource

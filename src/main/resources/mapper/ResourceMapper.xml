@@ -14,4 +14,28 @@
         WHERE t_resource.id = #{id}
     </delete>
 
+    <update id="modifyResourceInfo" parameterType="cn.opencil.po.Resource">
+        UPDATE t_resource
+        <set>
+            <choose>
+                <when test="typeId != null">
+                    type_id = #{typeId},
+                </when>
+                <when test="purchaserId != null">
+                    purchaser_id = #{purchaserId},
+                </when>
+                <when test="unitPrice != null">
+                    unit_price = #{unitPrice},
+                </when>
+                <when test="remaining != null">
+                    remaining = #{remaining},
+                </when>
+                <when test="quantity != null">
+                    quantity = #{quantity}
+                </when>
+            </choose>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

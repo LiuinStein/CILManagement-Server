@@ -7,4 +7,6 @@ public interface ResourceService {
     boolean addResource(Resource resource);
 
     boolean deleteResource(Resource resource);
+
+    boolean modifyResourceInfo(Resource resource);
 }
