@@ -1427,28 +1427,45 @@ HTTP/1.1 201 Created
 #### 0x03 Query resource types
 
 ```http
-GET /v1/resource/type/ HTTP/1.1
+GET /v1/resource/type?condition={c}&value={v} HTTP/1.1
 ```
 
 ##### Input
 
-```json
+by resource id:
 
+```http
+GET /v1/resource/type?condition=resource&value=1 HTTP/1.1
+```
+
+by type id:
+
+```http
+GET /v1/resource/type?condition=type&value=1 HTTP/1.1
 ```
 
 ##### Output
 
 ```http
-
+HTTP/1.1 200 OK
 ```
 
 ```json
-
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "name": "lenovo desktop",
+                "description": "some descriptions",
+                "disposable": true
+            }
+        ]
+    }
+}
 ```
-
-
-
-
 
 ### 0x05 Error code
 

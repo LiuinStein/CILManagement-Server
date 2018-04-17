@@ -6,6 +6,8 @@ import cn.opencil.service.ResourceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myResourceTypeService")
 public class MyResourceTypeService implements ResourceTypeService {
 
@@ -30,5 +32,15 @@ public class MyResourceTypeService implements ResourceTypeService {
     @Override
     public boolean modifyResourceTypeProperties(ResourceType resourceType) {
         return typeMapper.modifyResourceTypeProperties(resourceType) == 1;
+    }
+
+    @Override
+    public List<ResourceType> queryTypesByResourceId(Integer id) {
+        return typeMapper.queryTypesByResourceId(id);
+    }
+
+    @Override
+    public List<ResourceType> queryTypesByTypeId(Integer id) {
+        return typeMapper.queryTypesByTypeId(id);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/resource/type")
@@ -70,7 +71,23 @@ public class ResourceTypeController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryResourceType() {
-        return null;
+    public RestfulResult queryResourceType(@RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException {
+        List<ResourceType> result;
+        switch (condition.toLowerCase()) {
+            case "resource":
+                result = resourceTypeService.queryTypesByResourceId(Integer.parseInt(value));
+                break;
+            case "type":
+                result = resourceTypeService.queryTypesByTypeId(Integer.parseInt(value));
+                break;
+            default:
+                throw new SimpleHttpException(400, "invalid condition was given", HttpStatus.BAD_REQUEST);
+        }
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "no resource type found in this server", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("users", result);
+        return new RestfulResult(0, "", data);
     }
 }

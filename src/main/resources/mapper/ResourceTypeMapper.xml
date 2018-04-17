@@ -34,4 +34,29 @@
         WHERE id = #{id}
     </update>
 
+    <sql id="queryTypeProperties">
+        t_resource_type.id,
+        t_resource_type.name,
+        t_resource_type.description,
+        t_resource_type.disposable
+    </sql>
+
+    <resultMap id="typeProperties" type="cn.opencil.po.ResourceType"/>
+
+    <select id="queryTypesByResourceId" parameterType="java.lang.Integer" resultMap="typeProperties">
+        SELECT
+            <include refid="queryTypeProperties"/>
+        FROM t_resource_type
+            LEFT JOIN t_resource
+                ON t_resource.type_id = t_resource_type.id
+        WHERE t_resource.id = #{id}
+    </select>
+
+    <select id="queryTypesByTypeId" parameterType="java.lang.Integer" resultMap="typeProperties">
+        SELECT
+           <include refid="queryTypeProperties"/>
+        FROM t_resource_type
+        WHERE id = #{id}
+    </select>
+
 </mapper>
