@@ -3,12 +3,14 @@
 <mapper namespace="cn.opencil.mapper.ResourceUsageMapper">
 
     <insert id="addResourceUsage" parameterType="cn.opencil.po.ResourceUsage">
-        INSERT INTO t_resource_usage (resource_id, user_id, usage_amount, start_date, end_date, purpose)
-            VALUE (#{resourceId}, #{userId}, #{usageAmount}, #{startDate}, #{endDate}, #{purpose})
+        INSERT INTO t_resource_usage (resource_id, user_id, amount, transaction_date, note)
+            VALUE (#{resourceId}, #{userId}, #{amount}, #{transactionDate}, #{note})
     </insert>
 
-    <select id="checkResourceRemaining" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT remaining
+    <select id="checkResourceRemaining" parameterType="java.lang.Integer" resultType="cn.opencil.po.Resource">
+        SELECT
+            remaining,
+            quantity
         FROM t_resource
         WHERE id = #{id}
     </select>

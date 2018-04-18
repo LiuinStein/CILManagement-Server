@@ -29,25 +29,16 @@ public class ResourceUsageController {
     }
 
     /**
-     * Rent something to somebody
+     * Rent or give back some resources
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public RestfulResult rentResource(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
         ResourceUsage usage = validationService.validate(input.toJavaObject(ResourceUsage.class), AddResourceUsageValidation.class);
         if (!usageService.rentResource(usage)) {
-            throw new SimpleHttpException(404, "not have or not enough resource can be rent", HttpStatus.NOT_FOUND);
+            throw new SimpleHttpException(400, usage.getAmount() > 0 ? "the given back resource amount surpass the amount of this resource" : "not have or not enough resource can be rent", HttpStatus.BAD_REQUEST);
         }
-        return new RestfulResult(0, "resource rent successfully", new HashMap<>());
-    }
-
-    /**
-     * Give back some resources
-     */
-    @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void giveBackResource(@RequestBody JSONObject input) throws ValidationException {
-
+        return new RestfulResult(0, usage.getAmount() > 0 ? "resource give back successfully" : "resource rent successfully", new HashMap<>());
     }
 
     /**

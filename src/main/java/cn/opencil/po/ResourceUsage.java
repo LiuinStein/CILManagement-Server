@@ -3,10 +3,7 @@ package cn.opencil.po;
 import cn.opencil.validation.group.AddResourceUsageValidation;
 import com.shaoqunliu.validation.annotation.DatabaseColumnReference;
 
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 public class ResourceUsage {
@@ -31,28 +28,22 @@ public class ResourceUsage {
     })
     private Long userId;
 
-    @Positive
     @NotNull(groups = {
             AddResourceUsageValidation.class
     })
-    private Integer usageAmount;
+    private Integer amount;
 
-    @FutureOrPresent
+    @PastOrPresent
     @NotNull(groups = {
             AddResourceUsageValidation.class
     })
-    private Date startDate;
-
-    @NotNull(groups = {
-            AddResourceUsageValidation.class
-    })
-    private Date endDate;
+    private Date transactionDate;
 
     @Size(max = 200)
     @NotNull(groups = {
             AddResourceUsageValidation.class
     })
-    private String purpose;
+    private String note;
 
     public Integer getId() {
         return id;
@@ -78,35 +69,27 @@ public class ResourceUsage {
         this.userId = userId;
     }
 
-    public Integer getUsageAmount() {
-        return usageAmount;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setUsageAmount(Integer usageAmount) {
-        this.usageAmount = usageAmount;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getNote() {
+        return note;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose == null ? null : purpose.trim();
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

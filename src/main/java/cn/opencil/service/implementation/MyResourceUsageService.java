@@ -22,13 +22,14 @@ public class MyResourceUsageService implements ResourceUsageService {
 
     @Override
     public boolean rentResource(ResourceUsage resourceUsage) {
-        Integer surplus = usageMapper.checkResourceRemaining(resourceUsage.getResourceId());
-        if (surplus - resourceUsage.getUsageAmount() < 0) {
+        Resource resource = usageMapper.checkResourceRemaining(resourceUsage.getResourceId());
+        Integer remaining = resource.getRemaining() + resourceUsage.getAmount();
+        if (remaining < 0 || remaining > resource.getQuantity()) {
             return false;
         }
-        Resource resource = new Resource();
+        resource = new Resource();
         resource.setId(resourceUsage.getResourceId());
-        resource.setRemaining(surplus - resourceUsage.getUsageAmount());
+        resource.setRemaining(remaining);
         return resourceMapper.modifyResourceInfo(resource) == 1 &&
                 usageMapper.addResourceUsage(resourceUsage) == 1;
     }

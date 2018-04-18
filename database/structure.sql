@@ -55,7 +55,6 @@ CREATE TABLE `cil_management`.`t_rbac_role_permission`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
   `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
   `permission_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'permission id',
-#   `code` char(3) NOT NULL DEFAULT '000' COMMENT 'permission code',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -191,10 +190,9 @@ CREATE TABLE `cil_management`.`t_resource_usage`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'table\'s independent id',
   `resource_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'resource id',
   `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'who use it',
-  `usage_amount` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'how many of they use',
-  `start_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he use it',
-  `end_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT, when did he return it, 1970-1-1 will be set when it still lending or it\'s disposable',
-  `purpose` varchar(200) NOT NULL DEFAULT '' COMMENT 'why did he use it',
+  `amount` int NOT NULL DEFAULT 0 COMMENT 'how many of they use',
+  `transaction_date` date NOT NULL DEFAULT '1970-1-1' COMMENT 'GMT',
+  `note` varchar(200) NOT NULL DEFAULT '' COMMENT 'why did he use it',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 

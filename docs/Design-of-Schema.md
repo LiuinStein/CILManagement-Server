@@ -201,13 +201,12 @@ The Objects we should manager in this program includes **personnel**, **resource
 
 #### 0x02 Resource usage table (t_resource_usage):
 
-| Name         | Type         | key  | Comment                                                      | Example        |
-| ------------ | ------------ | ---- | ------------------------------------------------------------ | -------------- |
-| id           | INT          | PK   | -                                                            | 1              |
-| resource_id  | INT          |      | -                                                            | 2              |
-| user_id      | BIGINT       |      | who use it                                                   | 151105         |
-| usage_amount | INT          |      | how many of they use                                         | 5              |
-| start_date   | DATE         |      | GMT, when did he use it                                      | 2018-2-1       |
-| end_date     | DATE         |      | GMT, when did he return it, 1970-1-1 will be set when it still lending or it's disposable | 1970-1-1       |
-| purpose      | VARCHAR(200) |      | why did he use it                                            | compose theory |
+| Name             | Type         | key  | Comment              | Example        |
+| ---------------- | ------------ | ---- | -------------------- | -------------- |
+| id               | INT          | PK   | -                    | 1              |
+| resource_id      | INT          |      | -                    | 2              |
+| user_id          | BIGINT       |      | who use it           | 151105         |
+| amount           | INT          |      | how many of they use | 5              |
+| transaction_date | DATE         |      | GMT                  | 2018-2-1       |
+| note             | VARCHAR(200) |      | note                 | compose theory |
 
