@@ -1641,17 +1641,56 @@ HTTP/1.1 201 Created
 }
 ```
 
-#### 0x09 Modify resources usage info
+#### 0x09 Query resource usage info
 
+```http
+GET /v1/resource/usage?condition={c}&value={v} HTTP/1.1
+```
 
+##### Input
 
-####0x0A Modify resources usage info
+by resource usage id:
 
+```http
+GET /v1/resource/usage?condition=id&value=1 HTTP/1.1
+```
 
+by resource id:
 
-#### 0x0B Query resource usage info
+```http
+GET /v1/resource/usage?condition=resource&value=1 HTTP/1.1
+```
 
+by user id:
 
+```http
+GET /v1/resource/usage?condition=user&value=15110506001 HTTP/1.1
+```
+
+##### Output
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "usages": [
+            {
+                "id": 1,
+                "resourceId": 6,
+                "userId": 15110506001,
+                "amount": -4,
+                "transactionDate": "2018-04-09",
+                "note": "to do something"
+            }
+        ]
+    }
+}
+```
 
 ### 0x05 Error code
 

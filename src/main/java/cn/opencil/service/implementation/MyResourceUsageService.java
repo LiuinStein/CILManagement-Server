@@ -8,6 +8,8 @@ import cn.opencil.service.ResourceUsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myResourceUsageService")
 public class MyResourceUsageService implements ResourceUsageService {
 
@@ -32,5 +34,10 @@ public class MyResourceUsageService implements ResourceUsageService {
         resource.setRemaining(remaining);
         return resourceMapper.modifyResourceInfo(resource) == 1 &&
                 usageMapper.addResourceUsage(resourceUsage) == 1;
+    }
+
+    @Override
+    public List<ResourceUsage> queryResourceUsage(ResourceUsage resourceUsage) {
+        return usageMapper.queryResourceUsage(resourceUsage);
     }
 }

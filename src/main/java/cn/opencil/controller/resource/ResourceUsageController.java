@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/resource/usage")
@@ -42,20 +43,31 @@ public class ResourceUsageController {
     }
 
     /**
-     * Modify resources usage info
-     */
-    @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyResourceUsageInfo(@RequestBody JSONObject input) throws ValidationException, SimpleHttpException {
-        return null;
-    }
-
-    /**
      * Query resource usage info
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public RestfulResult queryResourceUsage(@RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException {
-        return null;
+        ResourceUsage usage = new ResourceUsage();
+        switch (condition.toLowerCase()) {
+            case "id":
+                usage.setId(Integer.parseInt(value));
+                break;
+            case "resource":
+                usage.setResourceId(Integer.parseInt(value));
+                break;
+            case "user":
+                usage.setUserId(Long.parseLong(value));
+                break;
+            default:
+                throw new SimpleHttpException(400, "invalid condition was given", HttpStatus.BAD_REQUEST);
+        }
+        List<ResourceUsage> result = usageService.queryResourceUsage(usage);
+        if (result == null || result.size() == 0) {
+            throw new SimpleHttpException(404, "resource usage not found", HttpStatus.NOT_FOUND);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("usages", result);
+        return new RestfulResult(0, "", data);
     }
 }

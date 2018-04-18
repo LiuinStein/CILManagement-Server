@@ -15,4 +15,33 @@
         WHERE id = #{id}
     </select>
 
+    <resultMap id="resourceUsage" type="cn.opencil.po.ResourceUsage">
+        <result column="resource_id" property="resourceId"/>
+        <result column="user_id" property="userId"/>
+        <result column="transaction_date" property="transactionDate"/>
+    </resultMap>
+
+    <select id="queryResourceUsage" parameterType="cn.opencil.po.ResourceUsage" resultMap="resourceUsage">
+        SELECT
+            id,
+            resource_id,
+            user_id,
+            amount,
+            transaction_date,
+            note
+        FROM t_resource_usage
+        WHERE
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <when test="resourceId != null">
+                    resource_id = #{resourceId}
+                </when>
+                <when test="userId != null">
+                    user_id = #{userId}
+                </when>
+            </choose>
+    </select>
+
 </mapper>
