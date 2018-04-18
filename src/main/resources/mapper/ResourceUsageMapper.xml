@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.ResourceUsageMapper">
+
+    <insert id="addResourceUsage" parameterType="cn.opencil.po.ResourceUsage">
+        INSERT INTO t_resource_usage (resource_id, user_id, amount, transaction_date, note)
+            VALUE (#{resourceId}, #{userId}, #{amount}, #{transactionDate}, #{note})
+    </insert>
+
+    <select id="checkResourceRemaining" parameterType="java.lang.Integer" resultType="cn.opencil.po.Resource">
+        SELECT
+            remaining,
+            quantity
+        FROM t_resource
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="resourceUsage" type="cn.opencil.po.ResourceUsage">
+        <result column="resource_id" property="resourceId"/>
+        <result column="user_id" property="userId"/>
+        <result column="transaction_date" property="transactionDate"/>
+    </resultMap>
+
+    <select id="queryResourceUsage" parameterType="cn.opencil.po.ResourceUsage" resultMap="resourceUsage">
+        SELECT
+            id,
+            resource_id,
+            user_id,
+            amount,
+            transaction_date,
+            note
+        FROM t_resource_usage
+        WHERE
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <when test="resourceId != null">
+                    resource_id = #{resourceId}
+                </when>
+                <when test="userId != null">
+                    user_id = #{userId}
+                </when>
+            </choose>
+    </select>
+
+</mapper>

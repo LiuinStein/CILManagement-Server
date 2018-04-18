@@ -1335,7 +1335,362 @@ HTTP/1.1 200 OK
 
 ### 0x04 Resource & Usage Management
 
+#### 0x00 Add a type of resource
 
+```http
+POST /v1/resource/type/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "name":"lenovo desktop",
+  "description":"some descriptions",
+  "disposable":false
+}
+```
+
+##### Output
+
+Resource type add success:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource add success",
+    "data": {}
+}
+```
+
+#### 0x01 Delete a type of resource
+
+```http
+DELETE /v1/resource/type/ HTTP/1.1
+```
+
+> Warning: 
+>
+> This operation will clear all of the resources and its usage that belongs to this type
+
+##### Input
+
+```json
+{
+  "id":1
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x02 Modify resource type properties
+
+```http
+PUT /v1/resource/type/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":1,
+  "name":"lenovo desktop",
+  "description":"some descriptions",
+  "disposable":false
+}
+```
+
+##### Output
+
+Resource info change successfully:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource info change successfully",
+    "data": {}
+}
+```
+
+#### 0x03 Query resource types
+
+```http
+GET /v1/resource/type?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by resource id:
+
+```http
+GET /v1/resource/type?condition=resource&value=1 HTTP/1.1
+```
+
+by type id:
+
+```http
+GET /v1/resource/type?condition=type&value=1 HTTP/1.1
+```
+
+##### Output
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "types": [
+            {
+                "id": 1,
+                "name": "lenovo desktop",
+                "description": "some descriptions",
+                "disposable": true
+            }
+        ]
+    }
+}
+```
+
+#### 0x04 Add a resource
+
+```http
+POST /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "type_id":1,
+  "purchaser_id":15110506001,
+  "unit_price":5000,
+  "remaining":5,
+  "quantity":10
+}
+```
+
+##### Output
+
+Resource add successfully:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource add success",
+    "data": {}
+}
+```
+
+#### 0x05 Modify resource info
+
+```http
+PUT /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":1,
+  "type_id":1,
+  "purchaser_id":15110506001,
+  "unit_price":5000,
+  "remaining":5,
+  "quantity":10
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource info modified",
+    "data": {}
+}
+```
+
+#### 0x06 Delete a resource
+
+```http
+DELETE /v1/resource/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "id":5
+}
+```
+
+##### Output
+
+```http
+HTTP/1.1 204 NO CONTENT
+```
+
+#### 0x07 Query resource info
+
+```http
+GET /v1/resource?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by resource id:
+
+```http
+GET /v1/resource?condition=resource&value=1 HTTP/1.1
+```
+
+by resource type:
+
+```http
+GET /v1/resource?condition=type&value=1 HTTP/1.1
+```
+
+by purchaser id:
+
+```http
+GET /v1/resource?condition=purchaser&value=15110506001 HTTP/1.1
+```
+
+##### Output
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "resources": [
+            {
+                "id": 1,
+                "typeId": 1,
+                "purchaserId": 1,
+                "unitPrice": 2,
+                "remaining": 6,
+                "quantity": 0
+            }
+        ]
+    }
+}
+```
+
+#### 0x08 Rent or give back some resources
+
+```http
+POST /v1/resource/usage/ HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "resource_id":6,
+  "user_id":15110506001,
+  "amount":-1,
+  "transaction_date":"2018-04-10",
+  "note":"to do something"
+}
+```
+
+> When someone rent something, the amount is negative, otherwise, the amount is zero or positive.
+
+##### Output
+
+Operate successfully:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+    "code": 0,
+    "message": "resource rent successfully",
+    "data": {}
+}
+```
+
+#### 0x09 Query resource usage info
+
+```http
+GET /v1/resource/usage?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by resource usage id:
+
+```http
+GET /v1/resource/usage?condition=id&value=1 HTTP/1.1
+```
+
+by resource id:
+
+```http
+GET /v1/resource/usage?condition=resource&value=1 HTTP/1.1
+```
+
+by user id:
+
+```http
+GET /v1/resource/usage?condition=user&value=15110506001 HTTP/1.1
+```
+
+##### Output
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "usages": [
+            {
+                "id": 1,
+                "resourceId": 6,
+                "userId": 15110506001,
+                "amount": -4,
+                "transactionDate": "2018-04-09",
+                "note": "to do something"
+            }
+        ]
+    }
+}
+```
 
 ### 0x05 Error code
 

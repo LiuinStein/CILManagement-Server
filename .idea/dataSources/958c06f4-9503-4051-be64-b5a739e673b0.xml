@@ -1084,7 +1084,7 @@
     <column id="266" parent="236" name="amount">
       <Position>2</Position>
       <Comment>measure in cent</Comment>
-      <DataType>bigint(20) unsigned|0s</DataType>
+      <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1605,7 +1605,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="246" name="usage_amount">
+    <column id="339" parent="246" name="amount">
       <Position>4</Position>
       <Comment>how many of they use</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1613,36 +1613,28 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="246" name="start_date">
+    <column id="340" parent="246" name="transaction_date">
       <Position>5</Position>
-      <Comment>GMT, when did he use it</Comment>
+      <Comment>GMT</Comment>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="246" name="end_date">
+    <column id="341" parent="246" name="note">
       <Position>6</Position>
-      <Comment>GMT, when did he return it, 1970-1-1 will be set when it still lending or it&apos;s disposable</Comment>
-      <DataType>date|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;1970-01-01&apos;</DefaultExpression>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="342" parent="246" name="purpose">
-      <Position>7</Position>
       <Comment>why did he use it</Comment>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="343" parent="246" name="PRIMARY">
+    <key id="342" parent="246" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="344" parent="247" name="id">
+    <column id="343" parent="247" name="id">
       <Position>1</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1650,7 +1642,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="345" parent="247" name="leader">
+    <column id="344" parent="247" name="leader">
       <Position>2</Position>
       <Comment>leader id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1658,7 +1650,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="247" name="title">
+    <column id="345" parent="247" name="title">
       <Position>3</Position>
       <Comment>team name, all of the lab persons contributes a big team called &quot;CIL home&quot;</Comment>
       <DataType>varchar(30)|0s</DataType>
@@ -1666,7 +1658,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="247" name="description">
+    <column id="346" parent="247" name="description">
       <Position>4</Position>
       <Comment>about project team </Comment>
       <DataType>varchar(300)|0s</DataType>
@@ -1674,7 +1666,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="247" name="slogan">
+    <column id="347" parent="247" name="slogan">
       <Position>5</Position>
       <Comment>team slogan</Comment>
       <DataType>varchar(50)|0s</DataType>
@@ -1682,12 +1674,12 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="349" parent="247" name="PRIMARY">
+    <key id="348" parent="247" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="350" parent="248" name="id">
+    <column id="349" parent="248" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1695,7 +1687,7 @@ role_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="248" name="team_id">
+    <column id="350" parent="248" name="team_id">
       <Position>2</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1703,7 +1695,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="248" name="person_id">
+    <column id="351" parent="248" name="person_id">
       <Position>3</Position>
       <Comment>person id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
@@ -1711,7 +1703,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="353" parent="248" name="position">
+    <column id="352" parent="248" name="position">
       <Position>4</Position>
       <Comment>0: leader; 1: deputy leader; 2: teacher; 3: developer; 4: designer; 5: tester; 6: operation and maintenance; 7: artist; 8: DBA; 9: others</Comment>
       <DataType>tinyint(3) unsigned|0s</DataType>
@@ -1719,7 +1711,7 @@ role_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="248" name="jobs">
+    <column id="353" parent="248" name="jobs">
       <Position>5</Position>
       <Comment>work content</Comment>
       <DataType>varchar(300)|0s</DataType>
@@ -1727,22 +1719,22 @@ role_id</ColNames>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="355" parent="248" name="team_id">
+    <index id="354" parent="248" name="team_id">
       <ColNames>team_id
 person_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="356" parent="248" name="PRIMARY">
+    <key id="355" parent="248" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="357" parent="248" name="team_id">
+    <key id="356" parent="248" name="team_id">
       <ColNames>team_id
 person_id</ColNames>
       <UnderlyingIndexName>team_id</UnderlyingIndexName>
     </key>
-    <column id="358" parent="249" name="id">
+    <column id="357" parent="249" name="id">
       <Position>1</Position>
       <Comment>table&apos;s independent id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1750,7 +1742,7 @@ person_id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="249" name="team_id">
+    <column id="358" parent="249" name="team_id">
       <Position>2</Position>
       <Comment>team id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1758,7 +1750,7 @@ person_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="360" parent="249" name="project_id">
+    <column id="359" parent="249" name="project_id">
       <Position>3</Position>
       <Comment>project id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
@@ -1766,17 +1758,17 @@ person_id</ColNames>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="361" parent="249" name="team_id">
+    <index id="360" parent="249" name="team_id">
       <ColNames>team_id
 project_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="362" parent="249" name="PRIMARY">
+    <key id="361" parent="249" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="363" parent="249" name="team_id">
+    <key id="362" parent="249" name="team_id">
       <ColNames>team_id
 project_id</ColNames>
       <UnderlyingIndexName>team_id</UnderlyingIndexName>
