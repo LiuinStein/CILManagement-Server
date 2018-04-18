@@ -1605,6 +1605,72 @@ HTTP/1.1 200 OK
 }
 ```
 
+#### 0x08 Rent something to somebody
+
+```http
+POST /v1/resource/usage HTTP/1.1
+```
+
+##### Input
+
+```json
+{
+  "resource_id":5,
+  "user_id":15110506001,
+  "usage_amount":1,
+  "start_date":"2018-04-01",
+  "end_date":"2018-05-01",
+  "purpose":"to do something"
+}
+```
+
+##### Output
+
+Resource rent successfully:
+
+```http
+HTTP/1.1 201 Created
+```
+
+```json
+{
+  "resource_id":6,
+  "user_id":15110506001,
+  "usage_amount":4,
+  "start_date":"2018-04-20",
+  "end_date":"2018-05-01",
+  "purpose":"to do something"
+}
+```
+
+Resource not have or not enough:
+
+```http
+HTTP/1.1 404 NOT FOUND
+```
+
+```json
+{
+    "code": 404,
+    "message": "not have or not enough resource can be rent",
+    "data": {}
+}
+```
+
+#### 0x09 Give back some resources
+
+
+
+#### 0x0A Modify resources usage info
+
+
+
+####0x0B Modify resources usage info
+
+
+
+#### 0x0C Query resource usage info
+
 
 
 ### 0x05 Error code

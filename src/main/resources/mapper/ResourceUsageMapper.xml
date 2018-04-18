@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.opencil.mapper.ResourceUsageMapper">
+
+    <insert id="addResourceUsage" parameterType="cn.opencil.po.ResourceUsage">
+        INSERT INTO t_resource_usage (resource_id, user_id, usage_amount, start_date, end_date, purpose)
+            VALUE (#{resourceId}, #{userId}, #{usageAmount}, #{startDate}, #{endDate}, #{purpose})
+    </insert>
+
+    <select id="checkResourceRemaining" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT remaining
+        FROM t_resource
+        WHERE id = #{id}
+    </select>
+
+</mapper>
