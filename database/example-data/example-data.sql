@@ -17,6 +17,14 @@ TRUNCATE TABLE `cil_management`.`t_rbac_user_role`;
 TRUNCATE TABLE `cil_management`.`t_rbac_permission`;
 TRUNCATE TABLE `cil_management`.`t_rbac_role_permission`;
 TRUNCATE TABLE `cil_management`.`t_personnel`;
+TRUNCATE TABLE `cil_management`.`t_project`;
+TRUNCATE TABLE `cil_management`.`t_team`;
+TRUNCATE TABLE `cil_management`.`t_team_personnel`;
+TRUNCATE TABLE `cil_management`.`t_team_project`;
+TRUNCATE TABLE `cil_management`.`t_expenditure`;
+TRUNCATE TABLE `cil_management`.`t_resource_type`;
+TRUNCATE TABLE `cil_management`.`t_resource`;
+TRUNCATE TABLE `cil_management`.`t_resource_usage`;
 
 -- --------------------------- example users --------------------------------
 -- all example default password is 666666
@@ -60,6 +68,74 @@ INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
   VALUE (8, 'Query member\'s info', '/v1/user/info', 0);
 INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
   VALUE (9, 'Enable or disable an account', '/v1/user/', 4);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (10, 'Grant some permissions to a role', '/v1/auth/role/permission/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (11, 'Revoke permissions from role', '/v1/auth/role/permission/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (12, 'Assign role to somebody', '/v1/auth/user/role/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (13, 'Take back a role from someone', '/v1/auth/user/role/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (14, 'Add a new role', '/v1/auth/role/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (15, 'Delete a role', '/v1/auth/role/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (16, 'Rename a role', '/v1/auth/role/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (17, 'Query roles', '/v1/auth/role', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (18, 'Add a project', '/v1/project/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (19, 'Modify project information', '/v1/project/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (20, 'Delete a project', '/v1/project/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (21, 'Query projects', '/v1/project', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (22, 'Organize a team', '/v1/team/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (23, 'Modify team information', '/v1/team/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (24, 'Dissolve a team', '/v1/team/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (25, 'Query a team', '/v1/team', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (26, 'Add a member to a team', '/v1/team/member/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (27, 'Kick out a man from a team', '/v1/team/member/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (28, 'Modify someone''s job or position', '/v1/team/member/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (29, 'Query team members', '/v1/team/member', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (30, 'Assign a project to a team', '/v1/team/project/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (31, 'Take back a project from a team', '/v1/team/project/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (32, 'Income/Outcome a sum of money', '/v1/project/funding/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (33, 'Query expenditures', '/v1/project/funding', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (34, 'Add a type of resource', '/v1/resource/type/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (35, 'Delete a type of resource', '/v1/resource/type/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (36, 'Modify resource type properties', '/v1/resource/type/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (37, 'Query resource types', '/v1/resource/type', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (38, 'Add a resource', '/v1/resource/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (39, 'Modify resource info', '/v1/resource/', 3);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (40, 'Delete a resource', '/v1/resource/', 5);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (41, 'Query resource info', '/v1/resource', 0);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (42, 'Rent or give back some resources', '/v1/resource/usage/', 2);
+INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
+  VALUE (43, 'Query resource usage info', '/v1/resource/usage', 0);
 
 -- --------------------------- example role's permissions -------------------
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (1, 1, 1);
