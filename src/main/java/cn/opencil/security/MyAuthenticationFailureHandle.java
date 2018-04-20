@@ -1,7 +1,6 @@
 package cn.opencil.security;
 
 import cn.opencil.vo.RestfulResult;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

@@ -50,7 +50,7 @@
     <!-- myAuthenticationFilter in position FORM_LOGIN_FILTER -->
     <beans:bean id="myAuthenticationFilter" class="cn.opencil.security.MyAuthenticationFilter">
         <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
-        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session/"/>
         <beans:property name="authenticationSuccessHandler" ref="mySuccessHandle"/>
         <beans:property name="authenticationFailureHandler" ref="myFailureHandle"/>
     </beans:bean>
@@ -86,7 +86,7 @@
                 <beans:ref bean="securityContextLogoutHandler"/>
             </beans:list>
         </beans:constructor-arg>
-        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session/"/>
         <beans:property name="method" value="DELETE"/>
     </beans:bean>
 
