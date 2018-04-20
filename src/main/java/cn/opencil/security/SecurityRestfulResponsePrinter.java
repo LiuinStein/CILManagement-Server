@@ -19,12 +19,12 @@ public class SecurityRestfulResponsePrinter {
     }
 
     public void print(HttpServletRequest request, HttpServletResponse response, RestfulResult result) throws IOException {
-        if ("application/xml".equals(request.getHeader("Accept"))) {
+        if (request.getHeader("Accept").toLowerCase().contains("application/xml")) {
             printXmlResult(response, result);
-        } else if ("application/json".equals(request.getHeader("Accept"))) {
+        } else if (request.getHeader("Accept").toLowerCase().contains("application/json")) {
             printJsonResult(response, result);
         } else {
-            throw new IOException("an unsupported response format");
+            throw new IOException("unsupported response format was given");
         }
     }
 

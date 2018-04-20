@@ -17,7 +17,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
 
     @Override
     protected String obtainPassword(HttpServletRequest request) {
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if (request.getHeader("Content-Type").toLowerCase().contains("application/json")) {
             return password;
         }
         return super.obtainPassword(request);
@@ -25,7 +25,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
 
     @Override
     protected String obtainUsername(HttpServletRequest request) {
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if (request.getHeader("Content-Type").toLowerCase().contains("application/json")) {
             return userId.toString();
         }
         return super.obtainUsername(request);
@@ -33,7 +33,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if (request.getHeader("Content-Type").toLowerCase().contains("application/json")) {
             try {
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
