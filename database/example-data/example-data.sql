@@ -140,16 +140,47 @@ INSERT INTO `cil_management`.`t_rbac_permission` (`id`, `name`, `uri`, `method`)
 -- --------------------------- example role's permissions -------------------
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (1, 1, 1);
 INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (2, 1, 2);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (3, 2, 1);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (4, 2, 2);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (5, 3, 1);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (6, 3, 2);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (7, 4, 1);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (8, 4, 2);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (9, 1, 3);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (10, 1, 9);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (11, 1, 4);
-INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (12, 1, 5);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (3, 1, 3);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (4, 1, 4);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (5, 1, 5);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (6, 1, 6);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (7, 1, 7);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (8, 1, 8);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (9, 1, 9);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (10, 1, 10);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (11, 1, 11);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (12, 1, 12);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (13, 1, 13);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (14, 1, 14);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (15, 1, 15);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (16, 1, 16);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (17, 1, 17);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (18, 1, 18);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (19, 1, 19);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (20, 1, 20);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (21, 1, 21);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (22, 1, 22);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (23, 1, 23);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (24, 1, 24);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (25, 1, 25);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (26, 1, 26);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (27, 1, 27);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (28, 1, 28);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (29, 1, 29);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (30, 1, 30);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (31, 1, 31);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (32, 1, 32);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (33, 1, 33);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (34, 1, 34);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (35, 1, 35);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (36, 1, 36);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (37, 1, 37);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (38, 1, 38);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (39, 1, 39);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (40, 1, 40);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (41, 1, 41);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (42, 1, 42);
+INSERT INTO `cil_management`.`t_rbac_role_permission` (`id`, `role_id`, `permission_id`) VALUE (43, 1, 43);
 
 
 -- --------------------------- example users' info --------------------------------

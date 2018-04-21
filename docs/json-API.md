@@ -523,7 +523,64 @@ Revoke permission success
 HTTP/1.1 204 NO CONTENT
 ```
 
-#### 0x02 Assign role to somebody
+#### 0x02 Query permissions
+
+```http
+GET /v1/auth/permission?mode={m}&condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+by user id:
+
+```http
+GET /v1/auth/permission?mode=summary&condition=user&value=10001 HTTP/1.1
+```
+
+by role id:
+
+```http
+GET /v1/auth/permission?mode=summary&condition=role&value=1 HTTP/1.1
+```
+
+> The mode field controls which data will be returned.
+>
+> | Mode    | Returned fields   |
+> | ------- | ----------------- |
+> | summary | name              |
+> | all     | name, method, URI |
+> |         |                   |
+
+##### Output
+
+Query successfully:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "permissions": [
+            {
+                "name": "Sign in",
+                "uri": "/v1/user/session",
+                "method": 2
+            },
+            {
+                "name": "Sign out",
+                "uri": "/v1/user/session/",
+                "method": 5
+            }
+        ]
+    }
+}
+```
+
+#### 0x03 Assign role to somebody
 
 ```http
 POST /v1/auth/user/role/ HTTP/1.1
@@ -556,7 +613,7 @@ HTTP/1.1 201 CREATED
 }
 ```
 
-#### 0x03 Take back a role from someone
+#### 0x04 Take back a role from someone
 
 ```http
 DELETE /v1/auth/user/role/ HTTP/1.1
@@ -579,7 +636,7 @@ DELETE /v1/auth/user/role/ HTTP/1.1
 HTTP/1.1 204 NO CONTENT
 ```
 
-#### 0x04 Add a new role
+#### 0x05 Add a new role
 
 ```http
 POST /v1/auth/role/ HTTP/1.1
@@ -611,7 +668,7 @@ HTTP/1.1 201 Created
 }
 ```
 
-#### 0x05 Delete a role
+#### 0x06 Delete a role
 
 ```http
 DELETE /v1/auth/role/ HTTP/1.1
@@ -635,7 +692,7 @@ Role delete successfully
 HTTP/1.1 204 NO CONTENT
 ```
 
-#### 0x06 Rename a role
+#### 0x07 Rename a role
 
 ```http
 PUT /v1/auth/role/ HTTP/1.1
@@ -668,7 +725,7 @@ HTTP/1.1 201 Created
 }
 ```
 
-#### 0x07 Query roles
+#### 0x08 Query roles
 
 ```http
 GET /v1/auth/role?condition={c}&value={v} HTTP/1.1
