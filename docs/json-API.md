@@ -777,6 +777,12 @@ GET /v1/auth/role?condition={c}&value={v} HTTP/1.1
 
 ##### Input
 
+query all:
+
+```http
+GET /v1/auth/role?condition=all HTTP/1.1
+```
+
 by role id:
 
 ```http

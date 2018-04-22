@@ -117,10 +117,13 @@ public class AuthRoleController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult queryRoles(@RequestParam("condition") String condition, @RequestParam("value") String value) throws SimpleHttpException, ValidationException {
+    public RestfulResult queryRoles(@RequestParam("condition") String condition, @RequestParam(value = "value", required = false) String value) throws SimpleHttpException, ValidationException {
         List<RBACRole> roles;
         try {
-            switch (condition) {
+            switch (condition.toLowerCase()) {
+                case "all":
+                    roles = roleService.getRole(new RBACRole());
+                    break;
                 case "user_id":
                     Long userId = Long.parseLong(value);
                     roles = userRoleService.getRoleByUser(userId);

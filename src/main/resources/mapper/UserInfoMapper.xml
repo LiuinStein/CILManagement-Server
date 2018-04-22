@@ -94,7 +94,10 @@
           <include refid="queryWhereOption"/>
     </select>
 
-    <resultMap id="userInfo" type="cn.opencil.po.UserInfo"/>
+    <resultMap id="userInfo" type="cn.opencil.po.UserInfo">
+        <result column="enroll_time" property="enrollTime"/>
+        <result column="exit_time" property="exitTime"/>
+    </resultMap>
 
     <sql id="queryBasicOption">
         id, name, gender, department
