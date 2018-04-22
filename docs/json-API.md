@@ -275,7 +275,6 @@ PUT /v1/user/info/ HTTP/1.1
   "id":15110506001,
   "name":"Jack Ma",
   "gender":0,
-  "identify":0,
   "department":101,
   "enroll_time":"2017-08-15",
   "exit_time":"1970-01-01",
@@ -460,6 +459,51 @@ HTTP/1.1 201 CREATED
     "code": 0,
     "message": "Account has been disabled!",
     "data": {}
+}
+```
+
+#### 0x09 Query user department
+
+```http
+GET /v1/user/info?condition={c}&value={v} HTTP/1.1
+```
+
+##### Input
+
+get colleges:
+
+```http
+GET /v1/user/info?condition=college  HTTP/1.1
+```
+
+get classes:
+
+```http
+GET /v1/user/info?mode=all&condition=class&value=1  HTTP/1.1
+```
+
+> value field is college id
+
+##### Output
+
+Query success response header & return data:
+
+```http
+HTTP/1.1 200 OK
+```
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "college": [
+            {
+                "id": 1,
+                "name": "交通与车辆工程学院"
+            }
+        ]
+    }
 }
 ```
 

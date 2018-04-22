@@ -120,4 +120,21 @@
             </otherwise>
         </choose>
     </sql>
+
+    <resultMap id="userDepartment" type="cn.opencil.po.UserDepartment"/>
+
+    <select id="getCollege" resultMap="userDepartment">
+        SELECT
+            id,
+            name
+        FROM t_college
+    </select>
+
+    <select id="getClass" parameterType="java.lang.Integer" resultMap="userDepartment">
+        SELECT
+            id,
+            name
+        FROM t_class
+        WHERE college = #{collegeId}
+    </select>
 </mapper>

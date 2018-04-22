@@ -1,10 +1,7 @@
 package cn.opencil.controller.user;
 
 import cn.opencil.exception.SimpleHttpException;
-import cn.opencil.po.RBACRole;
-import cn.opencil.po.RBACUser;
-import cn.opencil.po.RBACUserRole;
-import cn.opencil.po.UserInfo;
+import cn.opencil.po.*;
 import cn.opencil.service.RBACUserRoleService;
 import cn.opencil.service.RBACUserService;
 import cn.opencil.service.UserInfoService;
@@ -142,6 +139,28 @@ public class UserController {
         }
         HashMap<String, Object> data = new HashMap<>();
         data.put("users", result);
+        return new RestfulResult(0, "", data);
+    }
+
+    /**
+     * Query department
+     */
+    @RequestMapping(value = "/department", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public RestfulResult queryDepartment(@RequestParam("condition") String condition, @RequestParam(value = "value", required = false) String value) throws SimpleHttpException {
+        List<UserDepartment> result;
+        switch (condition.toLowerCase()) {
+            case "college":
+                result = infoService.getCollege();
+                break;
+            case "class":
+                result = infoService.getClass(Integer.parseInt(value));
+                break;
+            default:
+                throw new SimpleHttpException(400, "bad condition", HttpStatus.BAD_REQUEST);
+        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(condition.toLowerCase(), result);
         return new RestfulResult(0, "", data);
     }
 
