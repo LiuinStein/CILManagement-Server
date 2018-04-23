@@ -24,6 +24,8 @@ Related technologies:
 * **JQuery** & **Ajax** for front-end & data transmission
 * **JUnit** for test
 * **Maven** for package management
+* **Docker-maven-plugin** for remote docker deployment
+* **Docker** no matter the server and database, they all run with docker!
 * **Git** for versioning
 * **Tomcat** as a web container
 * **Java9**: minimal Java platform is Java 8, recommend to Java 9
@@ -51,19 +53,23 @@ Further development:
 
 You can find all of the document in the `docs` directory.
 
-Design-of-Schema.md
+[Design-of-Schema.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/Design-of-Schema.md)
 
 > This document provides the design of database structure & the data dictionaries.
 
-How-to-deploy.md
+[How-to-deploy.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/How-to-deploy.md)
 
 > The purpose of this file is pretty self-evident in its name. The method of deployment of the server-side program
 
-json-API.md
+[json-API.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/json-API.md)
 
 > The Restful Json API document includes how to invoke it & the example input and output data.
 
-Role-permission-list.md
+[Further-Development.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/Further-Development.md)
+
+> This document introduce some **wishes** (also called issues) or **hopes** (also called advice) from current developer to the future developer. Good luck!
+
+[Role-permission-list.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/Role-permission-list.md)
 
 > A series of table indicates the relationship between every-role and every-privilege in every sub-system.
 
