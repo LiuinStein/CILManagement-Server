@@ -59,7 +59,7 @@ You can find all of the document in the `docs` directory.
 
 [How-to-deploy.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/How-to-deploy.md)
 
-> The purpose of this file is pretty self-evident in its name. The method of deployment of the server-side program
+> The purpose of this file is pretty self-evident in its name. The method of deployment of the server-side program.
 
 [json-API.md](https://github.com/LiuinStein/CILManagement-Server/blob/dev/docs/json-API.md)
 
