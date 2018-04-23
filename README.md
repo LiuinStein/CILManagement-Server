@@ -24,6 +24,8 @@ Related technologies:
 * **JQuery** & **Ajax** for front-end & data transmission
 * **JUnit** for test
 * **Maven** for package management
+* **Docker-maven-plugin** for remote docker deployment
+* **Docker** no matter the server and database, they all run with docker!
 * **Git** for versioning
 * **Tomcat** as a web container
 * **Java9**: minimal Java platform is Java 8, recommend to Java 9
@@ -66,18 +68,6 @@ json-API.md
 Role-permission-list.md
 
 > A series of table indicates the relationship between every-role and every-privilege in every sub-system.
-
-System-Structure.md
-
-> The server-side program system structure includes 3 sub-systems and a lot of functions in it.
-
-Usage-of-Session-and-Cookie.md
-
-> The usage of sessions and cookies. Convenient to follow up development.
-
-Workflow.md
-
-> How every function works. This file includes the workflow image of Activiti framework.
 
 ## 0x01 Versioning
 
@@ -125,6 +115,9 @@ G:.
 │      │  │      ├─controller   # Spring controller                
 │      │  │      │  ├─authorization # controller for URI /v1/auth/*
 │      │  │      │  ├─error     # error handling controller
+│      │  │      │  ├─project   # controller for URI /v1/project/*
+│      │  │      │  │  └─team   # controller for URI /v1/team/*
+│      │  │      │  ├─resource  # controller for URI /v1/resource/*
 │      │  │      │  └─user      # controller for URI /v1/user/*
 │      │  │      ├─exception    # exceptions form controller             
 │      │  │      ├─mapper       # mybatis mapper interfaces             
@@ -143,10 +136,12 @@ G:.
 │      │          ├─security   # shaoqunliu security libraries
 │      │          │  ├─rwx     # RWX file permission control libraries
 │      │          │  └─util    # shaoqunliu common security utils 
+│      │          ├─utils
 │      │          └─validation # shaoqunliu validation libraries
 │      │              ├─annotation   # validation annotations
-│      │              ├─DBValidation # database validation libraries
-│      │              └─exception    # validation exceptions      
+│      │              ├─exception    # validation exceptions  
+│      │              └─validator    # validators
+│      │                  └─database # database validation libraries
 │      ├─resources       # the resources & configrations file
 │      │  ├─activiti     # activiti bpmn files
 │      │  ├─mapper       # mybatis mapper                    

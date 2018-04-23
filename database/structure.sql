@@ -32,7 +32,7 @@ CREATE TABLE `cil_management`.`t_rbac_role`  (
 DROP TABLE IF EXISTS `cil_management`.`t_rbac_user_role`;
 CREATE TABLE `cil_management`.`t_rbac_user_role`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'independent id',
-  `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role name',
+  `user_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'user id',
   `role_id` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT 'role id',
   PRIMARY KEY (`id`),
   UNIQUE (`user_id`, `role_id`)
@@ -83,7 +83,7 @@ CREATE TABLE `cil_management`.`t_class`  (
   `college` int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'affiliated college id',
   PRIMARY KEY (`id`),
   INDEX `idx_class_name`(`name`) USING BTREE
-) ENGINE = InnoDB;
+) AUTO_INCREMENT = 1000, ENGINE = InnoDB;
 -- ----------------------------- college table (t_college) --------------------------------
 DROP TABLE IF EXISTS `cil_management`.`t_college`;
 CREATE TABLE `cil_management`.`t_college`  (

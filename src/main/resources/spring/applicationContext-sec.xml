@@ -28,6 +28,10 @@
 
         <csrf disabled="true"/>
 
+        <!-- CORS support -->
+        <!-- https://docs.spring.io/spring-security/site/docs/current/reference/html/cors.html -->
+        <cors configuration-source-ref="corsSource"/>
+
     </http>
 
     <!-- securityFilter before FILTER_SECURITY_INTERCEPTOR -->
@@ -46,7 +50,7 @@
     <!-- myAuthenticationFilter in position FORM_LOGIN_FILTER -->
     <beans:bean id="myAuthenticationFilter" class="cn.opencil.security.MyAuthenticationFilter">
         <beans:property name="authenticationManager" ref="myAuthenticationManager"/>
-        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session/"/>
         <beans:property name="authenticationSuccessHandler" ref="mySuccessHandle"/>
         <beans:property name="authenticationFailureHandler" ref="myFailureHandle"/>
     </beans:bean>
@@ -82,7 +86,7 @@
                 <beans:ref bean="securityContextLogoutHandler"/>
             </beans:list>
         </beans:constructor-arg>
-        <beans:property name="filterProcessesUrl" value="/v1/user/session"/>
+        <beans:property name="filterProcessesUrl" value="/v1/user/session/"/>
         <beans:property name="method" value="DELETE"/>
     </beans:bean>
 
@@ -109,5 +113,32 @@
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
 
+    <!-- CORS configurations -->
+    <beans:bean id="corsSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+        <beans:property name="corsConfigurations">
+            <beans:map>
+                <beans:entry key="/**" value-ref="corsConfiguration"/>
+            </beans:map>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="corsConfiguration" class="org.springframework.web.cors.CorsConfiguration">
+        <beans:property name="allowedMethods">
+            <beans:list>
+                <beans:value>*</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="allowedHeaders">
+            <beans:list>
+                <beans:value>*</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="allowedOrigins">
+            <beans:list>
+                <beans:value>*</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="allowCredentials" value="true"/>
+    </beans:bean>
 
 </beans:beans>

@@ -94,7 +94,10 @@
           <include refid="queryWhereOption"/>
     </select>
 
-    <resultMap id="userInfo" type="cn.opencil.po.UserInfo"/>
+    <resultMap id="userInfo" type="cn.opencil.po.UserInfo">
+        <result column="enroll_time" property="enrollTime"/>
+        <result column="exit_time" property="exitTime"/>
+    </resultMap>
 
     <sql id="queryBasicOption">
         id, name, gender, department
@@ -120,4 +123,21 @@
             </otherwise>
         </choose>
     </sql>
+
+    <resultMap id="userDepartment" type="cn.opencil.po.UserDepartment"/>
+
+    <select id="getCollege" resultMap="userDepartment">
+        SELECT
+            id,
+            name
+        FROM t_college
+    </select>
+
+    <select id="getClass" parameterType="java.lang.Integer" resultMap="userDepartment">
+        SELECT
+            id,
+            name
+        FROM t_class
+        WHERE college = #{collegeId}
+    </select>
 </mapper>

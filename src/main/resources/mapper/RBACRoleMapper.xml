@@ -9,7 +9,7 @@
             id,
             name
         FROM t_rbac_role
-        WHERE
+        <where>
             <choose>
                 <when test="id != null">
                     id = #{id}
@@ -17,10 +17,8 @@
                 <when test="name != null">
                     name = #{name}
                 </when>
-                <otherwise>
-                    1 = 2
-                </otherwise>
             </choose>
+        </where>
     </select>
 
 </mapper>
