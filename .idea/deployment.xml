@@ -5,7 +5,7 @@
       <paths name="192.168.50.130">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/docker/CILMgrServer" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/docker/CILMgrServer/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

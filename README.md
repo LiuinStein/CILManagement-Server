@@ -24,6 +24,8 @@ Related technologies:
 * **JQuery** & **Ajax** for front-end & data transmission
 * **JUnit** for test
 * **Maven** for package management
+* **Docker-maven-plugin** for remote docker deployment
+* **Docker** no matter the server and database, they all run with docker!
 * **Git** for versioning
 * **Tomcat** as a web container
 * **Java9**: minimal Java platform is Java 8, recommend to Java 9

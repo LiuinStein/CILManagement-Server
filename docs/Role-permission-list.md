@@ -14,30 +14,9 @@ According to [CWE-257](http://cwe.mitre.org/data/definitions/257.html) & [Securi
 
 So, we use **BCrypt** algorithm with **11 rounds hash strength** to hash password here.
 
-> **Deprecated in design phase:**
->
-> This algorithm only existed in initial design and deprecated later.
->
-> ```
-> SHA1(hash_salt+clear_password+hash_salt)
-> ```
->
-> Default hash_salt is `/HASHSALT/`
->
-> Default password is `666666` 
->
-> So default hash value:
->
-> ```
-> SHA1('/HASHSALT/666666/HASHSALT/') =>
-> 'CD9477E503432CE42DA4D2FC0665863619F2993B'
-> ```
->
-> For security, even if you use the default password, **make sure the hash_salt randomly**, do it **in your application code**. The database only provide an example value.
+
 
 #### 0x01 Access Control Algorithm
-
-
 
 > **Deprecated in design phase:**
 >
@@ -88,33 +67,3 @@ So, we use **BCrypt** algorithm with **11 rounds hash strength** to hash passwor
 >
 > Sign in is a one-sided operation, **we can see it as an operation for sessions**, so if we have permission to sign in, equals we have the permission of reading & writing for the session, so the value 600 means you can sign in, the value 000 means you can not sign in.
 
-### 0x02 Personnel Management
-
-
-
-> **Deprecated in design phase:**
->
-> |           | Admin | Teacher | Team leader | Member |
-> | --------- | :---: | :-----: | :---------: | :----: |
-> | Sign in   |  600  |   600   |     600     |  600   |
-> | account   |  666  |   444   |     444     |  444   |
-> | user info |  666  |   664   |     664     |  644   |
-> | password  |  622  |   600   |     600     |  600   |
-
-### 0x03 Project & Team Management
-
-|                     | Admin | Teacher |    Team leader    | Member |
-| ------------------- | :---: | :-----: | :---------------: | :----: |
-| add projects        |   √   |    √    |                   |        |
-| delete projects     |   √   |    √    |                   |        |
-| modify project info |   √   |    √    | Only your project |        |
-| query project info  |   √   |    √    |         √         |   √    |
-|                     |       |         |                   |        |
-|                     |       |         |                   |        |
-|                     |       |         |                   |        |
-|                     |       |         |                   |        |
-|                     |       |         |                   |        |
-
-
-
-### 0x04 Resource & Usage Management
