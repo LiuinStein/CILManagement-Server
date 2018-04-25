@@ -21,7 +21,11 @@ public class MyRBACPermissionRoleService implements RBACPermissionRoleService {
     }
 
     private void refreshPermission() {
-        new MySecurityMetadataSource(permissionRoleMapper).refreshPermissions();
+        /*
+         * no need to invoke .refreshPermissions() method due to
+         * the constructor of this class will automatically invoke it
+         */
+        new MySecurityMetadataSource(permissionRoleMapper);
     }
 
     @Override
